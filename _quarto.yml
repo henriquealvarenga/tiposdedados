@@ -6,40 +6,58 @@ website:
   title: "Tipos de Dados em Saúde"
   description: "Da coleta à análise — entendendo variáveis para pesquisa em saúde."
   navbar:
+    logo: assets/logo-database.svg
+    # Alternativa: assets/logo-clipboard.svg
     left:
       - href: index.qmd
         text: Início
+        icon: house
       - text: "Fundamentos"
+        icon: book
         menu:
           - href: cap01-dados-pesquisa.qmd
             text: Os Dados da Pesquisa
+            icon: file-text
           - href: cap02-classificacao.qmd
             text: Classificação dos Tipos de Dados
+            icon: diagram-3
           - href: cap03-dicionario.qmd
             text: Dicionário de Variáveis
+            icon: journal-text
       - text: "Tipos de Dados"
+        icon: tags
         menu:
           - href: cap04-numericos.qmd
             text: Dados Numéricos
+            icon: "123"
           - href: cap05-categoricos.qmd
             text: Dados Categóricos
+            icon: tag
           - href: cap06-casos-especiais.qmd
             text: Casos Especiais
+            icon: question-diamond
       - text: "Na Prática"
+        icon: tools
         menu:
           - href: cap07-planilhas.qmd
             text: Organizando Dados em Planilhas
+            icon: table
           - href: cap08-visualizacao.qmd
             text: Visualizando por Tipo de Dado
+            icon: bar-chart
           - href: cap09-publicando.qmd
             text: Publicando seus Dados
+            icon: cloud-upload
           - href: cap10-tipos-r-python.qmd
             text: Tipos de Dados no R e no Python
+            icon: code-slash
       - href: referencias.qmd
         text: Referências
+        icon: bookmark
     right:
       - href: about.qmd
         text: Sobre
+        icon: person-circle
       - icon: github
         href: https://github.com/halvarengda
   sidebar: false
