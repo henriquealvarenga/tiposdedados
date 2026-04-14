@@ -451,3 +451,35 @@ tbody tr:hover {
     padding: var(--space-xl) var(--space-md);
   }
 }
+
+
+/* ============================================================
+   LANDING PAGE — força largura total e centralização
+   ============================================================ */
+
+/* Remove qualquer restrição de largura herdada do container Quarto */
+.quarto-container-page,
+main#quarto-document-content {
+  max-width: none;
+}
+
+/* Garante que o #conteudo ocupe toda a largura disponível */
+#conteudo {
+  width: 100%;
+  max-width: none;
+}
+
+/* Reforça a centralização da content-section */
+#conteudo > .content-section {
+  max-width: 1200px;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  width: 100%;
+}
+
+/* Divisor também centralizado */
+#conteudo > .section-divider {
+  max-width: 1200px;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
