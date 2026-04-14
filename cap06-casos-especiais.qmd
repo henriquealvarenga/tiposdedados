@@ -1,0 +1,377 @@
+---
+title: "Casos Especiais"
+subtitle: "Quando o tipo de dado muda: Likert, contexto e a mesma variável com duas identidades"
+---
+
+```{r}
+#| label: setup
+#| message: false
+
+library(readr)
+library(dplyr)
+library(knitr)
+library(ggplot2)
+library(tidyr)
+
+pacientes <- read_csv("data/pacientes.csv")
+```
+
+## A história
+
+Em 1932, o psicólogo americano Rensis Likert (pronuncia-se "LICK-ert", não "LIE-kert") publicou sua tese de doutorado nos *Archives of Psychology*: *A Technique for the Measurement of Attitudes*. O problema que o motivava era antigo: como medir algo tão subjetivo quanto uma atitude — a favorabilidade de uma pessoa em relação a uma política, um grupo social, uma instituição? [@likert1932].
+
+A solução era elegante. Em vez de perguntas de sim/não, Likert propôs que os respondentes indicassem seu grau de concordância com uma série de afirmações, numa escala de cinco pontos: *discordo totalmente*, *discordo*, *indeciso*, *concordo*, *concordo totalmente*. Cada resposta recebia um valor de 1 a 5, e os valores dos itens individuais eram somados num escore total que representava a atitude do sujeito. A técnica era simples, confiável e — crucialmente — produzia números. Tornou-se rapidamente uma das mais utilizadas em ciências sociais e da saúde. Mas a natureza dos números que ela produz gerou um debate longo, que só nas últimas décadas encontrou uma resolução prática.
+
+
+## Escala de Likert: item vs. escala
+
+Para entender a escala de Likert é preciso primeiro distinguir dois conceitos que são facilmente confundidos:
+
+Um **item Likert** é uma afirmação isolada à qual o respondente reage numa escala de concordância.
+Exemplo: "Eu me sinto satisfeito com o atendimento recebido" — de 1 (*discordo totalmente*) a 5 (*concordo totalmente*).
+
+O **escore da escala Likert** é a **soma** (ou média) de múltiplos itens Likert que medem o mesmo constructo.
+Se um questionário de satisfação tem 10 itens, cada um de 1 a 5, o escore total varia de 10 a 50.
+
+A classificação dos dados Likert gerou um dos debates mais longos da metodologia quantitativa. De um lado, a posição ordinalista: cada item Likert é ordinal, os números representam categorias ordenadas, e a distância entre "discordo" e "indeciso" não é necessariamente igual à distância entre "concordo" e "concordo totalmente". Logo, média e desvio-padrão não seriam apropriados — o correto seria usar mediana, moda e testes não paramétricos [@jamieson2004].
+
+Do outro lado, estudos de simulação acumulados desde os anos 1930 mostraram que testes paramétricos como ANOVA e correlação de Pearson são extraordinariamente robustos a violações dessas suposições. Pearson (1931) já demonstrava que a ANOVA funcionava com distribuições assimétricas e amostras de 4 a 10. Décadas depois, Havlicek e Peterson (1976) testaram correlações de Pearson com distribuições normais, retangulares e ordinais, com amostras de 5 a 60, e concluíram que o coeficiente de Pearson é "rather insensitive to extreme violations of the basic assumptions of normality and the type of scale" [@norman2010].
+
+A explicação teórica é simples: a suposição de normalidade dos testes paramétricos se aplica à distribuição das **médias**, não dos dados individuais. Pelo Teorema Central do Limite, com amostras maiores que 5 ou 10 por grupo, as médias se distribuem de forma aproximadamente normal independente da distribuição original [@norman2010].
+
+### O consenso atual
+
+Hoje, a questão está resolvida na prática. O consenso se apoia em dois pontos [@carifio2008; @norman2010; @sullivan2013]:
+
+1. Um **item** Likert individual é ordinal. A mediana e as frequências são a forma mais honesta de descrevê-lo.
+
+2. O **score tota da escala** Likert composta (soma de múltiplos itens) se comporta de forma aproximadamente contínua — e o uso de média, desvio-padrão e testes paramétricos é adequado. Isso é especialmente claro quando a escala tem oito ou mais itens [@carifio2008].
+
+::: {.callout-tip}
+## Item vs. escala
+Um **item** Likert (uma pergunta) é ordinal. O **escore total da escala** Likert (a soma de vários itens) se comporta de forma aproximadamente contínua. A confusão entre os dois é a principal fonte de mal-entendidos sobre o tema.
+:::
+
+```{r}
+#| label: tbl-item-vs-escala
+#| tbl-cap: "Item Likert vs. escala Likert — a distinção central."
+
+tibble::tibble(
+  aspecto = c("O que é", "Valores possíveis", "Natureza",
+              "Média faz sentido?", "Distribuição",
+              "Estatística descritiva", "Exemplo"),
+  item = c("Uma afirmação isolada",
+           "1, 2, 3, 4, 5 (poucos valores discretos)",
+           "Categórica ordinal",
+           "Não — poucos valores, distâncias desiguais",
+           "Discreta, frequentemente assimétrica",
+           "Moda, mediana, frequências",
+           "'Eu me sinto seguro no meu bairro' → 4"),
+  escala = c("Soma/média de múltiplos itens",
+             "10 a 50 (ou 1,0 a 5,0 como média)",
+             "Tratada como numérica na prática",
+             "Sim — muitos valores, TLC se aplica",
+             "Tende a aproximar-se da normal (TLC)",
+             "Média, desvio-padrão",
+             "Escore de satisfação = 38 (soma de 10 itens)")
+) |>
+  kable(
+    col.names = c("Aspecto", "Item Likert (individual)", "Escala Likert (composta)"),
+    align = "lll"
+  ) |>
+  kableExtra::kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = TRUE) |>
+  kableExtra::column_spec(1, width = "25%") |>
+  kableExtra::column_spec(2, width = "37.5%") |>
+  kableExtra::column_spec(3, width = "37.5%")
+```
+
+TLC = **Teorema do Limite Central**: quando somamos muitas variáveis independentes, a distribuição da soma tende a se aproximar da normal — mesmo que as variáveis originais não sejam normais. É por isso que escalas compostas (soma de vários itens) se comportam de forma mais "bem-comportada" que itens isolados.
+
+
+### Visualizando a diferença com dados simulados
+
+Para tornar a distinção concreta, vamos simular um cenário simples: 200 sujeitos respondem a um item Likert de satisfação (1 a 5). O que muda quando analisamos o item como ordinal vs. como numérico?
+
+```{r}
+#| label: fig-likert-simulacao
+#| fig-cap: "O mesmo item Likert visto de duas formas: como frequência de categorias (esquerda) e como distribuição numérica (direita)."
+#| fig-width: 9
+#| fig-height: 4
+
+set.seed(42)
+likert_sim <- tibble(
+  resposta_num = sample(1:5, 200, replace = TRUE, prob = c(0.05, 0.15, 0.25, 0.35, 0.20)),
+  resposta_cat = factor(resposta_num,
+    levels = 1:5,
+    labels = c("Discordo\ntotalmente", "Discordo", "Indeciso", "Concordo", "Concordo\ntotalmente")
+  )
+)
+
+p1 <- likert_sim |>
+  count(resposta_cat) |>
+  mutate(proporcao = n / sum(n) * 100) |>
+  ggplot(aes(x = resposta_cat, y = proporcao, fill = resposta_cat)) +
+  geom_col(alpha = 0.85, show.legend = FALSE) +
+  scale_fill_manual(values = c("#EF4444", "#F59E0B", "#9CA3AF", "#3B82F6", "#1E40AF")) +
+  labs(title = "Como categórica ordinal", x = NULL, y = "Proporção (%)") +
+  theme_minimal(base_size = 11) +
+  theme(panel.grid.minor = element_blank(),
+        axis.text.x = element_text(size = 8))
+
+p2 <- ggplot(likert_sim, aes(x = resposta_num)) +
+  geom_histogram(fill = "#3B82F6", color = "white", binwidth = 1, alpha = 0.85) +
+  geom_vline(xintercept = mean(likert_sim$resposta_num), color = "#EF4444",
+             linetype = "dashed", linewidth = 0.8) +
+  annotate("text", x = mean(likert_sim$resposta_num) + 0.3,
+           y = max(table(likert_sim$resposta_num)) * 0.9,
+           label = paste0("média = ", round(mean(likert_sim$resposta_num), 2)),
+           color = "#EF4444", hjust = 0, size = 3.5) +
+  scale_x_continuous(breaks = 1:5) +
+  labs(title = "Como numérica", x = "Resposta (1–5)", y = "Frequência") +
+  theme_minimal(base_size = 11) +
+  theme(panel.grid.minor = element_blank())
+
+gridExtra::grid.arrange(p1, p2, ncol = 2)
+```
+
+```{r}
+#| label: tbl-likert-descritivas
+#| tbl-cap: "O mesmo dado analisado de duas formas — as conclusões são semelhantes, mas a linguagem muda."
+
+tibble::tibble(
+  abordagem = c("Como ordinal (não paramétrica)", "Como numérica (paramétrica)"),
+  centro = c(
+    paste0("Mediana = ", median(likert_sim$resposta_num),
+           " (Concordo); Moda = ", names(sort(table(likert_sim$resposta_num), decreasing = TRUE))[1],
+           " (Concordo)"),
+    paste0("Média = ", round(mean(likert_sim$resposta_num), 2),
+           " ± ", round(sd(likert_sim$resposta_num), 2))
+  ),
+  interpretacao = c("A maioria concorda ou concorda totalmente",
+                     "Em média, os respondentes tendem a concordar"),
+  teste = c("Mann-Whitney, Kruskal-Wallis",
+            "Teste t, ANOVA")
+) |>
+  kable(
+    col.names = c("Abordagem", "Medida de centro", "Interpretação", "Teste de comparação"),
+    align = "llll"
+  )
+```
+
+Na prática, as duas abordagens frequentemente levam à mesma conclusão [@norman2010]. A diferença está na **precisão da linguagem**: dizer "a mediana é 4 (concordo)" é mais fiel à natureza ordinal do dado do que dizer "a média é 3,48".
+
+
+### Recomendação prática
+
+Na prática, a orientação pode ser resumida assim:
+
+```{r}
+#| label: tbl-recomendacao-likert
+#| tbl-cap: "Recomendação prática — como tratar dados Likert dependendo do contexto."
+
+tibble::tibble(
+  situacao = c("Item individual (1 a 5 ou 1 a 7)",
+               "Escala composta (soma/média de ≥ 5 itens)",
+               "Amostra pequena (n < 30) com item individual",
+               "Apresentação descritiva em artigo"),
+  recomendacao = c("Trate como ordinal: reporte mediana, moda e frequências; use testes não paramétricos",
+                    "Pode tratar como numérica: reporte média ± DP; testes paramétricos são válidos",
+                    "Sempre trate como ordinal — a robustez paramétrica depende de n suficiente",
+                    "Reporte frequências por nível (%) E a mediana — mesmo que use média para análise"),
+  justificativa = c("Poucos valores possíveis; distâncias entre níveis não garantidas",
+                     "Muitos valores possíveis; TLC se aplica; décadas de simulações confirmam robustez",
+                     "Sem n suficiente, o TLC não garante normalidade da média amostral",
+                     "A distribuição de frequências é a descrição mais fiel dos dados ordinais")
+) |>
+  kable(
+    col.names = c("Situação", "Recomendação", "Justificativa"),
+    align = "lll"
+  )
+```
+
+::: {.callout-note}
+## Na dúvida, seja transparente
+
+Reporte as frequências por nível e a mediana. Se usar a média para análise, justifique a escolha. Assim o leitor pode avaliar os dados independentemente da abordagem estatística escolhida [@norman2010; @sullivan2013].
+:::
+
+
+## A mesma variável, dois tipos
+
+A escala de Likert ilustra um fenômeno mais geral: **a mesma informação pode ser coletada como numérica ou como categórica**. A decisão é do pesquisador — e essa decisão tem consequências diretas para a análise.
+
+```{r}
+#| label: tbl-mesma-variavel
+#| tbl-cap: "A mesma realidade, dois tipos de dado — a decisão é metodológica, não da natureza."
+
+tibble::tibble(
+  variavel = c("Idade", "Peso", "Pressão arterial", "Glicemia", "Dor", "Escolaridade"),
+  como_numerica = c("47 anos", "82,3 kg", "138 mmHg",
+                     "112 mg/dL", "Escala visual analógica: 7,2 cm",
+                     "16 anos de estudo"),
+  como_categorica = c("Adulto (30–59 anos)", "Sobrepeso (IMC 25–29,9)",
+                       "Hipertenso estágio 1", "Pré-diabético",
+                       "Dor moderada", "Ensino superior completo"),
+  perde = c("Magnitude exata", "Magnitude exata", "Magnitude exata",
+            "Magnitude exata", "Precisão contínua", "Magnitude exata")
+) |>
+  kable(
+    col.names = c("Variável", "Como numérica", "Como categórica", "O que se perde na categorização"),
+    align = "llll"
+  )
+```
+
+A passagem de numérico para categórico é sempre possível — basta definir pontos de corte. Mas o caminho inverso é impossível: uma vez que registramos "hipertenso estágio 1", não podemos recuperar se a pressão era 140, 152 ou 159 mmHg. A categorização é uma via de mão única, e Altman e Royston demonstram que dicotomizar uma variável contínua pela mediana reduz o poder estatístico tanto quanto descartar um terço dos dados [@altman2006].
+
+```{r}
+#| label: fig-imc-dupla-identidade
+#| fig-cap: "O IMC tem duas vidas: como variável contínua (histograma) e como categórica ordinal (barras)."
+#| fig-width: 9
+#| fig-height: 4
+
+# Calcular IMC
+pacientes_imc <- pacientes |>
+  filter(!is.na(peso), !is.na(altura)) |>
+  mutate(
+    imc = peso / (altura / 100)^2,
+    imc_cat = case_when(
+      imc < 18.5 ~ "Baixo peso",
+      imc < 25 ~ "Normal",
+      imc < 30 ~ "Sobrepeso",
+      TRUE ~ "Obesidade"
+    ),
+    imc_cat = factor(imc_cat, levels = c("Baixo peso", "Normal", "Sobrepeso", "Obesidade"))
+  )
+
+p1 <- ggplot(pacientes_imc, aes(x = imc)) +
+  geom_histogram(fill = "#3B82F6", color = "white", bins = 30, alpha = 0.85) +
+  geom_vline(xintercept=c(18.5,25,30), col=c("#3B82F6","#F59E0B","#EF4444" )) +
+  labs(title = "IMC — variável contínua", x = "IMC (kg/m²)", y = "Frequência") +
+  theme_minimal(base_size = 11) +
+  theme(panel.grid.minor = element_blank())
+
+p2 <- pacientes_imc |>
+  count(imc_cat) |>
+  mutate(proporcao = n / sum(n) * 100) |>
+  ggplot(aes(x = imc_cat, y = proporcao, fill = imc_cat)) +
+  geom_col(alpha = 0.85, show.legend = FALSE) +
+  scale_fill_manual(values = c("Baixo peso" = "#93C5FD", "Normal" = "#3B82F6",
+                                "Sobrepeso" = "#F59E0B", "Obesidade" = "#EF4444")) +
+  labs(title = "IMC — variável categórica ordinal", x = "Classificação OMS", y = "Proporção (%)") +
+  theme_minimal(base_size = 11) +
+  theme(panel.grid.minor = element_blank())
+
+gridExtra::grid.arrange(p1, p2, ncol = 2)
+```
+
+O caso do IMC é paradigmático. O valor bruto (27,4 kg/m²) é uma variável contínua de razão — permite média, desvio-padrão e todas as operações aritméticas. Mas na prática clínica, é quase sempre apresentado em **categorias da OMS** (baixo peso, normal, sobrepeso, obesidade), tornando-se uma variável ordinal. A mesma informação, dois tipos de dado — e a escolha depende do objetivo: a versão contínua é mais poderosa estatisticamente; a categórica é mais comunicável clinicamente.
+
+::: {.callout-important}
+## A regra de ouro
+
+Sempre que possível, **colete e armazene os dados na forma mais detalhada** (numérica). Categorizar depois é fácil; recuperar a precisão perdida é impossível. Registre a pressão como 142 mmHg, não como "hipertenso" — você sempre pode criar a categoria depois, mas nunca poderá desfazer a perda [@altman2006; @agresti2018].
+:::
+
+
+## Outros casos especiais
+
+A escala de Likert não é o único caso em que a classificação de uma variável desafia as categorias simples. Outros exemplos frequentes em pesquisa em saúde:
+
+### Escolaridade: ordinal ou numérica?
+
+A escolaridade pode ser registrada como **anos de estudo** (variável numérica discreta: 0, 1, 2, ..., 20) ou como **nível de escolaridade** (variável categórica ordinal: fundamental, médio, superior). No IBGE, a classificação oficial é ordinal — mas muitos estudos epidemiológicos usam "anos de estudo" como proxy numérica, permitindo regressão linear em vez de modelos ordinais.
+
+### Escala visual analógica de dor (EVA)
+
+O paciente marca um ponto numa linha de 10 cm. O valor lido — 4,7 cm — é contínuo. Mas quando transformamos em categorias (0 = sem dor, 1–3 = leve, 4–6 = moderada, 7–10 = intensa), a variável se torna ordinal. Mesmo o valor bruto levanta questões: a distância entre 2 e 4 é a mesma experiência de dor que entre 6 e 8? A escala pode ser **contínua na régua** sem ser **intervalar na experiência**.
+
+### Variáveis cíclicas
+
+Algumas variáveis numéricas não obedecem à lógica linear. O **horário** (0h a 24h) é numérico, mas a diferença entre 23h e 1h não é 22 horas — é 2 horas. O **mês de nascimento** (1 a 12) é numérico, mas dezembro e janeiro são adjacentes, não distantes. Variáveis cíclicas exigem métodos específicos (estatística circular) e são frequentemente tratadas de forma inadequada quando jogadas numa regressão linear convencional [@hand2004].
+
+### Variáveis truncadas e censuradas
+
+Na pesquisa em saúde, variáveis numéricas frequentemente têm **limites de detecção**. Um exame de carga viral que reporta "< 20 cópias/mL" não informa o valor exato — apenas que está abaixo do limite de detecção. Esses dados **censurados** não podem ser tratados como zero nem como o valor do limite; exigem métodos estatísticos específicos (como a regressão de Tobit ou métodos de sobrevida) que levem em conta a informação parcial.
+
+```{r}
+#| label: tbl-casos-especiais
+#| tbl-cap: "Exemplos"
+
+tibble::tibble(
+  variavel = c("IMC", "Escolaridade", "Dor (EVA)", "Horário do evento",
+               "Carga viral", "Likert (item)", "Likert (escala)"),
+  numerica = c("27,4 kg/m²", "14 anos de estudo", "4,7 cm",
+               "23:15", "> 20 cópias/mL", "4 (concordo)",
+               "38 pontos (soma de 10 itens)"),
+  categorica = c("Sobrepeso (OMS)", "Ensino médio completo",
+                  "Dor moderada", "Período noturno",
+                  "Indetectável vs. detectável", "Concordo",
+                  "Alta satisfação"),
+  desafio = c("Perda de poder ao categorizar",
+              "Proxy numérica comum mas imprecisa",
+              "Contínua na régua, ordinal na experiência?",
+              "Variável cíclica — diferenças lineares falham",
+              "Censura à esquerda — valor exato desconhecido",
+              "Ordinal, mas tratada como numérica por muitos",
+              "Composta — comporta-se como intervalar")
+) |>
+  kable(
+    col.names = c("Variável", "Versão numérica", "Versão categórica", "Desafio"),
+    align = "llll"
+  )
+```
+
+
+## A lição dos casos especiais
+
+Os exemplos deste capítulo convergem para uma mesma lição: a classificação de uma variável **não é uma propriedade intrínseca do fenômeno** — é o resultado de decisões sobre como medir, registrar e analisar. A idade é contínua por natureza, mas pode ser coletada como discreta (anos inteiros) ou categórica (faixa etária). O IMC é contínuo, mas a prática clínica o transforma em ordinal. A escala de Likert muda de natureza dependendo de como é agregada — um item é ordinal, uma escala composta se comporta como contínua.
+
+Essa fluidez não é um defeito do sistema de classificação de Stevens — é uma característica da realidade. As escalas de medida são **modelos**, não leis da natureza [@velleman1993; @hand2004]. O pesquisador deve escolher o modelo que melhor serve ao objetivo da análise, documentar essa escolha e estar preparado para justificá-la.
+
+::: {.callout-warning}
+## Documente suas decisões
+
+Em qualquer artigo ou relatório, explicite: (1) como a variável foi medida originalmente, (2) se e como foi categorizada, e (3) por que essa classificação foi escolhida. Essa transparência permite que revisores e leitores avaliem se a análise é coerente com a natureza dos dados — e é exatamente o que diretrizes como o STROBE recomendam [@vandenbroucke2007].
+:::
+
+
+## Resumo do capítulo
+
+```{r}
+#| label: tbl-resumo-cap6
+#| tbl-cap: "Resumo — casos especiais na classificação de variáveis."
+
+tibble::tibble(
+  conceito = c("A mesma variável, dois tipos",
+               "Item Likert",
+               "Escala Likert (composta)",
+               "Debate Likert (resolvido)",
+               "IMC: dupla identidade",
+               "Variáveis cíclicas",
+               "Dados censurados"),
+  definicao = c("O pesquisador decide se coleta/analisa como numérica ou categórica",
+                "Afirmação isolada com resposta de 1 a 5 (ou 7) — ordinal",
+                "Soma ou média de múltiplos itens — comporta-se como contínua",
+                "Item = ordinal (consenso); escala composta = testes paramétricos são robustos",
+                "Contínuo (kg/m²) na coleta; ordinal (OMS) na prática clínica",
+                "Valores numéricos sem linearidade (horário, mês) — exigem estatística circular",
+                "Valor exato desconhecido (< limite de detecção) — exigem métodos especiais"),
+  recomendacao = c("Colete na forma mais detalhada possível; categorize depois se necessário",
+                    "Reporte frequências por nível e mediana",
+                    "Média ± DP e testes paramétricos são adequados",
+                    "Seja transparente: reporte frequências E mediana, mesmo que use média",
+                    "Mantenha contínuo para análise; categorize para comunicação clínica",
+                    "Não use média aritmética; considere estatística circular",
+                    "Não substitua por zero nem pelo limite; use métodos de censura")
+) |>
+  kable(
+    col.names = c("Conceito", "Definição", "Recomendação prática"),
+    align = "lll"
+  )
+```
+
+::: {.callout-note}
+## Próximos passos
+
+Este capítulo explorou os casos em que a classificação de variáveis desafia as categorias simples. No próximo capítulo vamos aprender a **organizá-los** — como estruturar planilhas para que os dados possam ser analisados de forma eficiente e reproduzível.
+:::

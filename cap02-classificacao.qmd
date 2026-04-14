@@ -1,0 +1,301 @@
+---
+title: "Classificação dos Tipos de Dados"
+subtitle: "Numéricos vs. Categóricos"
+---
+
+```{r}
+#| label: setup
+#| message: false
+
+library(readr)
+library(dplyr)
+library(knitr)
+
+pacientes <- read_csv("data/pacientes.csv")
+```
+
+## Introdução
+
+Classificar corretamente os dados de uma pesquisa é uma etapa fundamental da análise estatística, é o momento em que o pesquisador decide o que aquele número representa, determinando tudo o que vem depois. É a classificação que diz se faz sentido calcular uma média ou se o correto é contar frequências. É ela que separa o histograma do gráfico de barras, o teste t do qui-quadrado, a correlação de Pearson da de Spearman.
+
+Parece simples e óbvio dizer que a altura medida em metros é uma variável numérica e que o sexo é uma variável categórica. É fácil esquecer que alguém precisou inventar essa classificação. A história da classificação das variáveis e suas reviravoltas vale a pena ser contada.
+
+::: {.callout-note}
+## A história
+
+Em 1946, Stanley Smith Stevens publicou na revista *Science* um artigo de pouco mais de três páginas que mudaria para sempre a forma como cientistas pensam sobre medição. O título era direto: "On the Theory of Scales of Measurement". A proposta, audaciosa: toda medição científica pode ser classificada em quatro escalas — **nominal, ordinal, intervalar e de razão** [@stevens1946].
+
+O artigo não surgiu do nada. Stevens respondeu a um impasse que durava quase uma década. Em 1932, a British Association for the Advancement of Science criou um comitê com representantes da psicologia e da física para responder a uma pergunta aparentemente simples: sensações psicológicas — como a percepção de intensidade sonora — podem ser "medidas"? Após oito anos de deliberações, psicólogos e físicos não conseguiram chegar a um acordo. Os físicos esperavam que toda medição obedecesse à adição; os psicólogos sabiam que suas escalas não se comportavam assim [@stevens1946; @chrisman1998].
+
+Stevens resolveu o impasse reformulando a própria definição de medição. Em vez de exigir propriedades aditivas, ele propôs que **"medição é a atribuição de numerais a objetos ou eventos segundo regras"** [@stevens1946]. Diferentes regras geram diferentes escalas, e cada escala admite diferentes operações estatísticas. A Tabela 1 de seu artigo — reproduzida abaixo — tornou-se uma das mais citadas da história da estatística.
+
+
+```{r}
+#| label: tbl-stevens
+#| tbl-cap: "As quatro escalas de Stevens (1946) — adaptada da Tabela 1 do artigo original."
+
+tibble::tibble(
+  escala = c("Nominal", "Ordinal", "Intervalar", "Razão"),
+  operacao = c("Determinação de igualdade",
+               "Determinação de maior ou menor",
+               "Determinação de igualdade de intervalos",
+               "Determinação de igualdade de razões"),
+  estatisticas = c("Frequência, moda, correlação de contingência",
+                    "Mediana, percentis",
+                    "Média, desvio-padrão, correlação de Pearson",
+                    "Média geométrica, coeficiente de variação"),
+  exemplo_saude = c("Tipo sanguíneo (A, B, AB, O)",
+                     "Estadiamento de câncer (I, II, III, IV)",
+                     "Temperatura corporal em °C",
+                     "Peso em kg, altura em cm")
+) |>
+  kable(
+    col.names = c("Escala", "Operação empírica básica",
+                  "Estatísticas permissíveis", "Exemplo em saúde"),
+    align = "llll"
+  )
+```
+
+A taxonomia de Stevens — conhecida pela sigla **NOIR** — foi rapidamente adotada por livros-texto de estatística nas ciências sociais e da saúde. De Siegel (1956) a Robinson (1960), o esquema oferecia algo irresistível: **uma regra simples para escolher o teste estatístico certo a partir do tipo de dado** [@velleman1993; @chrisman1998].
+
+A taxonomia NOIR dominou o ensino de estatística por quase meio século. Mas, ao longo desse período, acumulou críticas de peso. Velleman e Wilkinson, em um artigo provocativo de 1993 no *The American Statistician*, argumentaram que as tipologias de Stevens são **"enganosas"** [@velleman1993]. O problema central, segundo eles, é que o tipo de escala **não é um atributo fixo dos dados** — depende da pergunta que fazemos e da informação adicional que temos [@velleman1993].
+
+O debate sobre a taxonomia de Stevens dividiu estatísticos em dois campos ao longo de décadas. De um lado, teóricos da medição argumentam que o nível de escala deveria restringir a escolha do teste estatístico [@feuerstahler2023]. Do outro, estatísticos aplicados como Tukey e Lord sempre defenderam que essa prescrição é rígida demais [@velleman1993]. Na prática, o lado aplicado prevaleceu: quase nenhum software estatístico moderno usa a taxonomia NOIR e a divisão operacional que se consolidou ficou mais simples: numérico vs. categórico [@velleman1993; @agresti2018].
+:::
+
+
+## O mapa completo
+
+A árvore abaixo organiza os tipos de dados que você encontrará na maioria dos conjuntos de dados de pesquisa em saúde:
+
+```{r}
+#| label: fig-arvore
+#| fig-cap: "Árvore de classificação dos tipos de dados em pesquisa em saúde."
+#| fig-width: 8
+#| fig-height: 5
+
+library(ggplot2)
+
+nodes <- data.frame(
+  label = c("Dados", "Numéricos\n(Quantitativos)", "Categóricos\n(Qualitativos)",
+            "Discretos", "Contínuos", "Nominais", "Ordinais",
+            "Binários"),
+  x = c(5, 2.5, 7.5, 1.5, 3.5, 6.5, 8.5,
+        6.5),
+  y = c(4, 3, 3, 2, 2, 2, 2,
+        1),
+  fill = c("#64748b", "#3B82F6", "#10B981", "#3B82F6", "#3B82F6",
+           "#10B981", "#10B981",
+           "#6EE7B7")
+)
+
+edges <- data.frame(
+  x = c(5, 5, 2.5, 2.5, 7.5, 7.5, 6.5),
+  xend = c(2.5, 7.5, 1.5, 3.5, 6.5, 8.5, 6.5),
+  y = c(4, 4, 3, 3, 3, 3, 2),
+  yend = c(3, 3, 2, 2, 2, 2, 1)
+)
+
+ggplot() +
+  geom_segment(data = edges,
+               aes(x = x, xend = xend, y = y, yend = yend),
+               color = "#94a3b8", linewidth = 0.8) +
+  geom_label(data = nodes,
+             aes(x = x, y = y, label = label, fill = fill),
+             color = "white", fontface = "bold", size = 3.2,
+             label.padding = unit(0.4, "lines"),
+             label.r = unit(0.3, "lines"),
+             show.legend = FALSE) +
+  scale_fill_identity() +
+  theme_void() +
+  coord_cartesian(xlim = c(0, 10), ylim = c(0.5, 4.5))
+```
+
+A distinção primária é entre **numéricos** (quantitativos) e **categóricos** (qualitativos). Dentro de cada ramo, subdivisões adicionais determinam como os dados se comportam — e quais análises são adequadas.
+
+## Numéricos (Quantitativos)
+
+Dados numéricos representam **quantidades**. São valores sobre os quais operações aritméticas fazem sentido (soma, subtração, média, etc).
+
+::: {.callout-note}
+## E no computador?
+Quando carregamos dados num software estatístico, ele precisa decidir como armazenar cada valor na memória. Para dados numéricos, a distinção mais importante é entre **números inteiros** (`int`, `integer`) e **números com casas decimais** (`float`, `double`, `numeric`) — o computador reserva espaços de memória diferentes para cada um. Essa diferença pode parecer um detalhe técnico, mas tem consequências práticas: um número de internações (que só pode ser 0, 1, 2, 3...) é armazenado de forma diferente de um peso corporal (que pode ser 72,3 kg). Veremos como o R e o Python lidam com isso no **Capítulo 10**.
+:::
+
+### Numéricos Discretos
+
+Dados discretos assumem valores inteiros e não admitem frações no contexto em que são coletados. Não faz sentido dizer que um determinado paciente teve 2,7 internações ou que uma determinada família tem 1,3 filhos.
+
+Exemplos em saúde: número de internações, número de consultas no último ano, quantidade de medicamentos em uso, número de dentes cariados.
+
+```{r}
+#| label: tbl-discretos
+#| tbl-cap: "Exemplos de variáveis numéricas discretas em pesquisa em saúde."
+
+tibble::tibble(
+  variavel = c("Número de internações", "Quantidade de medicamentos",
+               "Número de filhos", "Número de consultas/ano"),
+  valores = c("0, 1, 2, 3, ...", "0, 1, 2, 3, ...",
+              "0, 1, 2, 3, ...", "0, 1, 2, 3, ..."),
+  operacao = c("Contagem", "Contagem", "Contagem", "Contagem"),
+  descritivas = c("Mediana, média, DP", "Mediana, média, DP",
+                   "Mediana, média, DP", "Mediana, média, DP")
+) |>
+  kable(
+    col.names = c("Variável", "Valores possíveis", "Operação", "Descritivas"),
+    align = "llll"
+  )
+```
+
+
+### Numéricos Contínuos
+
+Dados contínuos resultam de **medições**. Podem assumir qualquer valor dentro de um intervalo, incluindo frações arbitrariamente precisas. A precisão é limitada apenas pelo instrumento de medida, não pela natureza da variável.
+
+Exemplos em saúde: peso (72,301 kg; 72,350 kg), altura (168,5 cm), pressão arterial (118 mmHg), colesterol (203 mg/dL), temperatura corporal (36,7 °C).
+
+No nosso banco de dados, as variáveis contínuas predominam:
+
+```{r}
+#| label: tbl-continuas
+#| tbl-cap: "Variáveis numéricas contínuas do estudo — note a amplitude e a precisão decimal."
+
+pacientes |>
+  summarise(
+    across(c(idade, colesterol, glicose, hdl, peso, altura, sistolica, diastolica),
+           list(min = ~round(min(.x, na.rm = TRUE),2),
+                max = ~round(max(.x, na.rm = TRUE),2),
+                media = ~round(mean(.x, na.rm = TRUE), 1)),
+           .names = "{.col}__{.fn}")
+  ) |>
+  tidyr::pivot_longer(everything(),
+                       names_to = c("variavel", "stat"),
+                       names_sep = "__") |>
+  tidyr::pivot_wider(names_from = stat, values_from = value) |>
+  mutate(
+    unidade = c("anos", "mg/dL", "mg/dL", "mg/dL", "kg", "cm", "mmHg", "mmHg"),
+    amplitude = paste0(min, " – ", max)
+  ) |>
+  select(variavel, unidade, amplitude, media) |>
+  kable(
+    col.names = c("Variável", "Unidade", "Amplitude (mín – máx)", "Média"),
+    align = "llrr"
+  )
+```
+
+A distinção entre discreto e contínuo pode parecer sutil, mas tem consequências práticas. Variáveis contínuas admitem distribuições de probabilidade contínuas (como a normal); variáveis discretas seguem distribuições discretas (como a Poisson ou a binomial). Essa diferença se reflete na escolha de modelos estatísticos.
+
+
+## Categóricos (Qualitativos)
+
+Dados categóricos representam **categorias** ou **rótulos**. Os valores indicam a qual grupo o sujeito pertence, mas não representam medições.
+
+::: {.callout-note}
+## E no computador?
+No R, variáveis categóricas são armazenadas como `factor` — um tipo que permite definir quais são os níveis válidos e se existe uma ordem entre eles (nominal ou ordinal). No Python (pandas), o equivalente é o tipo `category`. Veremos como usar ambos no **Capítulo 10**.
+:::
+
+### categóricos Nominais
+
+Dados nominais classificam sujeitos em categorias **sem qualquer relação de ordem**. Não existe hierarquia entre os níveis — reorganizá-los em qualquer sequência não altera o significado.
+
+Exemplos em saúde: tipo sanguíneo (A, B, AB, O), sexo (feminino, masculino), cidade de residência, cor dos olhos, estado civil.
+
+```{r}
+#| label: tbl-nominais
+#| tbl-cap: "Variáveis categóricas nominais do estudo."
+
+bind_rows(
+  pacientes |>
+    count(sexo) |>
+    mutate(variavel = "sexo", nivel = sexo, prop = round(n / sum(n) * 100, 1)) |>
+    select(variavel, nivel, n, prop),
+  pacientes |>
+    count(cidade) |>
+    mutate(variavel = "cidade", nivel = cidade, prop = round(n / sum(n) * 100, 1)) |>
+    select(variavel, nivel, n, prop)
+) |>
+  kable(
+    col.names = c("Variável", "Nível", "n", "% "),
+    align = "llrr"
+  )
+```
+
+Um caso particular dos nominais são os **binários** — variáveis com exatamente dois níveis. A variável sexo no nosso estudo é um exemplo. Variáveis binárias são extremamente comuns em saúde: diagnóstico (presente/ausente), desfecho (óbito/alta), exposição (sim/não). Conceitualmente, são variáveis categóricas — representam grupos, não quantidades [@agresti2018]. Mas a codificação numérica 0/1, tão habitual na prática, abre uma porta interessante: a média de uma variável codificada como 0 e 1 é a proporção de "1" no grupo — uma operação aritmética perfeitamente legítima sobre algo que, em essência, é categórico. Na prática, a classificação depende do que se faz com a variável: quando entra como desfecho em uma regressão logística, é tratada como categórica; quando entra como preditora codificada 0/1 em uma regressão linear, opera como numérica. É mais um exemplo de que a fronteira entre tipos de dados nem sempre é uma linha nítida — tema que retomaremos no capítulo sobre casos especiais.
+
+### Categóricos Ordinais
+
+Dados ordinais classificam sujeitos em categorias **com uma ordem implícita**, mas cujas distâncias entre os níveis não são necessariamente iguais. Sabemos que "grau III" é mais grave que "grau II", mas não podemos afirmar que a diferença entre I e II é a mesma que entre II e III.
+
+Exemplos em saúde: estadiamento de câncer (I < II < III < IV), classe funcional da insuficiência cardíaca (NYHA I–IV), grau de obesidade, escala de dor (leve < moderada < intensa), classificação ASA de risco cirúrgico.
+
+No nosso estudo, a variável `biotipo` é ordinal — seus níveis seguem uma ordenação de tamanho corporal:
+
+```{r}
+#| label: tbl-ordinais
+#| tbl-cap: "Distribuição do biotipo — uma variável categórica ordinal."
+
+pacientes |>
+  filter(!is.na(biotipo)) |>
+  mutate(biotipo = factor(biotipo, levels = c("small", "medium", "large"),
+                          ordered = TRUE)) |>
+  count(biotipo) |>
+  mutate(prop = round(n / sum(n) * 100, 1)) |>
+  kable(
+    col.names = c("Biotipo (ordenado)", "n", "%"),
+    align = "lrr"
+  )
+```
+
+A distinção entre nominal e ordinal é crucial: para dados ordinais, podemos calcular a mediana (o nível central), mas a média não faz sentido — pois exigiria distâncias iguais entre os níveis.
+
+::: {.callout-warning}
+## O perigo da falsa precisão
+
+Tratar uma variável ordinal como numérica — por exemplo, atribuir 1, 2, 3, 4 aos graus de obesidade e calcular a média — é um erro frequente. A média de 2,3 graus de obesidade **não tem significado clínico**. Esse é um dos pontos que exploraremos em profundidade no Capítulo 6, ao discutir a escala de Likert.
+:::
+
+## Tabela-resumo
+
+A tabela abaixo sintetiza toda a classificação, com as características que distinguem cada tipo de dado e suas implicações para a análise:
+
+```{r}
+#| label: tbl-resumo
+#| tbl-cap: "Resumo da classificação dos tipos de dados em pesquisa em saúde."
+
+tibble::tibble(
+  tipo = c("Numérico discreto", "Numérico contínuo",
+           "Categórico nominal", "Categórico ordinal"),
+  definicao = c("Resultado de contagem; valores inteiros",
+                "Resultado de medição; qualquer valor em um intervalo",
+                "Categorias sem ordem; rótulos intercambiáveis",
+                "Categorias com hierarquia; ordem, mas sem distâncias iguais"),
+  exemplo = c("Nº de internações, nº de filhos",
+              "Peso (kg), colesterol (mg/dL), altura (cm)",
+              "Sexo, tipo sanguíneo, cidade",
+              "Estadiamento de câncer, biotipo, escala de dor"),
+  centro = c("Média ou mediana", "Média ou mediana",
+             "Moda", "Mediana"),
+  dispersao = c("DP, amplitude", "DP, amplitude, IIQ",
+                "—", "IIQ"),
+  grafico = c("Histograma, boxplot", "Histograma, boxplot",
+              "Barras, setores", "Barras (ordenadas)"),
+  teste = c("t, ANOVA, Wilcoxon", "t, ANOVA, correlação",
+            "Qui-quadrado, Fisher", "Mann-Whitney, Kruskal-Wallis")
+) |>
+  kable(
+    col.names = c("Tipo", "Definição", "Exemplo",
+                  "Medida de centro", "Medida de dispersão",
+                  "Gráfico", "Teste"),
+    align = "lllllll"
+  )
+```
+
+::: {.callout-note}
+## Próximos passos
+
+- **Capítulo 3** — Como documentar essa classificação em um dicionário de variáveis
+- **Capítulo 4** — Dados numéricos em profundidade (discretos, contínuos, escalas de medida)
+- **Capítulo 5** — Dados categóricos em profundidade (níveis definidos pelo pesquisador, recodificação)
+- **Capítulo 6** — Casos especiais: quando a classificação não é óbvia (Likert, idade, IMC)
+:::

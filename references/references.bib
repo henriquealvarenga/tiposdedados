@@ -1,0 +1,568 @@
+% ============================================================
+% Referências bibliográficas — Tipos de Dados em Saúde
+% Projeto Quarto · Prof. Henrique Alvarenga da Silva
+% ============================================================
+% Organização:
+%   1. Escalas de medida e classificação de variáveis
+%   2. Dados categóricos
+%   3. Dados numéricos e medidas
+%   4. Escala de Likert e casos especiais
+%   5. Dicionário de variáveis e documentação
+%   6. Organização de dados e planilhas
+%   7. Visualização por tipo de dado
+%   8. Publicação de dados e reprodutibilidade
+%   9. História da estatística e contexto narrativo
+%  10. Livros-texto e referências gerais
+% ============================================================
+
+
+% =============================================================
+% 1. ESCALAS DE MEDIDA E CLASSIFICAÇÃO DE VARIÁVEIS
+% =============================================================
+
+% --- Stevens (1946): O artigo clássico na Science que definiu as quatro
+%     escalas de medida (nominal, ordinal, intervalar, razão). Um dos
+%     artigos mais citados da história da estatística. ---
+@article{stevens1946,
+  author    = {Stevens, Stanley Smith},
+  title     = {On the Theory of Scales of Measurement},
+  journal   = {Science},
+  volume    = {103},
+  number    = {2684},
+  pages     = {677--680},
+  year      = {1946},
+  doi       = {10.1126/science.103.2684.677},
+  publisher = {American Association for the Advancement of Science}
+}
+
+% --- Velleman & Wilkinson (1993): Artigo provocativo no American
+%     Statistician que questiona a taxonomia de Stevens, mostrando
+%     que a classificação NOIR é mais nuançada do que parece. ---
+@article{velleman1993,
+  author    = {Velleman, Paul F. and Wilkinson, Leland},
+  title     = {Nominal, Ordinal, Interval, and Ratio Typologies Are Misleading},
+  journal   = {The American Statistician},
+  volume    = {47},
+  number    = {1},
+  pages     = {65--72},
+  year      = {1993},
+  doi       = {10.1080/00031305.1993.10475938}
+}
+
+% --- Michell (1986): Artigo influente no Psychological Bulletin sobre
+%     o conflito entre escalas de medida e testes estatísticos. ---
+@article{michell1986,
+  author    = {Michell, Joel},
+  title     = {Measurement Scales and Statistics: {A} Clash of Paradigms},
+  journal   = {Psychological Bulletin},
+  volume    = {100},
+  number    = {3},
+  pages     = {398--407},
+  year      = {1986},
+  doi       = {10.1037/0033-2909.100.3.398}
+}
+
+% --- Chrisman (1998): Rethinking levels of measurement —
+%     propõe extensões à taxonomia de Stevens com novos níveis. ---
+@article{chrisman1998,
+  author    = {Chrisman, Nicholas R.},
+  title     = {Rethinking Levels of Measurement for Cartography},
+  journal   = {Cartography and Geographic Information Science},
+  volume    = {25},
+  number    = {4},
+  pages     = {231--242},
+  year      = {1998},
+  doi       = {10.1559/152304098782383043}
+}
+
+
+% =============================================================
+% 2. DADOS CATEGÓRICOS
+% =============================================================
+
+% --- Agresti (2013): O livro-referência mundial sobre análise de
+%     dados categóricos. Cobre desde tabelas de contingência até
+%     modelos logísticos e multinomiais. ---
+@book{agresti2013,
+  author    = {Agresti, Alan},
+  title     = {Categorical Data Analysis},
+  edition   = {3},
+  publisher = {John Wiley \& Sons},
+  address   = {Hoboken, NJ},
+  year      = {2013},
+  isbn      = {978-0-470-46363-5}
+}
+
+% --- Agresti (2018): Livro-texto abrangente que cobre todos os tipos
+%     de dados com exemplos das ciências sociais e da saúde. ---
+@book{agresti2018,
+  author    = {Agresti, Alan},
+  title     = {Statistical Methods for the Social Sciences},
+  edition   = {5},
+  publisher = {Pearson},
+  address   = {Boston},
+  year      = {2018},
+  isbn      = {978-0-13-450713-8}
+}
+
+% --- Siegel & Castellan (1988): Referência clássica sobre estatística
+%     não-paramétrica, com ênfase em dados ordinais e nominais. ---
+@book{siegel1988,
+  author    = {Siegel, Sidney and Castellan Jr., N. John},
+  title     = {Nonparametric Statistics for the Behavioral Sciences},
+  edition   = {2},
+  publisher = {McGraw-Hill},
+  address   = {New York},
+  year      = {1988},
+  isbn      = {978-0-07-057357-4}
+}
+
+
+% =============================================================
+% 3. DADOS NUMÉRICOS E MEDIDAS
+% =============================================================
+
+% --- Hand (2004): Livro abrangente sobre teoria da medição,
+%     cobrindo dados numéricos, escalas e suas propriedades. ---
+@book{hand2004,
+  author    = {Hand, David J.},
+  title     = {Measurement Theory and Practice: The World Through Quantification},
+  publisher = {Arnold Publishers},
+  address   = {London},
+  year      = {2004},
+  isbn      = {978-0-340-67783-6}
+}
+
+% --- Tukey (1977): Exploratory Data Analysis — livro fundacional
+%     que revolucionou a forma de explorar dados numéricos. ---
+@book{tukey1977,
+  author    = {Tukey, John W.},
+  title     = {Exploratory Data Analysis},
+  publisher = {Addison-Wesley},
+  address   = {Reading, MA},
+  year      = {1977},
+  isbn      = {978-0-201-07616-5}
+}
+
+
+% =============================================================
+% 4. ESCALA DE LIKERT E CASOS ESPECIAIS
+% =============================================================
+
+% --- Likert (1932): O artigo original que introduziu a escala de Likert
+%     para medir atitudes. Publicado nos Archives of Psychology. ---
+@article{likert1932,
+  author    = {Likert, Rensis},
+  title     = {A Technique for the Measurement of Attitudes},
+  journal   = {Archives of Psychology},
+  volume    = {22},
+  number    = {140},
+  pages     = {5--55},
+  year      = {1932}
+}
+
+% --- Carifio & Perla (2008): Artigo que tenta resolver o debate de
+%     50 anos sobre o uso correto de escalas Likert em pesquisa. ---
+@article{carifio2008,
+  author    = {Carifio, James and Perla, Rocco},
+  title     = {Resolving the 50-Year Debate Around Using and Misusing {Likert} Scales},
+  journal   = {Medical Education},
+  volume    = {42},
+  number    = {12},
+  pages     = {1150--1152},
+  year      = {2008},
+  doi       = {10.1111/j.1365-2923.2008.03172.x}
+}
+
+% --- Norman (2010): Artigo muito citado que demonstra, com simulações,
+%     que testes paramétricos são robustos mesmo para dados ordinais
+%     de Likert. Publicado em Advances in Health Sciences Education. ---
+@article{norman2010,
+  author    = {Norman, Geoff},
+  title     = {Likert Scales, Levels of Measurement and the ``Laws'' of Statistics},
+  journal   = {Advances in Health Sciences Education},
+  volume    = {15},
+  number    = {5},
+  pages     = {625--632},
+  year      = {2010},
+  doi       = {10.1007/s10459-010-9222-y}
+}
+
+% --- Jamieson (2004): Artigo curto e influente que argumenta que
+%     escalas Likert são ordinais e não devem ser tratadas como
+%     intervalares — o "lado oposto" do debate. ---
+@article{jamieson2004,
+  author    = {Jamieson, Susan},
+  title     = {Likert Scales: How to (Ab)use Them},
+  journal   = {Medical Education},
+  volume    = {38},
+  number    = {12},
+  pages     = {1217--1218},
+  year      = {2004},
+  doi       = {10.1111/j.1365-2929.2004.02012.x}
+}
+
+% --- Sullivan & Artino (2013): Tutorial prático para pesquisadores
+%     da saúde sobre como analisar e reportar dados de Likert. ---
+@article{sullivan2013,
+  author    = {Sullivan, Gail M. and Artino Jr., Anthony R.},
+  title     = {Analyzing and Interpreting Data From {Likert}-Type Scales},
+  journal   = {Journal of Graduate Medical Education},
+  volume    = {5},
+  number    = {4},
+  pages     = {541--542},
+  year      = {2013},
+  doi       = {10.4300/JGME-5-4-18}
+}
+
+
+% =============================================================
+% 5. DICIONÁRIO DE VARIÁVEIS E DOCUMENTAÇÃO
+% =============================================================
+
+% --- STROBE Statement: von Elm et al. (2007) — Diretrizes
+%     internacionais para relato de estudos observacionais.
+%     Essencial para documentação de variáveis. ---
+@article{vonelm2007,
+  author    = {von Elm, Erik and Altman, Douglas G. and Egger, Matthias and Pocock, Stuart J. and G{\o}tzsche, Peter C. and Vandenbroucke, Jan P.},
+  title     = {The {Strengthening the Reporting of Observational Studies in Epidemiology (STROBE)} Statement: Guidelines for Reporting Observational Studies},
+  journal   = {The Lancet},
+  volume    = {370},
+  number    = {9596},
+  pages     = {1453--1457},
+  year      = {2007},
+  doi       = {10.1016/S0140-6736(07)61602-X}
+}
+
+% --- Vandenbroucke et al. (2007): Explicação detalhada
+%     de cada item do checklist STROBE. ---
+@article{vandenbroucke2007,
+  author    = {Vandenbroucke, Jan P. and von Elm, Erik and Altman, Douglas G. and G{\o}tzsche, Peter C. and Mulrow, Cynthia D. and Pocock, Stuart J. and Poole, Charles and Schlesselman, James J. and Egger, Matthias},
+  title     = {Strengthening the {Reporting of Observational Studies in Epidemiology (STROBE)}: Explanation and Elaboration},
+  journal   = {Annals of Internal Medicine},
+  volume    = {147},
+  number    = {8},
+  pages     = {W-163--W-194},
+  year      = {2007},
+  doi       = {10.7326/0003-4819-147-8-200710160-00010-w1}
+}
+
+
+% =============================================================
+% 6. ORGANIZAÇÃO DE DADOS E PLANILHAS
+% =============================================================
+
+% --- Broman & Woo (2018): Artigo prático e muito citado sobre
+%     organização de dados em planilhas. Publicado no American
+%     Statistician. Leitura obrigatória para pesquisadores. ---
+@article{broman2018,
+  author    = {Broman, Karl W. and Woo, Kara H.},
+  title     = {Data Organization in Spreadsheets},
+  journal   = {The American Statistician},
+  volume    = {72},
+  number    = {1},
+  pages     = {2--10},
+  year      = {2018},
+  doi       = {10.1080/00031305.2017.1375989}
+}
+
+% --- Wickham (2014): O artigo que formalizou o conceito de
+%     "tidy data" — dados arrumados. Fundação do tidyverse. ---
+@article{wickham2014,
+  author    = {Wickham, Hadley},
+  title     = {Tidy Data},
+  journal   = {Journal of Statistical Software},
+  volume    = {59},
+  number    = {10},
+  pages     = {1--23},
+  year      = {2014},
+  doi       = {10.18637/jss.v059.i10}
+}
+
+% --- Hesse (2009): A história de como as planilhas eletrônicas
+%     (VisiCalc, Lotus, Excel) mudaram o mundo. ---
+@article{hesse2009,
+  author    = {Hesse, Rick and Hesse Scerno, Deborah},
+  title     = {How Electronic Spreadsheets Changed the World},
+  journal   = {Interfaces},
+  volume    = {39},
+  number    = {2},
+  pages     = {159--167},
+  year      = {2009},
+  doi       = {10.1287/inte.1080.0376}
+}
+
+% --- Reinhart & Rogoff (2010): O artigo original que influenciou
+%     políticas de austeridade. Usado como caso de erro em planilha. ---
+@article{reinhart2010,
+  author    = {Reinhart, Carmen M. and Rogoff, Kenneth S.},
+  title     = {Growth in a Time of Debt},
+  journal   = {American Economic Review},
+  volume    = {100},
+  number    = {2},
+  pages     = {573--578},
+  year      = {2010},
+  doi       = {10.1257/aer.100.2.573}
+}
+
+% --- Herndon, Ash & Pollin (2014): O artigo que expôs o erro
+%     de planilha de Reinhart–Rogoff. ---
+@article{herndon2014,
+  author    = {Herndon, Thomas and Ash, Michael and Pollin, Robert},
+  title     = {Does High Public Debt Consistently Stifle Economic Growth? {A} Critique of {Reinhart} and {Rogoff}},
+  journal   = {Cambridge Journal of Economics},
+  volume    = {38},
+  number    = {2},
+  pages     = {257--279},
+  year      = {2014},
+  doi       = {10.1093/cje/bet075}
+}
+
+
+% =============================================================
+% 7. VISUALIZAÇÃO POR TIPO DE DADO
+% =============================================================
+
+% --- Cleveland & McGill (1984): Artigo clássico sobre percepção
+%     gráfica — como o tipo de dado influencia a escolha do gráfico. ---
+@article{cleveland1984,
+  author    = {Cleveland, William S. and McGill, Robert},
+  title     = {Graphical Perception: Theory, Experimentation, and Application to the Development of Graphical Methods},
+  journal   = {Journal of the American Statistical Association},
+  volume    = {79},
+  number    = {387},
+  pages     = {531--554},
+  year      = {1984},
+  doi       = {10.1080/01621459.1984.10478080}
+}
+
+% --- Few (2012): Livro prático sobre visualização de dados
+%     quantitativos, com ênfase em boas práticas por tipo de dado. ---
+@book{few2012,
+  author    = {Few, Stephen},
+  title     = {Show Me the Numbers: Designing Tables and Graphs to Enlighten},
+  edition   = {2},
+  publisher = {Analytics Press},
+  address   = {Burlingame, CA},
+  year      = {2012},
+  isbn      = {978-0-9706019-7-1}
+}
+
+% --- Healy (2018): Data Visualization: A Practical Introduction.
+%     Livro moderno e acessível sobre visualização. ---
+@book{healy2018,
+  author    = {Healy, Kieran},
+  title     = {Data Visualization: A Practical Introduction},
+  publisher = {Princeton University Press},
+  year      = {2018},
+  isbn      = {978-0-691-18162-2}
+}
+
+
+% =============================================================
+% 8. PUBLICAÇÃO DE DADOS E REPRODUTIBILIDADE
+% =============================================================
+
+% --- Ioannidis (2005): "Why most published research findings are
+%     false" — o artigo mais lido da história do PLOS Medicine.
+%     Marco da crise de reprodutibilidade. ---
+@article{ioannidis2005,
+  author    = {Ioannidis, John P. A.},
+  title     = {Why Most Published Research Findings Are False},
+  journal   = {PLOS Medicine},
+  volume    = {2},
+  number    = {8},
+  pages     = {e124},
+  year      = {2005},
+  doi       = {10.1371/journal.pmed.0020124}
+}
+
+% --- Wilkinson et al. (2016): Os princípios FAIR para dados
+%     científicos — Findable, Accessible, Interoperable, Reusable. ---
+@article{wilkinson2016,
+  author    = {Wilkinson, Mark D. and Dumontier, Michel and Aalbersberg, IJsbrand Jan and Appleton, Gabrielle and Axton, Myles and Baak, Arie and Blomberg, Niklas and Boiten, Jan-Willem and da Silva Santos, Luiz Bonino and Bourne, Philip E. and Bouwman, Jildau and Brookes, Anthony J. and Clark, Tim and Crosas, Merc{\`e} and Dillo, Ingrid and Dumon, Olivier and Edmunds, Scott and Evelo, Chris T. and Finkers, Richard and Gonzalez-Beltran, Alejandra and Gray, Alasdair J. G. and Groth, Paul and Goble, Carole and Grethe, Jeffrey S. and Heringa, Jaap and {'t Hoen}, Peter A. C. and Hooft, Rob and Kuhn, Tobias and Kok, Ruben and Kok, Joost and Lusher, Scott J. and Martone, Maryann E. and Mons, Albert and Packer, Abel L. and Persson, Bengt and Rocca-Serra, Philippe and Roos, Marco and van Schaik, Rene and Sansone, Susanna-Assunta and Schultes, Erik and Sengstag, Thierry and Slater, Ted and Strawn, George and Swertz, Morris A. and Thompson, Mark and van der Lei, Johan and van Mulligen, Erik and Velterop, Jan and Waagmeester, Andra and Wittenburg, Peter and Wolstencroft, Katherine and Zhao, Jun and Mons, Barend},
+  title     = {The {FAIR} Guiding Principles for Scientific Data Management and Stewardship},
+  journal   = {Scientific Data},
+  volume    = {3},
+  pages     = {160018},
+  year      = {2016},
+  doi       = {10.1038/sdata.2016.18}
+}
+
+% --- Open Science Collaboration (2015): A tentativa de reproduzir
+%     100 estudos de psicologia — apenas ~36% replicaram. Marco da
+%     crise de reprodutibilidade. ---
+@article{osc2015,
+  author    = {{Open Science Collaboration}},
+  title     = {Estimating the Reproducibility of Psychological Science},
+  journal   = {Science},
+  volume    = {349},
+  number    = {6251},
+  pages     = {aac4716},
+  year      = {2015},
+  doi       = {10.1126/science.aac4716}
+}
+
+
+% =============================================================
+% 9. HISTÓRIA DA ESTATÍSTICA E CONTEXTO NARRATIVO
+% =============================================================
+
+% --- Nightingale (1863): Notes on Hospitals — Florence Nightingale
+%     como pioneira na padronização da coleta de dados hospitalares. ---
+@book{nightingale1863,
+  author    = {Nightingale, Florence},
+  title     = {Notes on Hospitals},
+  edition   = {3},
+  publisher = {Longman, Green, Longman, Roberts, and Green},
+  address   = {London},
+  year      = {1863}
+}
+
+% --- Bradshaw (2020): Florence Nightingale como "mestre inesperada
+%     dos dados" — foco na coleta e padronização. ---
+@article{bradshaw2020,
+  author    = {Bradshaw, Noel-Ann},
+  title     = {Florence Nightingale (1820--1910): An Unexpected Master of Data},
+  journal   = {Patterns},
+  volume    = {1},
+  number    = {2},
+  pages     = {100036},
+  year      = {2020},
+  doi       = {10.1016/j.patter.2020.100036}
+}
+
+% --- Graunt (1662): Natural and Political Observations upon the
+%     Bills of Mortality — considerado o nascimento da demografia
+%     e da categorização de dados. ---
+@book{graunt1662,
+  author    = {Graunt, John},
+  title     = {Natural and Political Observations Mentioned in a Following Index, and Made upon the {Bills of Mortality}},
+  publisher = {Tho. Roycroft for John Martin, James Allestry, and Tho. Dicas},
+  address   = {London},
+  year      = {1662},
+  note      = {Reproduzido em: Journal of the Institute of Actuaries, 90(1), 1--61, 1964}
+}
+
+% --- Quetelet (1835): Sur l'homme — o "homem médio" e a aplicação
+%     da curva normal a medidas humanas. Fundação da estatística social. ---
+@book{quetelet1835,
+  author    = {Quetelet, Adolphe},
+  title     = {Sur l'Homme et le D\'{e}veloppement de ses Facult\'{e}s, ou Essai de Physique Sociale},
+  publisher = {Bachelier},
+  address   = {Paris},
+  year      = {1835},
+  note      = {Tradu\c{c}\~{a}o inglesa: \textit{A Treatise on Man and the Development of his Faculties}, 1842}
+}
+
+% --- Stigler (1986): The History of Statistics — o livro definitivo
+%     sobre a história da estatística antes de 1900. ---
+@book{stigler1986,
+  author    = {Stigler, Stephen M.},
+  title     = {The History of Statistics: The Measurement of Uncertainty Before 1900},
+  publisher = {Harvard University Press},
+  address   = {Cambridge, MA},
+  year      = {1986},
+  isbn      = {978-0-674-40340-6}
+}
+
+% --- Stigler (1999): Statistics on the Table — capítulos sobre
+%     a história da classificação de dados e medição. ---
+@book{stigler1999,
+  author    = {Stigler, Stephen M.},
+  title     = {Statistics on the Table: The History of Statistical Concepts and Methods},
+  publisher = {Harvard University Press},
+  address   = {Cambridge, MA},
+  year      = {1999},
+  isbn      = {978-0-674-83601-3}
+}
+
+% --- Desrosières (1998): The Politics of Large Numbers — como
+%     a categorização e quantificação moldaram a governança. ---
+@book{desrosieres1998,
+  author    = {Desrosi\`{e}res, Alain},
+  title     = {The Politics of Large Numbers: A History of Statistical Reasoning},
+  publisher = {Harvard University Press},
+  address   = {Cambridge, MA},
+  year      = {1998},
+  isbn      = {978-0-674-68932-1},
+  note      = {Traduzido do franc\^{e}s por Camille Naish}
+}
+
+% --- Mars Climate Orbiter (1999): Relatório da NASA sobre a perda
+%     da sonda por erro de unidades — caso de documentação de variáveis. ---
+@techreport{nasa1999,
+  author      = {{Mars Climate Orbiter Mishap Investigation Board}},
+  title       = {Mars Climate Orbiter Mishap Investigation Board Phase {I} Report},
+  institution = {NASA},
+  year        = {1999},
+  month       = {November},
+  url         = {https://llis.nasa.gov/llis_lib/pdf/1009464main1_0641-mr.pdf},
+  note        = {Relat\'{o}rio que documenta a perda da sonda por convers\~{a}o incorreta de unidades}
+}
+
+
+% =============================================================
+% 10. LIVROS-TEXTO E REFERÊNCIAS GERAIS
+% =============================================================
+
+% --- Freedman, Pisani & Purves (2007): Statistics — um dos melhores
+%     livros introdutórios de estatística já escritos. ---
+@book{freedman2007,
+  author    = {Freedman, David A. and Pisani, Robert and Purves, Roger A.},
+  title     = {Statistics},
+  edition   = {4},
+  publisher = {W. W. Norton \& Company},
+  address   = {New York},
+  year      = {2007},
+  isbn      = {978-0-393-92972-0}
+}
+
+% --- Altman (1991): Practical Statistics for Medical Research —
+%     referência padrão em bioestatística aplicada. ---
+@book{altman1991,
+  author    = {Altman, Douglas G.},
+  title     = {Practical Statistics for Medical Research},
+  publisher = {Chapman and Hall},
+  address   = {London},
+  year      = {1991},
+  isbn      = {978-0-412-27630-9}
+}
+
+% --- Pagano & Gauvreau (2018): Principles of Biostatistics —
+%     livro-texto clássico de bioestatística com ênfase em tipos
+%     de dados e suas implicações para análise. ---
+@book{pagano2018,
+  author    = {Pagano, Marcello and Gauvreau, Kimberlee},
+  title     = {Principles of Biostatistics},
+  edition   = {2},
+  publisher = {Chapman and Hall/CRC},
+  address   = {Boca Raton, FL},
+  year      = {2018},
+  isbn      = {978-1-138-59314-6}
+}
+
+% --- Rosner (2015): Fundamentals of Biostatistics —
+%     outro livro-texto clássico muito usado em cursos de saúde. ---
+@book{rosner2015,
+  author    = {Rosner, Bernard},
+  title     = {Fundamentals of Biostatistics},
+  edition   = {8},
+  publisher = {Cengage Learning},
+  address   = {Boston},
+  year      = {2015},
+  isbn      = {978-1-305-26892-0}
+}
+
+% --- Dancey & Reidy (2017): Statistics Without Maths for Psychology —
+%     livro acessível que trata a questão de escalas de medida
+%     com clareza para não-estatísticos. ---
+@book{dancey2017,
+  author    = {Dancey, Christine P. and Reidy, John},
+  title     = {Statistics Without Maths for Psychology},
+  edition   = {7},
+  publisher = {Pearson},
+  address   = {Harlow, UK},
+  year      = {2017},
+  isbn      = {978-1-292-12428-6}
+}

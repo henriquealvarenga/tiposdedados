@@ -1,0 +1,301 @@
+id,sexo,idade,escolaridade,saude_autoavaliada
+1,masculino,34,Ensino médio,regular
+2,feminino,28,Superior completo,muito boa
+3,feminino,55,Fundamental incompleto,ruim
+4,masculino,67,Fundamental completo,excelente
+5,feminino,38,Fundamental incompleto,excelente
+6,feminino,36,Superior completo,regular
+7,feminino,41,Superior incompleto,excelente
+8,masculino,32,Ensino médio,excelente
+9,feminino,72,Fundamental incompleto,boa
+10,feminino,51,Superior completo,muito boa
+11,masculino,51,Fundamental incompleto,regular
+12,masculino,43,Pós-graduação,boa
+13,feminino,44,Ensino médio,boa
+14,feminino,25,Superior completo,muito boa
+15,feminino,29,Superior completo,muito boa
+16,masculino,36,Pós-graduação,excelente
+17,feminino,43,Pós-graduação,muito boa
+18,feminino,63,Fundamental incompleto,muito boa
+19,masculino,64,Ensino médio,excelente
+20,feminino,60,Ensino médio,boa
+21,feminino,33,Superior completo,boa
+22,feminino,70,Fundamental incompleto,regular
+23,masculino,38,Superior completo,muito boa
+24,feminino,41,Superior completo,muito boa
+25,masculino,28,Ensino médio,regular
+26,masculino,42,Ensino médio,ruim
+27,masculino,33,Superior completo,muito boa
+28,masculino,35,Superior completo,muito boa
+29,masculino,70,Fundamental completo,ruim
+30,feminino,44,Fundamental incompleto,boa
+31,masculino,65,Pós-graduação,muito boa
+32,masculino,33,Ensino médio,ruim
+33,masculino,45,Superior incompleto,excelente
+34,feminino,57,Fundamental incompleto,regular
+35,feminino,31,Superior completo,boa
+36,masculino,39,Superior incompleto,muito boa
+37,feminino,35,Superior completo,excelente
+38,feminino,51,Ensino médio,ruim
+39,masculino,51,Ensino médio,muito boa
+40,feminino,52,Fundamental incompleto,regular
+41,feminino,49,Superior completo,excelente
+42,masculino,39,Superior completo,boa
+43,masculino,50,Pós-graduação,boa
+44,feminino,49,Fundamental incompleto,ruim
+45,feminino,53,Pós-graduação,muito boa
+46,feminino,42,Ensino médio,boa
+47,masculino,62,Pós-graduação,muito boa
+48,feminino,32,Ensino médio,excelente
+49,masculino,36,Superior completo,muito boa
+50,masculino,37,Fundamental incompleto,ruim
+51,masculino,57,Fundamental incompleto,boa
+52,masculino,55,Pós-graduação,muito boa
+53,feminino,59,Fundamental incompleto,muito boa
+54,feminino,41,Superior completo,regular
+55,masculino,25,Ensino médio,boa
+56,feminino,48,Ensino médio,boa
+57,masculino,64,Ensino médio,boa
+58,feminino,44,Ensino médio,boa
+59,masculino,48,Pós-graduação,muito boa
+60,masculino,37,Superior incompleto,regular
+61,masculino,49,Superior completo,muito boa
+62,feminino,44,Superior completo,muito boa
+63,feminino,54,Fundamental incompleto,regular
+64,masculino,45,Superior completo,muito boa
+65,masculino,38,Superior completo,muito boa
+66,feminino,30,Superior completo,boa
+67,masculino,30,Superior completo,excelente
+68,feminino,44,Ensino médio,boa
+69,feminino,44,Fundamental incompleto,ruim
+70,feminino,55,Superior completo,muito boa
+71,feminino,64,Fundamental incompleto,regular
+72,feminino,49,Ensino médio,boa
+73,feminino,37,Pós-graduação,muito boa
+74,feminino,34,Pós-graduação,excelente
+75,feminino,36,Superior completo,excelente
+76,masculino,38,Fundamental incompleto,boa
+77,feminino,54,Ensino médio,regular
+78,masculino,58,Ensino médio,excelente
+79,masculino,56,Pós-graduação,muito boa
+80,masculino,60,Ensino médio,boa
+81,feminino,58,Pós-graduação,muito boa
+82,feminino,65,Ensino médio,boa
+83,masculino,65,Ensino médio,boa
+84,masculino,29,Superior completo,muito boa
+85,feminino,42,Ensino médio,boa
+86,feminino,33,Superior completo,boa
+87,masculino,44,Fundamental incompleto,boa
+88,feminino,54,Pós-graduação,muito boa
+89,masculino,54,Pós-graduação,regular
+90,masculino,59,Fundamental incompleto,muito boa
+91,feminino,61,Ensino médio,boa
+92,feminino,50,Pós-graduação,boa
+93,masculino,51,Superior completo,muito boa
+94,feminino,66,Fundamental completo,regular
+95,masculino,66,Fundamental incompleto,ruim
+96,masculino,50,Ensino médio,muito boa
+97,masculino,43,Fundamental completo,excelente
+98,feminino,50,Superior completo,muito boa
+99,feminino,40,Fundamental completo,boa
+100,feminino,54,Ensino médio,regular
+101,masculino,59,Fundamental completo,regular
+102,masculino,45,Superior completo,boa
+103,masculino,42,Superior completo,excelente
+104,masculino,41,Superior completo,excelente
+105,masculino,36,Fundamental completo,muito boa
+106,feminino,47,Ensino médio,boa
+107,feminino,37,Fundamental incompleto,boa
+108,feminino,47,Fundamental incompleto,muito boa
+109,feminino,50,Fundamental incompleto,ruim
+110,feminino,71,Fundamental incompleto,muito boa
+111,masculino,51,Fundamental completo,muito boa
+112,feminino,63,Ensino médio,muito boa
+113,feminino,35,Superior completo,excelente
+114,feminino,38,Superior incompleto,ruim
+115,masculino,61,Ensino médio,muito boa
+116,masculino,53,Pós-graduação,excelente
+117,feminino,29,Superior completo,muito boa
+118,feminino,31,Ensino médio,muito boa
+119,masculino,32,Superior completo,excelente
+120,feminino,47,Superior completo,muito boa
+121,masculino,29,Ensino médio,boa
+122,masculino,35,Fundamental incompleto,muito boa
+123,masculino,31,Ensino médio,boa
+124,masculino,75,Fundamental incompleto,muito boa
+125,masculino,37,Pós-graduação,muito boa
+126,masculino,74,Fundamental incompleto,muito boa
+127,masculino,64,Fundamental incompleto,regular
+128,masculino,55,Fundamental incompleto,muito boa
+129,feminino,52,Fundamental completo,muito boa
+130,feminino,54,Ensino médio,boa
+131,masculino,46,Superior completo,regular
+132,masculino,46,Fundamental incompleto,regular
+133,masculino,44,Pós-graduação,muito boa
+134,masculino,70,Fundamental completo,ruim
+135,feminino,30,Superior completo,boa
+136,masculino,56,Superior completo,muito boa
+137,feminino,55,Superior completo,muito boa
+138,masculino,63,Fundamental completo,muito boa
+139,feminino,43,Ensino médio,boa
+140,feminino,54,Fundamental incompleto,boa
+141,masculino,55,Superior completo,muito boa
+142,masculino,62,Fundamental completo,excelente
+143,masculino,57,Fundamental incompleto,boa
+144,masculino,44,Ensino médio,boa
+145,feminino,47,Fundamental incompleto,regular
+146,feminino,37,Ensino médio,boa
+147,masculino,42,Superior completo,muito boa
+148,masculino,41,Fundamental incompleto,muito boa
+149,masculino,39,Superior completo,boa
+150,masculino,25,Ensino médio,muito boa
+151,feminino,45,Pós-graduação,regular
+152,feminino,70,Fundamental completo,regular
+153,feminino,56,Superior completo,boa
+154,feminino,71,Fundamental completo,regular
+155,masculino,53,Superior completo,boa
+156,feminino,28,Superior incompleto,excelente
+157,masculino,42,Fundamental incompleto,muito boa
+158,masculino,66,Fundamental incompleto,ruim
+159,feminino,34,Ensino médio,regular
+160,masculino,40,Fundamental incompleto,excelente
+161,feminino,63,Pós-graduação,excelente
+162,feminino,61,Pós-graduação,muito boa
+163,masculino,44,Ensino médio,excelente
+164,masculino,47,Pós-graduação,muito boa
+165,feminino,74,Fundamental completo,excelente
+166,feminino,38,Superior completo,muito boa
+167,masculino,30,Ensino médio,regular
+168,feminino,60,Ensino médio,regular
+169,feminino,51,Superior completo,muito boa
+170,masculino,43,Ensino médio,ruim
+171,masculino,53,Fundamental incompleto,boa
+172,masculino,39,Fundamental incompleto,boa
+173,masculino,65,Pós-graduação,muito boa
+174,feminino,62,Fundamental incompleto,ruim
+175,feminino,34,Ensino médio,excelente
+176,feminino,29,Ensino médio,regular
+177,masculino,39,Superior incompleto,muito boa
+178,masculino,53,Superior completo,boa
+179,masculino,60,Fundamental completo,excelente
+180,masculino,53,Superior completo,regular
+181,feminino,33,Superior incompleto,muito boa
+182,masculino,26,Ensino médio,regular
+183,feminino,42,Ensino médio,boa
+184,feminino,35,Superior incompleto,muito boa
+185,masculino,42,Ensino médio,regular
+186,masculino,65,Ensino médio,muito boa
+187,feminino,55,Superior completo,boa
+188,masculino,55,Fundamental incompleto,boa
+189,feminino,56,Fundamental incompleto,regular
+190,masculino,53,Fundamental incompleto,boa
+191,masculino,60,Ensino médio,ruim
+192,feminino,45,Ensino médio,boa
+193,feminino,53,Pós-graduação,excelente
+194,feminino,59,Ensino médio,boa
+195,feminino,37,Ensino médio,boa
+196,masculino,53,Superior completo,excelente
+197,feminino,42,Superior completo,muito boa
+198,masculino,56,Pós-graduação,excelente
+199,masculino,32,Ensino médio,ruim
+200,feminino,45,Fundamental incompleto,regular
+201,feminino,63,Pós-graduação,muito boa
+202,feminino,35,Pós-graduação,muito boa
+203,feminino,34,Ensino médio,boa
+204,masculino,67,Fundamental completo,muito boa
+205,masculino,65,Fundamental incompleto,excelente
+206,feminino,54,Superior completo,muito boa
+207,masculino,47,Fundamental incompleto,muito boa
+208,feminino,29,Superior completo,boa
+209,masculino,46,Superior completo,excelente
+210,masculino,35,Fundamental completo,regular
+211,masculino,62,Ensino médio,boa
+212,masculino,44,Fundamental incompleto,regular
+213,masculino,50,Pós-graduação,muito boa
+214,masculino,57,Pós-graduação,excelente
+215,feminino,40,Ensino médio,boa
+216,feminino,61,Fundamental incompleto,ruim
+217,masculino,49,Superior completo,boa
+218,feminino,56,Ensino médio,excelente
+219,feminino,57,Superior completo,excelente
+220,masculino,41,Fundamental incompleto,muito boa
+221,masculino,23,Superior incompleto,muito boa
+222,masculino,25,Ensino médio,muito boa
+223,masculino,44,Fundamental incompleto,ruim
+224,masculino,46,Superior completo,muito boa
+225,masculino,30,Ensino médio,excelente
+226,masculino,55,Fundamental incompleto,boa
+227,masculino,59,Ensino médio,ruim
+228,feminino,43,Pós-graduação,muito boa
+229,masculino,39,Ensino médio,muito boa
+230,masculino,41,Fundamental incompleto,boa
+231,feminino,53,Ensino médio,regular
+232,masculino,36,Fundamental incompleto,ruim
+233,feminino,53,Fundamental completo,boa
+234,masculino,44,Fundamental completo,regular
+235,masculino,71,Fundamental incompleto,boa
+236,feminino,45,Fundamental completo,regular
+237,masculino,40,Superior completo,muito boa
+238,feminino,39,Ensino médio,boa
+239,masculino,54,Ensino médio,boa
+240,feminino,57,Pós-graduação,excelente
+241,feminino,39,Fundamental completo,boa
+242,masculino,72,Fundamental incompleto,regular
+243,masculino,41,Superior completo,muito boa
+244,masculino,47,Fundamental incompleto,excelente
+245,masculino,31,Superior completo,boa
+246,masculino,71,Fundamental incompleto,regular
+247,masculino,36,Fundamental incompleto,excelente
+248,masculino,42,Superior completo,ruim
+249,feminino,73,Fundamental incompleto,boa
+250,masculino,39,Ensino médio,muito boa
+251,masculino,49,Fundamental incompleto,boa
+252,masculino,43,Fundamental incompleto,boa
+253,feminino,29,Superior incompleto,excelente
+254,feminino,65,Pós-graduação,muito boa
+255,feminino,30,Ensino médio,excelente
+256,masculino,43,Superior incompleto,boa
+257,feminino,33,Ensino médio,muito boa
+258,masculino,68,Fundamental incompleto,boa
+259,masculino,25,Superior incompleto,boa
+260,masculino,53,Fundamental incompleto,boa
+261,masculino,32,Superior completo,muito boa
+262,feminino,44,Fundamental incompleto,boa
+263,feminino,50,Ensino médio,excelente
+264,masculino,30,Ensino médio,muito boa
+265,feminino,28,Superior incompleto,muito boa
+266,masculino,58,Fundamental incompleto,boa
+267,masculino,38,Superior incompleto,boa
+268,masculino,34,Pós-graduação,excelente
+269,masculino,29,Pós-graduação,muito boa
+270,masculino,64,Ensino médio,boa
+271,feminino,65,Ensino médio,muito boa
+272,masculino,61,Fundamental completo,regular
+273,feminino,30,Pós-graduação,boa
+274,masculino,32,Ensino médio,regular
+275,feminino,52,Pós-graduação,muito boa
+276,masculino,72,Fundamental completo,muito boa
+277,feminino,61,Fundamental incompleto,boa
+278,masculino,64,Ensino médio,boa
+279,masculino,27,Superior completo,muito boa
+280,feminino,53,Ensino médio,boa
+281,feminino,48,Superior completo,regular
+282,masculino,62,Pós-graduação,excelente
+283,masculino,28,Ensino médio,boa
+284,feminino,42,Fundamental incompleto,muito boa
+285,masculino,30,Superior completo,muito boa
+286,feminino,28,Ensino médio,muito boa
+287,feminino,33,Ensino médio,muito boa
+288,feminino,39,Fundamental incompleto,muito boa
+289,feminino,72,Fundamental incompleto,regular
+290,feminino,56,Fundamental incompleto,boa
+291,feminino,42,Superior completo,excelente
+292,feminino,43,Fundamental incompleto,boa
+293,feminino,35,Pós-graduação,muito boa
+294,feminino,43,Fundamental incompleto,ruim
+295,feminino,72,Fundamental incompleto,regular
+296,feminino,41,Ensino médio,regular
+297,masculino,58,Ensino médio,regular
+298,feminino,55,Ensino médio,boa
+299,masculino,67,Fundamental incompleto,boa
+300,masculino,67,Fundamental incompleto,regular

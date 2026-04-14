@@ -1,0 +1,492 @@
+---
+title: "Dados Numéricos"
+subtitle: "Discretos, contínuos e tudo o que podemos medir"
+---
+
+```{r}
+#| label: setup
+#| message: false
+
+library(readr)
+library(dplyr)
+library(knitr)
+library(ggplot2)
+library(tidyr)
+
+pacientes <- read_csv("data/pacientes.csv")
+```
+
+## A história
+
+Em 1835, o astrônomo e matemático belga Adolphe Quetelet publicou *Sur l'Homme et le Développement de ses Facultés* — um tratado ambicioso que propunha aplicar à sociedade humana os mesmos métodos que a astronomia usava para medir estrelas. Quetelet coletou milhares de medidas de altura, peso e perímetro torácico de soldados e civis, e descobriu algo que o fascinava: quando agrupadas, essas medições formavam uma curva em sino — a distribuição normal — com notável regularidade. Ele chamou o centro dessa curva de *l'homme moyen*: o "homem médio" [@quetelet1835; @stigler1986].
+
+A ideia era revolucionária. Até então, variações individuais eram vistas como erros de observação — ruído a ser eliminado. Quetelet inverteu a lógica: a **variação** entre indivíduos era real e mensurável, e a **média** era uma descrição legítima do grupo. Nasciam ali dois conceitos que até hoje são a base de qualquer análise de dados numéricos: a tendência central e a dispersão.
+
+Mais de um século depois, em 1977, John Tukey publicou *Exploratory Data Analysis*, um livro que mudaria a forma como estatísticos olham para números antes de testá-los. A premissa de Tukey era direta: **"É importante entender o que você pode fazer antes de aprender a medir quão bem você parece ter feito"** [@tukey1977]. Em vez de começar com hipóteses e testes formais, Tukey propunha que o analista primeiro *explorasse* seus dados — usando gráficos simples, resumos numéricos e ferramentas visuais como o diagrama de ramo-e-folhas e o boxplot. A exploração revelaria padrões, anomalias e surpresas que testes confirmatórios jamais detectariam sozinhos.
+
+A lição conjunta de Quetelet e Tukey é o tema deste capítulo: dados numéricos carregam informação rica — média, dispersão, forma, outliers — mas essa riqueza só se revela quando sabemos o que procurar e como descrever.
+
+::: {.callout-tip}
+## A lição de Tukey
+
+Antes de testar, explore. Antes de modelar, descreva. A análise exploratória não é um passo opcional — é o primeiro passo.
+:::
+
+
+## O que são dados numéricos?
+
+Dados numéricos (ou quantitativos) representam **quantidades mensuráveis**. São valores sobre os quais operações aritméticas — soma, subtração, média, desvio-padrão — produzem resultados com significado. No R, são armazenados como `integer` (inteiros) ou `numeric`/`double` (decimais).
+
+A definição parece simples, mas carrega uma implicação profunda: se um valor é numérico, a **distância** entre dois valores tem significado. A diferença entre 120 e 140 mmHg de pressão sistólica (20 mmHg) é a mesma que entre 140 e 160 mmHg. Isso não ocorre com dados categóricos ordinais — a distância entre "leve" e "moderado" não é necessariamente igual à distância entre "moderado" e "grave".
+
+No nosso banco de dados, a maioria das variáveis é numérica:
+
+```{r}
+#| label: tbl-variaveis-numericas
+#| tbl-cap: "Variáveis numéricas do estudo — cada uma com unidade e tipo de medição definidos."
+
+tibble::tibble(
+  variavel = c("idade", "colesterol", "glicose", "hdl", "ratio",
+               "glicohemoglobina", "peso", "altura",
+               "sistolica", "diastolica", "cintura", "quadril"),
+  unidade = c("anos", "mg/dL", "mg/dL", "mg/dL", "adimensional",
+              "% (HbA1c)", "kg", "cm", "mmHg", "mmHg", "cm", "cm"),
+  tipo = c("Contínua*", "Contínua", "Contínua", "Contínua", "Contínua",
+           "Contínua", "Contínua", "Contínua", "Contínua", "Contínua",
+           "Contínua", "Contínua"),
+  instrumento = c("Registro civil", "Dosagem laboratorial", "Dosagem laboratorial",
+                   "Dosagem laboratorial", "Calculado (colesterol/hdl)",
+                   "Dosagem laboratorial", "Balança", "Estadiômetro",
+                   "Esfigmomanômetro", "Esfigmomanômetro", "Fita métrica", "Fita métrica")
+) |>
+  kable(
+    col.names = c("Variável", "Unidade", "Tipo", "Instrumento / origem"),
+    align = "llll"
+  )
+```
+
+\* A variável `idade` merece uma discussão à parte — veja o callout mais adiante.
+
+
+## Discretos vs. contínuos
+
+A distinção mais fundamental entre dados numéricos é entre **discretos** e **contínuos**. Embora o Capítulo 2 já tenha introduzido essa classificação, aqui a aprofundamos com exemplos, critérios e casos-limite.
+
+### Variáveis numéricas discretas
+
+Dados discretos assumem valores inteiros e finitos (ou infinitos enumeráveis), sem frações significativas no contexto da medição. Um teste prático ajuda a identificá-los: se, para qualquer par de valores observados, o valor intermediário **não faz sentido** no contexto da variável, ela é discreta [@kaliyadan2019]. Entre 5 e 8 lesões, "6,5 lesões" não existe. Não faz sentido dizer que um paciente teve 2,7 internações ou que uma família tem 1,3 filhos.
+
+```{r}
+#| label: tbl-exemplos-discretos
+#| tbl-cap: "Exemplos de variáveis numéricas discretas em pesquisa em saúde."
+
+tibble::tibble(
+  variavel = c("Número de internações", "Número de filhos",
+               "Quantidade de medicamentos", "Número de consultas/ano",
+               "Número de lesões cutâneas", "Número de dentes cariados"),
+  valores = c("0, 1, 2, 3, ...", "0, 1, 2, 3, ...",
+              "0, 1, 2, 3, ...", "0, 1, 2, 3, ...",
+              "0, 1, 2, 3, ...", "0, 1, 2, 3, ..."),
+  operacao = c("Contagem", "Contagem", "Contagem",
+               "Contagem", "Contagem", "Contagem"),
+  distribuicao = c("Poisson", "Poisson", "Poisson",
+                    "Poisson", "Poisson / Binomial negativa",
+                    "Binomial")
+) |>
+  kable(
+    col.names = c("Variável", "Valores possíveis", "Operação", "Distribuição típica"),
+    align = "llll"
+  )
+```
+
+
+### Variáveis numéricas contínuas
+
+Dados contínuos podem assumir qualquer valor dentro de um intervalo — incluindo frações arbitrariamente precisas. A precisão é limitada apenas pelo **instrumento de medida**, não pela natureza da variável.
+
+O mesmo teste prático funciona ao inverso: se, para qualquer par de valores, o valor intermediário **faz sentido**, a variável é contínua [@kaliyadan2019]. Entre um paciente com 72,0 kg e outro com 74,0 kg, um paciente com 73,0 kg é perfeitamente plausível — assim como 72,5 ou 73,217 kg.
+
+```{r}
+#| label: tbl-continuas-descritivas
+#| tbl-cap: "Variáveis numéricas contínuas do estudo — amplitude e estatísticas descritivas."
+
+pacientes |>
+  summarise(
+    across(c(colesterol, glicose, hdl, glicohemoglobina, peso, altura, sistolica, diastolica),
+           list(n_validos = ~sum(!is.na(.x)),
+                min = ~round(min(.x, na.rm = TRUE), 2),
+                max = ~round(max(.x, na.rm = TRUE), 2),
+                media = ~round(mean(.x, na.rm = TRUE), 1),
+                dp = ~round(sd(.x, na.rm = TRUE), 1)),
+           .names = "{.col}__{.fn}")
+  ) |>
+  pivot_longer(everything(),
+               names_to = c("variavel", "stat"),
+               names_sep = "__") |>
+  pivot_wider(names_from = stat, values_from = value) |>
+  mutate(
+    unidade = c("mg/dL", "mg/dL", "mg/dL", "% (HbA1c)", "kg", "cm", "mmHg", "mmHg")
+  ) |>
+  select(variavel, unidade, n_validos, min, max, media, dp) |>
+  kable(
+    col.names = c("Variável", "Unidade", "n válidos", "Mín", "Máx", "Média", "DP"),
+    align = "llrrrrr"
+  )
+```
+
+
+::: {.callout-warning}
+## Idade: discreta ou contínua?
+
+No nosso banco de dados, a variável `idade` aparece registrada como números inteiros (19, 23, 45, ...). Isso torna a idade uma variável discreta? A resposta exige cuidado.
+
+O tempo — e, portanto, o envelhecimento — é um fenômeno intrinsecamente contínuo. O fato de a idade ser comumente expressa em anos inteiros não a transforma em variável discreta: o que define a natureza da escala não são os valores efetivamente registrados, mas o **potencial da escala de acomodar valores decimais** [@chittaranjan2017]. A prova é que a idade de crianças é rotineiramente expressa em meses e a de neonatos em dias — precisamente porque a precisão em anos inteiros seria insuficiente.
+
+Um teste simples ajuda a esclarecer: se, para qualquer par de valores observados, o valor intermediário é significativo, a variável é contínua [@kaliyadan2019]. Entre um paciente de 40 anos e outro de 41, um paciente de 40,5 anos faz perfeito sentido — diferentemente de "6,5 lesões", que não faz.
+
+Na prática da pesquisa, a maioria dos artigos sequer especifica *como* a idade foi calculada — se na admissão, na inclusão no estudo ou no momento do desfecho — e se foram considerados meses ou apenas anos inteiros [@voor2019]. 
+
+O risco maior, porém, está em **categorizar** a idade em faixas etárias quando isso não é necessário. Altman e Royston demonstram que dicotomizar uma variável contínua pela mediana reduz o poder estatístico tanto quanto descartar um terço dos dados [@altman2006]. A recomendação é clara: sempre que possível, mantenha a idade como variável contínua na análise.
+
+**Em resumo**: a idade é uma variável **contínua por natureza**, frequentemente **registrada de forma discreta** (em anos inteiros) e por vezes indevidamente **categorizada** em faixas etárias. Reconhecer essa distinção é fundamental para escolher a análise estatística correta.
+:::
+
+
+## Escalas intervalar e de razão: uma distinção que ficou na teoria
+
+Nos capítulos anteriores, classificamos variáveis em dois grandes grupos: numéricas e categóricas. Peso é numérico. Sexo é categórico. Pressão arterial é numérica. Tipo sanguíneo é categórico. Essa divisão é intuitiva, funciona bem na prática e guia praticamente todas as decisões que tomamos ao escolher um teste estatístico ou um tipo de gráfico.
+
+Mas quem já cursou uma disciplina de bioestatística — ou folheou um livro-texto antes de chegar a este — provavelmente aprendeu uma classificação mais detalhada. Não dois tipos, mas quatro: nominal, ordinal, intervalar e de razão. A sigla NOIR (*Nominal, Ordinal, Interval, Ratio*), proposta por Stevens em 1946, aparece em praticamente todo curso introdutório e foi apresentada no Capítulo 2 deste livro [@stevens1946]. E se nominal e ordinal correspondem ao que chamamos de categórico, o ramo numérico deveria, pela lógica de Stevens, ser subdividido em mais dois: intervalar e de razão.
+
+A diferença entre escalas intervalar e de razão se resume a uma pergunta: **o zero da escala significa ausência da grandeza?**
+
+Na **escala intervalar**, o zero é arbitrário — não representa ausência da grandeza. O exemplo clássico é a temperatura em graus Celsius: 0 °C não significa "ausência de temperatura", mas sim o ponto de congelamento da água. Consequência: podemos calcular diferenças (a diferença entre 20 °C e 30 °C são 10 °C), mas não razões (30 °C não é "o dobro" de 15 °C em termos de calor).
+
+Na **escala de razão**, o zero é absoluto — representa ausência da grandeza. Peso, altura, concentração de colesterol e pressão arterial são exemplos. Um paciente com 80 kg pesa exatamente o dobro de um com 40 kg. As quatro operações aritméticas e todas as estatísticas descritivas são válidas.
+
+```{r}
+#| label: tbl-intervalar-razao
+#| tbl-cap: "Comparação entre escalas intervalar e de razão — a diferença está no zero."
+
+tibble::tibble(
+  aspecto = c("Zero", "Diferenças", "Razões",
+              "Exemplo clínico", "Estatísticas"),
+  intervalar = c("Arbitrário (convenção)",
+                  "Significativas (10 °C de diferença)",
+                  "Sem sentido (30 °C ≠ 2 × 15 °C)",
+                  "Temperatura em °C, ano calendário",
+                  "Média, DP, correlação de Pearson"),
+  razao = c("Absoluto (ausência da grandeza)",
+             "Significativas (10 kg de diferença)",
+             "Significativas (80 kg = 2 × 40 kg)",
+             "Peso (kg), colesterol (mg/dL), altura (cm)",
+             "Todas + média geométrica, CV")
+) |>
+  kable(
+    col.names = c("Aspecto", "Escala intervalar", "Escala de razão"),
+    align = "lll"
+  )
+```
+
+### Por que essa distinção ficou na teoria
+
+A distinção é conceitualmente correta. Mas na prática da análise de dados — especialmente em saúde — ela perdeu relevância por quatro razões convergentes.
+
+**O software não a reconhece.** As duas linguagens dominantes na análise de dados em saúde — R e Python — organizam suas variáveis em tipos que *não incluem* a distinção intervalar/razão. No R, uma variável numérica é `numeric` ou `integer`; uma categórica é `factor`. No Python (pandas), temos `float64` e `category`. Em nenhum dos dois ambientes existe um tipo `interval` separado de `ratio`. Quando a ferramenta que o mundo inteiro usa para analisar dados não reconhece uma distinção, é um sinal forte de que essa distinção não muda as decisões práticas de análise.
+
+**As operações estatísticas são as mesmas.** Média, desvio-padrão, teste *t*, ANOVA, correlação de Pearson, regressão linear — todas essas ferramentas pressupõem apenas que as **distâncias** entre valores são significativas, o que é verdade tanto para escalas intervalares quanto para escalas de razão. A única operação que a escala de razão permite e a intervalar não — a razão entre valores (ex: "o dobro") — raramente aparece como parte de um teste estatístico formal.
+
+**Variáveis intervalares são raras em saúde.** Na pesquisa clínica e epidemiológica, a grande maioria das variáveis numéricas é de razão: peso, altura, pressão, colesterol, glicose, frequência cardíaca, contagens celulares. Os exemplos clássicos de escala intervalar — temperatura em °C, ano calendário, escore de QI — aparecem com pouca frequência em bancos de dados clínicos. Uma distinção que raramente se aplica é uma distinção que raramente importa.
+
+**A literatura aponta na mesma direção.** Velleman e Wilkinson, em uma crítica influente à taxonomia de Stevens, concluem que a distinção operacional relevante na prática é entre *"categorical factors"* (nominais e ordinais) e *"continuous covariates"* (intervalares e de razão) — exatamente a divisão que adotamos neste livro. A seção 7 de seu artigo é intitulada, significativamente, *"Good data analysis does not assume data types"*, e a seção 8 conclui que *"the scale type of data depends on the questions we intend to ask"* [@velleman1993]. Agresti, em seu livro-texto de referência, organiza a classificação principal em *"quantitative"* e *"categorical"*, apresentando a subdivisão intervalar/razão como nota conceitual, não como divisor de análise [@agresti2018]. Norman demonstra que testes paramétricos produzem resultados válidos independentemente de o dado ser intervalar ou de razão — a robustez a violações de pressupostos de escala é documentada há décadas [@norman2010].
+
+### O que adotamos neste livro
+
+Diante dessas evidências, este livro trabalha com a classificação em dois grandes ramos: **numérico** (discreto ou contínuo) e **categórico** (nominal ou ordinal). Essa é a divisão que determina as decisões reais do dia a dia: se usamos média ou proporção, histograma ou barras, teste *t* ou qui-quadrado.
+
+::: {.callout-tip}
+## A distinção intervalar/razão importa quando?
+Em alguns contextos específicos, a diferença entre escalas intervalar e de razão pode ser relevante — por exemplo, na interpretação do coeficiente de variação (que pressupõe zero absoluto) ou no uso da média geométrica. Mas, para a grande maioria das análises em saúde, a pergunta que realmente muda a abordagem é: **o dado é numérico ou categórico?**
+:::
+
+## Descrevendo dados numéricos
+
+Descrever adequadamente uma variável numérica exige responder a três perguntas: **onde estão os dados?** (tendência central), **quão espalhados estão?** (dispersão) e **qual a forma da distribuição?** (simetria, outliers).
+
+### Medidas de tendência central
+
+As três medidas clássicas — média, mediana e moda — respondem de formas diferentes à pergunta "qual é o valor típico?".
+
+```{r}
+#| label: tbl-tendencia-central
+#| tbl-cap: "Medidas de tendência central para variáveis selecionadas do estudo."
+
+pacientes |>
+  summarise(
+    across(c(colesterol, glicose, peso, idade, sistolica),
+           list(
+             media = ~round(mean(.x, na.rm = TRUE), 1),
+             mediana = ~round(median(.x, na.rm = TRUE), 1)
+           ),
+           .names = "{.col}__{.fn}")
+  ) |>
+  pivot_longer(everything(),
+               names_to = c("variavel", "stat"),
+               names_sep = "__") |>
+  pivot_wider(names_from = stat, values_from = value) |>
+  mutate(
+    diferenca = round(media - mediana, 1),
+    interpretacao = case_when(
+      abs(diferenca) < 2 ~ "Distribuição aproximadamente simétrica",
+      diferenca > 0 ~ "Assimetria à direita (cauda longa para valores altos)",
+      TRUE ~ "Assimetria à esquerda"
+    )
+  ) |>
+  kable(
+    col.names = c("Variável", "Média", "Mediana", "Diferença", "Interpretação"),
+    align = "lrrrl"
+  )
+```
+
+Quando a média e a mediana são próximas, a distribuição tende a ser simétrica. Quando divergem, há assimetria — e a mediana é geralmente a medida mais representativa do "valor típico", pois é menos influenciada por valores extremos [@freedman2007].
+
+### Medidas de dispersão
+
+A tendência central sozinha não basta. Dois grupos podem ter a mesma média e distribuições completamente diferentes. As medidas de dispersão capturam essa variabilidade.
+
+```{r}
+#| label: tbl-dispersao
+#| tbl-cap: "Medidas de dispersão para variáveis selecionadas do estudo."
+
+pacientes |>
+  summarise(
+    across(c(colesterol, glicose, peso, idade, sistolica),
+           list(
+             dp = ~round(sd(.x, na.rm = TRUE), 1),
+             iiq = ~round(IQR(.x, na.rm = TRUE), 1),
+             amplitude = ~round(max(.x, na.rm = TRUE) - min(.x, na.rm = TRUE), 1)
+           ),
+           .names = "{.col}__{.fn}")
+  ) |>
+  pivot_longer(everything(),
+               names_to = c("variavel", "stat"),
+               names_sep = "__") |>
+  pivot_wider(names_from = stat, values_from = value) |>
+  kable(
+    col.names = c("Variável", "Desvio-padrão", "Intervalo interquartil", "Amplitude"),
+    align = "lrrr"
+  )
+```
+
+O **desvio-padrão** (DP) é a medida mais usada: quanto maior, mais os dados se espalham ao redor da média. O **intervalo interquartil** (IIQ) — a diferença entre o percentil 75 e o percentil 25 — é robusto a outliers e complementa a mediana da mesma forma que o DP complementa a média. A **amplitude** (máximo − mínimo) é simples mas muito sensível a valores extremos.
+
+### A forma da distribuição
+
+A **distribuição** de uma variável numérica revela padrões que nenhuma estatística isolada consegue capturar: simetria, caudas longas, picos múltiplos e valores atípicos. É aqui que a lição de Tukey se materializa — a exploração visual é insubstituível [@tukey1977].
+
+```{r}
+#| label: fig-histogramas
+#| fig-cap: "Distribuição de quatro variáveis numéricas — note a diferença de forma entre elas."
+#| fig-width: 9
+#| fig-height: 7
+
+pacientes |>
+  select(colesterol, glicose, idade, peso) |>
+  pivot_longer(everything(), names_to = "variavel", values_to = "valor") |>
+  mutate(variavel = factor(variavel,
+    levels = c("colesterol", "glicose", "idade", "peso"),
+    labels = c("Colesterol (mg/dL)", "Glicose (mg/dL)", "Idade (anos)", "Peso (kg)")
+  )) |>
+  ggplot(aes(x = valor)) +
+  geom_histogram(fill = "#3B82F6", color = "white", bins = 30, alpha = 0.85) +
+  facet_wrap(~variavel, scales = "free", ncol = 2) +
+  labs(x = NULL, y = "Frequência") +
+  theme_minimal(base_size = 12) +
+  theme(
+    strip.text = element_text(face = "bold", size = 11),
+    panel.grid.minor = element_blank()
+  )
+```
+
+Observe como as distribuições diferem: a idade e o peso apresentam distribuições mais simétricas, enquanto a glicose apresenta forte assimetria à direita — com uma cauda longa de valores elevados, típica de variáveis metabólicas em populações que incluem pacientes diabéticos.
+
+
+## O boxplot: cinco números que contam uma história
+
+O boxplot (diagrama de caixa) é talvez a ferramenta mais elegante que Tukey legou à estatística. Com apenas cinco números — mínimo, primeiro quartil (Q1), mediana, terceiro quartil (Q3) e máximo — ele resume a distribuição inteira e ainda identifica valores atípicos [@tukey1977].
+
+```{r}
+#| label: fig-boxplot-explicado
+#| fig-cap: "Anatomia do boxplot — os cinco números de Tukey aplicados ao colesterol do estudo."
+#| fig-width: 7
+#| fig-height: 4
+
+ggplot(pacientes, aes(y = colesterol)) +
+  geom_boxplot(fill = "#3B82F6", alpha = 0.6, width = 0.4, outlier.color = "#EF4444", outlier.size = 2) +
+  coord_flip() +
+  labs(y = "Colesterol (mg/dL)", x = NULL) +
+  theme_minimal(base_size = 12) +
+  theme(
+    axis.text.y = element_blank(),
+    axis.ticks.y = element_blank(),
+    panel.grid.minor = element_blank()
+  )
+```
+
+A **caixa** cobre o intervalo interquartil (IIQ = Q3 − Q1), contendo os 50% centrais dos dados. A **linha central** é a mediana. Os **bigodes** se estendem até o valor mais extremo que esteja dentro de 1,5 × IIQ a partir da caixa. Pontos além dos bigodes são sinalizados como potenciais **outliers** — valores que merecem investigação (não necessariamente exclusão).
+
+O boxplot é especialmente útil para **comparar grupos**:
+
+```{r}
+#| label: fig-boxplot-comparacao
+#| fig-cap: "Comparação da pressão sistólica entre sexos — o boxplot revela diferenças de mediana, dispersão e outliers."
+#| fig-width: 7
+#| fig-height: 4
+
+ggplot(pacientes, aes(x = sexo, y = sistolica, fill = sexo)) +
+  geom_boxplot(alpha = 0.7, outlier.color = "#EF4444", outlier.size = 2, show.legend = FALSE) +
+  scale_fill_manual(values = c("female" = "#EC4899", "male" = "#3B82F6")) +
+  labs(x = "Sexo", y = "Pressão sistólica (mmHg)") +
+  theme_minimal(base_size = 12) +
+  theme(panel.grid.minor = element_blank())
+```
+
+
+## O resumo dos cinco números
+
+O *five-number summary* de Tukey — mínimo, Q1, mediana, Q3 e máximo — é a base do boxplot e uma forma poderosa de descrever qualquer variável numérica sem pressupor simetria ou normalidade [@tukey1977].
+
+```{r}
+#| label: tbl-cinco-numeros
+#| tbl-cap: "Resumo dos cinco números para as variáveis numéricas do estudo."
+
+pacientes |>
+  summarise(
+    across(c(idade, colesterol, glicose, hdl, peso, altura, sistolica, diastolica),
+           list(
+             min = ~round(min(.x, na.rm = TRUE), 1),
+             q1 = ~round(quantile(.x, 0.25, na.rm = TRUE), 1),
+             mediana = ~round(median(.x, na.rm = TRUE), 1),
+             q3 = ~round(quantile(.x, 0.75, na.rm = TRUE), 1),
+             max = ~round(max(.x, na.rm = TRUE), 1)
+           ),
+           .names = "{.col}__{.fn}")
+  ) |>
+  pivot_longer(everything(),
+               names_to = c("variavel", "stat"),
+               names_sep = "__") |>
+  pivot_wider(names_from = stat, values_from = value) |>
+  kable(
+    col.names = c("Variável", "Mín", "Q1", "Mediana", "Q3", "Máx"),
+    align = "lrrrrr"
+  )
+```
+
+
+## Como reportar dados numéricos
+
+A forma de reportar uma variável numérica depende da simetria de sua distribuição. As duas convenções mais comuns na literatura em saúde são:
+
+```{r}
+#| label: tbl-como-reportar
+#| tbl-cap: "Convenções para reportar dados numéricos em artigos científicos."
+
+tibble::tibble(
+  situacao = c("Distribuição simétrica (aproximadamente normal)",
+               "Distribuição assimétrica ou com outliers"),
+  reportar = c("Média ± desvio-padrão (DP)",
+               "Mediana (intervalo interquartil: Q1 – Q3)"),
+  exemplo = c("Colesterol: 207,8 ± 44,4 mg/dL",
+              "Glicose: 90,0 (81,0 – 106,0) mg/dL"),
+  teste = c("Teste t, ANOVA", "Mann-Whitney, Kruskal-Wallis")
+) |>
+  kable(
+    col.names = c("Situação", "Como reportar", "Exemplo do estudo", "Teste de comparação"),
+    align = "llll"
+  )
+```
+
+::: {.callout-important}
+## Não misture as convenções
+
+Se a variável é reportada como mediana (IIQ), o teste de comparação deve ser não paramétrico (Mann-Whitney, Kruskal-Wallis). Se é reportada como média ± DP, o teste correspondente é o paramétrico (teste *t*, ANOVA). A coerência entre a estatística descritiva e o teste inferencial é fundamental — e revisores de periódicos frequentemente apontam essa inconsistência [@altman2006].
+:::
+
+
+## Transformações: quando os dados não cooperam
+
+Variáveis com distribuição muito assimétrica — como a glicose no nosso estudo — podem dificultar a aplicação de métodos que pressupõem normalidade. Uma estratégia comum é aplicar uma **transformação matemática** que aproxime a distribuição de uma forma mais simétrica.
+
+A transformação mais usada é o **logaritmo natural** (ln).  Ela comprime os valores mais altos mais intensamente do que os mais baixos, o que frequentemente reduz a assimetria à direita.”
+
+
+```{r}
+#| label: fig-transformacao
+#| fig-cap: "Efeito da transformação logarítmica sobre a distribuição da glicose."
+#| fig-width: 9
+#| fig-height: 4
+
+p1 <- ggplot(pacientes, aes(x = glicose)) +
+  geom_histogram(fill = "#3B82F6", color = "white", bins = 30, alpha = 0.85) +
+  labs(title = "Glicose — escala original", x = "Glicose (mg/dL)", y = "Frequência") +
+  theme_minimal(base_size = 11) +
+  theme(panel.grid.minor = element_blank())
+
+p2 <- ggplot(pacientes, aes(x = log(glicose))) +
+  geom_histogram(fill = "#10B981", color = "white", bins = 30, alpha = 0.85) +
+  labs(title = "Glicose — escala logarítmica", x = "ln(Glicose)", y = "Frequência") +
+  theme_minimal(base_size = 11) +
+  theme(panel.grid.minor = element_blank())
+
+gridExtra::grid.arrange(p1, p2, ncol = 2)
+```
+
+A transformação logarítmica é especialmente útil para variáveis biológicas estritamente positivas e com assimetria à direita, como concentrações sanguíneas, tempos de reação e algumas medidas laboratoriais. Em muitos casos, ela reduz a assimetria e estabiliza a variabilidade, o que pode tornar mais apropriado o uso de métodos paramétricos. Após a análise, os resultados podem ser reexpressos na escala original; por exemplo, a média dos valores transformados em log, quando retransformada, corresponde à média geométrica.
+[@freedman2007].
+
+::: {.callout-note}
+## Cuidado com a interpretação
+
+A transformação facilita a análise estatística, mas os **resultados devem ser interpretados na escala original**. Uma diferença de 0,3 em ln(glicose) não é intuitiva para o clínico — é preciso converter de volta para mg/dL.
+:::
+
+
+## Resumo do capítulo
+
+```{r}
+#| label: tbl-resumo-cap4
+#| tbl-cap: "Resumo — dados numéricos em pesquisa em saúde."
+
+tibble::tibble(
+  conceito = c("Variáveis discretas", "Variáveis contínuas",
+               "Escala intervalar", "Escala de razão",
+               "Tendência central", "Dispersão",
+               "Boxplot", "Transformação logarítmica"),
+  definicao = c("Resultado de contagem; valores inteiros sem frações significativas",
+                "Resultado de medição; qualquer valor em um intervalo contínuo",
+                "Zero arbitrário; diferenças significativas, razões sem sentido",
+                "Zero absoluto; todas as operações aritméticas são válidas",
+                "Média (distribuição simétrica) ou mediana (assimétrica)",
+                "DP (com a média) ou IIQ (com a mediana)",
+                "Resumo visual dos cinco números de Tukey — revela centro, dispersão e outliers",
+                "Comprime assimetria à direita; útil para variáveis biológicas"),
+  exemplo = c("Nº de internações, nº de filhos",
+              "Peso (kg), colesterol (mg/dL), pressão (mmHg)",
+              "Temperatura (°C), ano calendário",
+              "Peso (kg), altura (cm), colesterol (mg/dL)",
+              "Colesterol: média = 207,8; Glicose: mediana = 90,0",
+              "Colesterol: DP = 44,4; Glicose: IIQ = 81,0 – 106,0",
+              "Comparação de pressão sistólica entre sexos",
+              "Glicose em escala log → distribuição simétrica")
+) |>
+  kable(
+    col.names = c("Conceito", "Definição", "Exemplo do estudo"),
+    align = "lll"
+  )
+```
+
+::: {.callout-note}
+## Próximos passos
+
+Este capítulo explorou os dados numéricos — sua classificação, descrição e visualização. No próximo capítulo, faremos o mesmo percurso para os **dados categóricos**: nominais, ordinais e as armadilhas de tratar categorias como números.
+:::

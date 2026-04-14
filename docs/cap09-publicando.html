@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Publicando seus Dados – Tipos de Dados em Saúde</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-5b4ad623e5705c0698d39aec6f10cf02.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles/custom.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Tipos de Dados em Saúde</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Procurar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Alternar de navegação" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Início</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-fundamentos" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Fundamentos</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-fundamentos">    
+        <li>
+    <a class="dropdown-item" href="./cap01-dados-pesquisa.html">
+ <span class="dropdown-text">Os Dados da Pesquisa</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./cap02-classificacao.html">
+ <span class="dropdown-text">Classificação dos Tipos de Dados</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./cap03-dicionario.html">
+ <span class="dropdown-text">Dicionário de Variáveis</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tiposdedados" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Tipos de Dados</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-tiposdedados">    
+        <li>
+    <a class="dropdown-item" href="./cap04-numericos.html">
+ <span class="dropdown-text">Dados Numéricos</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./cap05-categoricos.html">
+ <span class="dropdown-text">Dados Categóricos</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./cap06-casos-especiais.html">
+ <span class="dropdown-text">Casos Especiais</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-na-prática" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Na Prática</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-na-prática">    
+        <li>
+    <a class="dropdown-item" href="./cap07-planilhas.html">
+ <span class="dropdown-text">Organizando Dados em Planilhas</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./cap08-visualizacao.html">
+ <span class="dropdown-text">Visualizando por Tipo de Dado</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./cap09-publicando.html">
+ <span class="dropdown-text">Publicando seus Dados</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./cap10-tipos-r-python.html">
+ <span class="dropdown-text">Tipos de Dados no R e no Python</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./referencias.html"> 
+<span class="menu-text">Referências</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./about.html"> 
+<span class="menu-text">Sobre</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/halvarengda"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Nesta página</h2>
+   
+  <ul>
+  <li><a href="#a-história" id="toc-a-história" class="nav-link active" data-scroll-target="#a-história">A história</a></li>
+  <li><a href="#por-que-publicar-dados" id="toc-por-que-publicar-dados" class="nav-link" data-scroll-target="#por-que-publicar-dados">Por que publicar dados?</a></li>
+  <li><a href="#princípios-fair" id="toc-princípios-fair" class="nav-link" data-scroll-target="#princípios-fair">Princípios FAIR</a></li>
+  <li><a href="#repositórios-de-dados" id="toc-repositórios-de-dados" class="nav-link" data-scroll-target="#repositórios-de-dados">Repositórios de dados</a></li>
+  <li><a href="#o-que-publicar-junto-com-os-dados" id="toc-o-que-publicar-junto-com-os-dados" class="nav-link" data-scroll-target="#o-que-publicar-junto-com-os-dados">O que publicar junto com os dados</a></li>
+  <li><a href="#o-dicionário-como-ato-de-transparência" id="toc-o-dicionário-como-ato-de-transparência" class="nav-link" data-scroll-target="#o-dicionário-como-ato-de-transparência">O dicionário como ato de transparência</a></li>
+  <li><a href="#o-ciclo-completo-do-dado-ao-artigo-do-artigo-ao-dado" id="toc-o-ciclo-completo-do-dado-ao-artigo-do-artigo-ao-dado" class="nav-link" data-scroll-target="#o-ciclo-completo-do-dado-ao-artigo-do-artigo-ao-dado">O ciclo completo: do dado ao artigo, do artigo ao dado</a></li>
+  <li><a href="#resumo-do-capítulo" id="toc-resumo-do-capítulo" class="nav-link" data-scroll-target="#resumo-do-capítulo">Resumo do capítulo</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Publicando seus Dados</h1>
+<p class="subtitle lead">Dados abertos, princípios FAIR e a crise de reprodutibilidade</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="a-história" class="level2">
+<h2 class="anchored" data-anchor-id="a-história">A história</h2>
+<p>Em 2005, um epidemiologista grego radicado nos Estados Unidos publicou um artigo com um título provocativo: <em>Why Most Published Research Findings Are False</em>. O artigo, publicado na <em>PLOS Medicine</em>, tornou-se o mais acessado da história da revista — e um dos mais citados da ciência moderna. A tese era perturbadora: combinando vieses de publicação, tamanhos amostrais pequenos, flexibilidade na análise e pressão por resultados positivos, a maioria dos achados publicados em periódicos científicos era provavelmente <strong>falsa</strong> <span class="citation" data-cites="ioannidis2005">(<a href="#ref-ioannidis2005" role="doc-biblioref">1</a>)</span>.</p>
+<p>O argumento não era retórico — era matemático. Usando modelos bayesianos simples, o artigo demonstrava que, em cenários comuns de pesquisa (estudos pequenos, muitas variáveis testadas, poucos achados verdadeiros), a probabilidade de um resultado “significativo” ser verdadeiro era inferior a 50%. O problema não estava nos pesquisadores — estava no <strong>sistema</strong>: incentivos que premiavam descobertas e puniam replicações, periódicos que publicavam novidades e rejeitavam confirmações, e uma cultura que tratava dados como propriedade privada em vez de bem público.</p>
+<p>Dez anos depois, a previsão se confirmou empiricamente. Em 2015, o Open Science Collaboration tentou replicar 100 estudos publicados em três importantes periódicos de psicologia. O resultado: apenas <strong>36%</strong> dos estudos originais produziram resultados significativos quando replicados. Os tamanhos de efeito médios caíram pela metade. A crise de reprodutibilidade não era mais uma hipótese — era um fato documentado <span class="citation" data-cites="osc2015">(<a href="#ref-osc2015" role="doc-biblioref">2</a>)</span>.</p>
+<p>A resposta da comunidade científica veio em múltiplas frentes: pré-registro de estudos, análises estatísticas mais rigorosas, combate ao <em>p-hacking</em>. Mas uma das respostas mais fundamentais foi surpreendentemente simples: <strong>tornar os dados disponíveis</strong>. Se os dados por trás de uma publicação forem acessíveis, qualquer pesquisador pode verificar os resultados, reaplicar as análises e detectar erros — exatamente como Thomas Herndon fez com a planilha de Reinhart e Rogoff.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>A lição de Ioannidis
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A transparência é o antídoto para a irreplicabilidade. Quando os dados são abertos, os erros são corrigíveis, os resultados são verificáveis e a ciência avança — mesmo quando os achados originais estavam errados.</p>
+</div>
+</div>
+</section>
+<section id="por-que-publicar-dados" class="level2">
+<h2 class="anchored" data-anchor-id="por-que-publicar-dados">Por que publicar dados?</h2>
+<p>A publicação de dados — ou <em>data sharing</em> — não é apenas uma questão ética. É cada vez mais uma <strong>exigência</strong> dos principais periódicos e agências de fomento.</p>
+<div class="cell">
+<div id="tbl-razoes-publicar" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-razoes-publicar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabela&nbsp;1: Por que publicar dados — razões científicas, éticas e práticas.
+</figcaption>
+<div aria-describedby="tbl-razoes-publicar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 85%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Razão</th>
+<th style="text-align: left;">Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Reprodutibilidade</td>
+<td style="text-align: left;">Outros pesquisadores podem reaplicar suas análises e confirmar (ou corrigir) seus resultados</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Verificação</td>
+<td style="text-align: left;">Erros como o de Reinhart-Rogoff podem ser identificados e corrigidos — a ciência se autocorrige</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Reutilização</td>
+<td style="text-align: left;">Seus dados podem ser combinados com outros em meta-análises ou usados para responder perguntas que você não fez</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Exigência editorial</td>
+<td style="text-align: left;">Periódicos como PLOS ONE, Nature, BMJ e The Lancet exigem ou incentivam dados abertos como condição de publicação</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Citação</td>
+<td style="text-align: left;">Dados publicados em repositórios recebem DOI e podem ser citados como uma publicação independente</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Transparência ética</td>
+<td style="text-align: left;">Pesquisa financiada com dinheiro público gera dados que pertencem à sociedade — não ao pesquisador</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</section>
+<section id="princípios-fair" class="level2">
+<h2 class="anchored" data-anchor-id="princípios-fair">Princípios FAIR</h2>
+<p>Em 2016, um consórcio internacional de pesquisadores, agências de fomento e editores científicos propôs um conjunto de princípios para orientar a gestão de dados científicos. Chamados de <strong>FAIR</strong>, os princípios estabelecem que dados devem ser <strong>F</strong>indable (encontráveis), <strong>A</strong>ccessible (acessíveis), <strong>I</strong>nteroperable (interoperáveis) e <strong>R</strong>eusable (reutilizáveis) <span class="citation" data-cites="wilkinson2016">(<a href="#ref-wilkinson2016" role="doc-biblioref">3</a>)</span>.</p>
+<div class="cell">
+<div id="tbl-fair" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-fair-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabela&nbsp;2: Os princípios FAIR — o que cada letra significa na prática.
+</figcaption>
+<div aria-describedby="tbl-fair-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 20%">
+<col style="width: 38%">
+<col style="width: 27%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Princípio</th>
+<th style="text-align: left;">Significado</th>
+<th style="text-align: left;">Como implementar</th>
+<th style="text-align: left;">No nosso banco</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">F — Findable (Encontrável)</td>
+<td style="text-align: left;">Os dados podem ser encontrados por humanos e máquinas</td>
+<td style="text-align: left;">Identificador persistente (DOI), metadados ricos e indexados em repositórios</td>
+<td style="text-align: left;">Publicar em repositório com DOI (ex: Zenodo)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">A — Accessible (Acessível)</td>
+<td style="text-align: left;">Os dados podem ser obtidos por quem precisa deles</td>
+<td style="text-align: left;">Protocolo aberto (HTTP), metadados sempre acessíveis — mesmo que os dados tenham restrições de acesso</td>
+<td style="text-align: left;">Formato CSV aberto, sem autenticação para download</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">I — Interoperable (Interoperável)</td>
+<td style="text-align: left;">Os dados podem ser combinados com outros dados</td>
+<td style="text-align: left;">Formato aberto (CSV, não .xlsx proprietário), vocabulário padronizado, unidades explícitas</td>
+<td style="text-align: left;">Nomes de variáveis em inglês, unidades no dicionário, formato UTF-8</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">R — Reusable (Reutilizável)</td>
+<td style="text-align: left;">Os dados podem ser usados em novas análises</td>
+<td style="text-align: left;">Licença clara (ex: CC-BY), documentação completa — incluindo o dicionário de variáveis</td>
+<td style="text-align: left;">Dicionário completo (Cap. 7), licença definida, metodologia documentada</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>Note que FAIR <strong>não significa acesso irrestrito</strong>. Dados de pacientes, por exemplo, podem exigir anonimização ou acesso controlado. O princípio “Accessible” diz que os <em>metadados</em> devem ser sempre acessíveis — mesmo que os dados em si exijam autorização. A transparência está na <strong>documentação</strong>, não necessariamente no acesso livre <span class="citation" data-cites="wilkinson2016">(<a href="#ref-wilkinson2016" role="doc-biblioref">3</a>)</span>.</p>
+</section>
+<section id="repositórios-de-dados" class="level2">
+<h2 class="anchored" data-anchor-id="repositórios-de-dados">Repositórios de dados</h2>
+<p>Onde publicar? Os dados não devem ficar apenas como “material suplementar” no site do periódico (que pode mudar de URL ou desaparecer). Devem ser depositados em <strong>repositórios</strong> que garantam persistência, DOI e indexação.</p>
+<div class="cell">
+<div id="tbl-repositorios" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-repositorios-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabela&nbsp;3: Principais repositórios para publicação de dados científicos.
+</figcaption>
+<div aria-describedby="tbl-repositorios-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 15%">
+<col style="width: 18%">
+<col style="width: 10%">
+<col style="width: 37%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Repositório</th>
+<th style="text-align: left;">Mantenedor</th>
+<th style="text-align: left;">Custo</th>
+<th style="text-align: left;">DOI</th>
+<th style="text-align: left;">Destaque</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Zenodo</td>
+<td style="text-align: left;">CERN (Genebra)</td>
+<td style="text-align: left;">Gratuito</td>
+<td style="text-align: left;">Sim (automático)</td>
+<td style="text-align: left;">Integração com GitHub; versões; comunidades temáticas</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Figshare</td>
+<td style="text-align: left;">Digital Science</td>
+<td style="text-align: left;">Gratuito (até 5 GB)</td>
+<td style="text-align: left;">Sim (automático)</td>
+<td style="text-align: left;">Visualização online de dados e figuras; métricas de uso</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Dryad</td>
+<td style="text-align: left;">Dryad Digital Repository</td>
+<td style="text-align: left;">Cobrado por alguns periódicos</td>
+<td style="text-align: left;">Sim</td>
+<td style="text-align: left;">Curadoria: os dados são revisados antes de publicar</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">OSF</td>
+<td style="text-align: left;">Center for Open Science</td>
+<td style="text-align: left;">Gratuito</td>
+<td style="text-align: left;">Sim</td>
+<td style="text-align: left;">Projetos completos: dados + código + pré-registro + artigo</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Repositórios institucionais</td>
+<td style="text-align: left;">Universidades</td>
+<td style="text-align: left;">Varia</td>
+<td style="text-align: left;">Varia</td>
+<td style="text-align: left;">Exigência de algumas universidades para teses e dissertações</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>A escolha do repositório importa
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Antes de publicar, verifique: (1) o periódico tem repositório preferencial? (2) sua universidade exige depósito institucional? (3) os dados contêm informação identificável que exija acesso controlado? A resposta a essas perguntas determina qual repositório é mais adequado.</p>
+</div>
+</div>
+</section>
+<section id="o-que-publicar-junto-com-os-dados" class="level2">
+<h2 class="anchored" data-anchor-id="o-que-publicar-junto-com-os-dados">O que publicar junto com os dados</h2>
+<p>Dados sem contexto são inúteis. Um arquivo CSV sem explicação é tão opaco quanto um artigo sem metodologia. Para que os dados sejam <strong>reutilizáveis</strong> (o R de FAIR), é preciso acompanhá-los de documentação mínima:</p>
+<div class="cell">
+<div id="tbl-o-que-publicar" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-o-que-publicar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabela&nbsp;4: O pacote mínimo para publicação de dados — o que acompanha o CSV.
+</figcaption>
+<div aria-describedby="tbl-o-que-publicar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 66%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Componente</th>
+<th style="text-align: left;">Descrição</th>
+<th style="text-align: left;">Formato sugerido</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Arquivo de dados</td>
+<td style="text-align: left;">O banco de dados em formato aberto (CSV, UTF-8), com nomes de variáveis padronizados</td>
+<td style="text-align: left;">.csv (UTF-8, vírgula como separador)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dicionário de variáveis</td>
+<td style="text-align: left;">Documento descrevendo cada variável: nome, tipo, unidade, valores possíveis, regras de codificação (como no Cap. 7)</td>
+<td style="text-align: left;">.csv ou .md ou .pdf</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">README</td>
+<td style="text-align: left;">Arquivo de texto descrevendo o estudo, a coleta, o período, os critérios de inclusão/exclusão e a versão dos dados</td>
+<td style="text-align: left;">README.md ou README.txt</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Script de análise</td>
+<td style="text-align: left;">Código (R, Python) que reproduz as análises do artigo a partir dos dados brutos — o oposto de fórmulas escondidas no Excel</td>
+<td style="text-align: left;">.R, .py, .qmd</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Licença</td>
+<td style="text-align: left;">Licença que especifica como os dados podem ser usados (ex: CC-BY 4.0 — uso livre com atribuição)</td>
+<td style="text-align: left;">LICENSE.md ou campo no repositório</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</section>
+<section id="o-dicionário-como-ato-de-transparência" class="level2">
+<h2 class="anchored" data-anchor-id="o-dicionário-como-ato-de-transparência">O dicionário como ato de transparência</h2>
+<p>O dicionário de variáveis — que construímos no Capítulo 7 — não é apenas uma boa prática de organização. Ele é o componente que transforma dados <strong>acessíveis</strong> em dados <strong>reutilizáveis</strong>. Sem o dicionário, um pesquisador que baixe seu CSV verá colunas como <code>glicohemoglobina</code>, <code>ratio</code> e <code>time.ppn</code> sem saber o que significam, em que unidade foram medidas ou qual a faixa de valores esperada <span class="citation" data-cites="wilkinson2016">(<a href="#ref-wilkinson2016" role="doc-biblioref">3</a>)</span>.</p>
+<p>O dicionário é para os dados o que a seção de Métodos é para o artigo: o elemento que permite a <strong>reprodução</strong>. As diretrizes STROBE para estudos observacionais recomendam explicitamente que os autores descrevam como cada variável foi definida e medida <span class="citation" data-cites="vonelm2007">(<a href="#ref-vonelm2007" role="doc-biblioref">4</a>)</span>.</p>
+<div class="cell">
+<div id="tbl-dicionario-exemplo" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-dicionario-exemplo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabela&nbsp;5: Exemplo de dicionário publicável — cada variável documentada para reutilização.
+</figcaption>
+<div aria-describedby="tbl-dicionario-exemplo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 6%">
+<col style="width: 16%">
+<col style="width: 8%">
+<col style="width: 13%">
+<col style="width: 11%">
+<col style="width: 43%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variável</th>
+<th style="text-align: left;">Tipo de dado</th>
+<th style="text-align: left;">Unidade</th>
+<th style="text-align: left;">Valores</th>
+<th style="text-align: left;">Ausentes</th>
+<th style="text-align: left;">Observação</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">Identificador</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">1000–1402</td>
+<td style="text-align: left;">Nenhum</td>
+<td style="text-align: left;">Identificador único, não usar em análises</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">idade</td>
+<td style="text-align: left;">Numérica contínua</td>
+<td style="text-align: left;">anos completos</td>
+<td style="text-align: left;">19–92</td>
+<td style="text-align: left;">Nenhum</td>
+<td style="text-align: left;">Calculada na data de inclusão; ver Cap. 4 sobre idade contínua vs.&nbsp;discreta</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">sexo</td>
+<td style="text-align: left;">Categórica nominal (binária)</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">female, male</td>
+<td style="text-align: left;">Nenhum</td>
+<td style="text-align: left;">Sexo biológico declarado</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">colesterol</td>
+<td style="text-align: left;">Numérica contínua</td>
+<td style="text-align: left;">mg/dL</td>
+<td style="text-align: left;">78–443</td>
+<td style="text-align: left;">Codificados como NA</td>
+<td style="text-align: left;">Colesterol total em jejum; dosagem laboratorial</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">glicose</td>
+<td style="text-align: left;">Numérica contínua</td>
+<td style="text-align: left;">mg/dL</td>
+<td style="text-align: left;">48–385</td>
+<td style="text-align: left;">Codificados como NA</td>
+<td style="text-align: left;">Glicemia em jejum; dosagem laboratorial</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">biotipo</td>
+<td style="text-align: left;">Categórica ordinal</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">small &lt; medium &lt; large</td>
+<td style="text-align: left;">Codificados como NA</td>
+<td style="text-align: left;">Classificação antropométrica: small, medium, large</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">sistolica</td>
+<td style="text-align: left;">Numérica contínua</td>
+<td style="text-align: left;">mmHg</td>
+<td style="text-align: left;">82–250</td>
+<td style="text-align: left;">Codificados como NA</td>
+<td style="text-align: left;">Pressão arterial sistólica; esfigmomanômetro calibrado</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>Note como o tipo de dado — tema central de todo este projeto — aparece no dicionário como informação essencial. Saber que <code>biotipo</code> é ordinal (e não nominal) muda a análise: permite frequência acumulada, mediana e testes não paramétricos de tendência. Saber que <code>colesterol</code> é contínua de razão permite média, DP e teste <em>t</em>. O tipo de dado <strong>não é óbvio</strong> pelo nome da variável — precisa ser documentado.</p>
+</section>
+<section id="o-ciclo-completo-do-dado-ao-artigo-do-artigo-ao-dado" class="level2">
+<h2 class="anchored" data-anchor-id="o-ciclo-completo-do-dado-ao-artigo-do-artigo-ao-dado">O ciclo completo: do dado ao artigo, do artigo ao dado</h2>
+<p>Os nove capítulos deste projeto seguiram um percurso:</p>
+<div class="cell">
+<div id="tbl-ciclo" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-ciclo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabela&nbsp;6: O percurso completo — de Nightingale à publicação aberta.
+</figcaption>
+<div aria-describedby="tbl-ciclo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 7%">
+<col style="width: 22%">
+<col style="width: 43%">
+<col style="width: 26%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Capítulo</th>
+<th style="text-align: left;">Tema</th>
+<th style="text-align: left;">Pergunta central</th>
+<th style="text-align: left;">Narrativa histórica</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Cap. 1</td>
+<td style="text-align: left;">Dados e pesquisa</td>
+<td style="text-align: left;">O que é um dado? O que é uma variável?</td>
+<td style="text-align: left;">Florence Nightingale (1854)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cap. 2</td>
+<td style="text-align: left;">Classificação de variáveis</td>
+<td style="text-align: left;">Como classificar variáveis? (Stevens, NOIR)</td>
+<td style="text-align: left;">S. S. Stevens (1946)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cap. 3</td>
+<td style="text-align: left;">Dicionário de dados</td>
+<td style="text-align: left;">Como documentar o banco de dados?</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cap. 4</td>
+<td style="text-align: left;">Dados numéricos</td>
+<td style="text-align: left;">Como descrever variáveis numéricas?</td>
+<td style="text-align: left;">Quetelet (1835) + Tukey (1977)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cap. 5</td>
+<td style="text-align: left;">Dados categóricos</td>
+<td style="text-align: left;">Como descrever variáveis categóricas?</td>
+<td style="text-align: left;">John Graunt (1662)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cap. 6</td>
+<td style="text-align: left;">Casos especiais</td>
+<td style="text-align: left;">O que fazer quando a classificação não é clara?</td>
+<td style="text-align: left;">Rensis Likert (1932)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cap. 7</td>
+<td style="text-align: left;">Organização em planilhas</td>
+<td style="text-align: left;">Como organizar dados para que sejam analisáveis?</td>
+<td style="text-align: left;">Reinhart-Rogoff (2010/2013)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cap. 8</td>
+<td style="text-align: left;">Visualização por tipo</td>
+<td style="text-align: left;">Qual gráfico para qual tipo de dado?</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cap. 9</td>
+<td style="text-align: left;">Publicação e dados abertos</td>
+<td style="text-align: left;">Como tornar os dados disponíveis para a comunidade?</td>
+<td style="text-align: left;">Ioannidis (2005) + OSC (2015)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>O fio condutor é o <strong>tipo de dado</strong>: como classificá-lo, como descrevê-lo, como visualizá-lo e, finalmente, como documentá-lo para que outros possam fazer o mesmo. A publicação de dados abertos — com dicionário, licença e código reproduzível — é o último passo desse ciclo, mas também o primeiro de um novo: o ciclo em que outros pesquisadores usam seus dados para fazer ciência que você não imaginou.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Aviso</span>O paradoxo de Ioannidis
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Se a maioria dos achados publicados é provavelmente falsa, a solução <strong>não é</strong> publicar menos — é publicar <strong>melhor</strong>. Dados abertos, análises reproduzíveis e documentação transparente não eliminam o erro, mas o tornam <strong>detectável e corrigível</strong>. A ciência não avança por ser perfeita — avança por ser autocorrigível.</p>
+</div>
+</div>
+</section>
+<section id="resumo-do-capítulo" class="level2">
+<h2 class="anchored" data-anchor-id="resumo-do-capítulo">Resumo do capítulo</h2>
+<div class="cell">
+<div id="tbl-resumo-cap9" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-resumo-cap9-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabela&nbsp;7: Resumo — publicação de dados e ciência aberta.
+</figcaption>
+<div aria-describedby="tbl-resumo-cap9-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 54%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Conceito</th>
+<th style="text-align: left;">Definição</th>
+<th style="text-align: left;">Ação prática</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Crise de reprodutibilidade</td>
+<td style="text-align: left;">Muitos resultados publicados não se replicam — dados abertos são parte da solução</td>
+<td style="text-align: left;">Tornar dados disponíveis para verificação e replicação</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Princípios FAIR</td>
+<td style="text-align: left;">Findable, Accessible, Interoperable, Reusable — o padrão internacional para dados científicos</td>
+<td style="text-align: left;">Seguir os quatro princípios ao preparar dados para publicação</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Repositórios de dados</td>
+<td style="text-align: left;">Zenodo, Figshare, Dryad, OSF — garantem DOI, persistência e indexação</td>
+<td style="text-align: left;">Depositar dados em repositório com DOI antes de submeter o artigo</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dicionário de variáveis</td>
+<td style="text-align: left;">O documento que transforma um CSV opaco em dados reutilizáveis</td>
+<td style="text-align: left;">Incluir tipo de dado, unidade, valores possíveis e regras de codificação</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pacote mínimo de publicação</td>
+<td style="text-align: left;">Dados (CSV) + dicionário + README + script de análise + licença</td>
+<td style="text-align: left;">Preparar todos os componentes antes da submissão ao periódico</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Tipo de dado no dicionário</td>
+<td style="text-align: left;">Especificar se a variável é numérica/categórica, discreta/contínua, nominal/ordinal — informação essencial para reutilização</td>
+<td style="text-align: left;">Documentar o tipo de dado para cada variável — o tema central deste projeto</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Fechando o ciclo
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Este capítulo encerra o projeto — mas o tema não se encerra aqui. Cada artigo que você publicar, cada banco de dados que compartilhar, cada tabela descritiva que montar, começará pela mesma pergunta: <strong>que tipo de dado é este?</strong> A resposta a essa pergunta determina como descrever, como visualizar, como analisar e como documentar. É o primeiro passo — e o mais importante.</p>
+</div>
+</div>
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">Referências</h2><div id="refs" class="references csl-bib-body" role="list">
+<div id="ref-ioannidis2005" class="csl-entry" role="listitem">
+<div class="csl-left-margin">1. </div><div class="csl-right-inline">Ioannidis JPA. <a href="https://doi.org/10.1371/journal.pmed.0020124">Why Most Published Research Findings Are False</a>. PLOS Medicine. 2005;2(8):e124. </div>
+</div>
+<div id="ref-osc2015" class="csl-entry" role="listitem">
+<div class="csl-left-margin">2. </div><div class="csl-right-inline">Open Science Collaboration. <a href="https://doi.org/10.1126/science.aac4716">Estimating the Reproducibility of Psychological Science</a>. Science. 2015;349(6251):aac4716. </div>
+</div>
+<div id="ref-wilkinson2016" class="csl-entry" role="listitem">
+<div class="csl-left-margin">3. </div><div class="csl-right-inline">Wilkinson MD, Dumontier M, Aalbersberg IjJ, Appleton G, Axton M, Baak A, et al. <a href="https://doi.org/10.1038/sdata.2016.18">The <span>FAIR</span> Guiding Principles for Scientific Data Management and Stewardship</a>. Scientific Data. 2016;3:160018. </div>
+</div>
+<div id="ref-vonelm2007" class="csl-entry" role="listitem">
+<div class="csl-left-margin">4. </div><div class="csl-right-inline">von Elm E, Altman DG, Egger M, Pocock SJ, Gøtzsche PC, Vandenbroucke JP. <a href="https://doi.org/10.1016/S0140-6736(07)61602-X">The <span>Strengthening the Reporting of Observational Studies in Epidemiology (STROBE)</span> Statement: <span>Guidelines</span> for Reporting Observational Studies</a>. The Lancet. 2007;370(9596):1453–7. </div>
+</div>
+</div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiada");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiada");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

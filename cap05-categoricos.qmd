@@ -1,0 +1,517 @@
+---
+title: "Dados Categóricos"
+subtitle: "Nominais, ordinais, binários"
+---
+
+```{r}
+#| label: setup
+#| message: false
+
+library(readr)
+library(dplyr)
+library(knitr)
+library(kableExtra)
+library(ggplot2)
+library(tidyr)
+
+pacientes <- read_csv("data/pacientes.csv")
+beer <- read_csv("data/beer.csv")
+escolaridade <- read_csv("data/escolaridade.csv")
+```
+
+## A história
+
+Em 1662, um comerciante de tecidos londrino chamado John Graunt publicou um pequeno livro que mudaria a história da saúde pública: *Natural and Political Observations upon the Bills of Mortality*. Graunt não era médico, nem matemático — era um mercador curioso que decidiu examinar sistematicamente os registros semanais de mortes em Londres, os chamados *Bills of Mortality*, que a igreja publicava desde o século XVI [@graunt1662; @stigler1986].
+
+O que Graunt fez com esses registros foi extraordinariamente original: ele **categorizou**. Cada óbito era classificado por causa — "consumptyon" (tuberculose), "plague" (peste), "drowned" (afogamento), "aged" (velhice), "teeth" (problemas dentários em crianças). A partir dessas categorias, ele construiu **tabelas de frequência** — possivelmente as primeiras da história — e descobriu padrões que ninguém havia notado: que a proporção de mortes por causas violentas era surpreendentemente estável de ano para ano; que os nascimentos masculinos superavam os femininos numa razão constante de 14 para 13; e que, em anos sem peste, a mortalidade urbana era maior que a rural [@graunt1662; @stigler1999].
+
+Graunt também enfrentou um problema que todo pesquisador moderno reconhecerá: as categorias não eram padronizadas. Uma morte registrada como "teeth" em uma paróquia podia ser registrada como "convulsion" em outra. O mesmo óbito podia ser atribuído a "fever" ou a "spotted feaver" dependendo de quem preenchia o formulário. Graunt precisou **decidir** como agrupar, renomear e consolidar essas categorias para que suas tabelas fizessem sentido — exercendo, sem saber, o papel que todo pesquisador exerce ao definir os níveis de uma variável categórica.
+
+Com esse trabalho, Graunt é considerado o fundador da demografia e um dos pais da epidemiologia. Seu legado mais duradouro, porém, foi demonstrar que **contar categorias** — algo aparentemente trivial — é uma das ferramentas mais poderosas da ciência.
+
+::: {.callout-tip}
+## A lição de Graunt
+
+Dados categóricos não são dados "simples". A decisão de *quais categorias criar* e *como agrupar* os casos é uma decisão metodológica com consequências diretas para as conclusões. Graunt sabia disso em 1662 — e a lição continua válida.
+:::
+
+
+## O que são dados categóricos?
+
+Dados categóricos (ou qualitativos) representam **qualidades**. Não faz sentido calcular a "média" de uma variável categórica — a média de "feminino" e "masculino" não existe [@agresti2018]. A diferença fundamental em relação aos dados numéricos é que, para dados categóricos, as operações aritméticas (soma, subtração, média) **não têm significado**. As operações que fazem sentido são **contar** (quantos sujeitos em cada categoria) e **comparar proporções** (que fração do total pertence a cada grupo).
+
+Dados categóricos se subdividem em dois tipos, de acordo com a existência ou não de uma ordem entre as categorias. Quando as categorias não possuem hierarquia chamamos a variável de nominal. Quando existe uma ordenação natural entre os níveis chamamos de ordinal. As variáveis nominais, quando tem apenas dois níveis, são um tipo especial de variáveis nominais, usualmente chamadas de nominais binárias.
+
+```{r}
+#| label: tbl-tipos-categoricos
+#| tbl-cap: "Exemplos de variáveis categóricas em pesquisa em saúde — nominais, binárias e ordinais."
+
+tibble::tibble(
+  variavel = c("Tipo sanguíneo", "Cor dos olhos", "Sexo",
+               "Diagnóstico", "Óbito", "Exposição",
+               "Estadiamento do câncer", "Escala de dor", "Classe funcional (NYHA)"),
+  niveis = c("A, B, AB, O", "castanho, azul, verde, ...", "masculino, feminino, outro",
+             "presente, ausente", "sim, não", "sim, não",
+             "I < II < III < IV", "leve < moderada < intensa",
+             "I < II < III < IV"),
+  n_niveis = c(4, "variável", 3, 2, 2, 2, 4, 3, 4),
+  ordem = c("Não", "Não", "Não", "Não", "Não", "Não", "Sim", "Sim", "Sim")
+) |>
+  kable(
+    col.names = c("Variável", "Níveis", "Nº de níveis", "Ordem?"),
+    align = "llcc"
+  ) |>
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed"),
+    full_width = FALSE,
+    font_size = 14
+  ) |>
+  pack_rows("Nominais", 1, 3, bold = TRUE,
+            label_row_css = "background-color: #10B981; color: #fff;") |>
+  pack_rows("Nominais binárias", 4, 6, bold = TRUE,
+            label_row_css = "background-color: #3B82F6; color: #fff;") |>
+  pack_rows("Ordinais", 7, 9, bold = TRUE,
+            label_row_css = "background-color: #F59E0B; color: #fff;")
+```
+
+## Categóricos Nominais: categorias sem ordem
+
+Dados nominais classificam sujeitos em categorias **sem qualquer relação de hierarquia**. Reorganizar os níveis em qualquer sequência não altera o significado — "A, B, AB, O" é tão válido quanto "O, A, B, AB" [@agresti2018; @stevens1946].
+
+A única operação de comparação possível é a de **igualdade**: dois sujeitos estão na mesma categoria ou em categorias diferentes. Não existe "maior" ou "menor" entre os níveis.
+
+Exemplos em saúde: tipo sanguíneo (A, B, AB, O), sexo (feminino, masculino), cor dos olhos, estado civil, cidade de residência, diagnóstico principal (infarto, AVC, pneumonia).
+
+No nosso estudo, as variáveis `sexo` e `cidade` são nominais. A forma natural de apresentar dados nominais é a **tabela de frequência** — exatamente como Graunt fazia no século XVII. A tabela mostra quantos sujeitos pertencem a cada categoria (*frequência absoluta*, n) e qual fração do total cada categoria representa (*frequência relativa*, %).
+
+
+```{r}
+#| label: tbl-freq-sexo
+#| tbl-cap: "Distribuição de frequência da variável sexo — uma variável nominal binária."
+
+pacientes |>
+  count(sexo) |>
+  mutate(
+    proporcao = round(n / sum(n) * 100, 1),
+    ic_inf = round(proporcao - 1.96 * sqrt(proporcao * (100 - proporcao) / sum(n)), 1),
+    ic_sup = round(proporcao + 1.96 * sqrt(proporcao * (100 - proporcao) / sum(n)), 1),
+    ic_95 = paste0(ic_inf, " – ", ic_sup)
+  ) |>
+  select(sexo, n, proporcao, ic_95) |>
+  kable(
+    col.names = c("Sexo", "n", "%", "IC 95%"),
+    align = "lrrr"
+  ) |>
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed"),
+    full_width = FALSE
+  )
+```
+
+```{r}
+#| label: tbl-freq-cidade
+#| tbl-cap: "Distribuição de frequência da variável cidade."
+
+pacientes |>
+  count(cidade) |>
+  mutate(proporcao = round(n / sum(n) * 100, 1)) |>
+  kable(
+    col.names = c("Cidade", "n", "%"),
+    align = "lrr"
+  ) |>
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed"),
+    full_width = FALSE
+  )
+```
+
+
+Quando a variável tem poucas categorias — como `sexo`, com apenas dois níveis — a tabela é suficiente. Mas quando há muitas categorias, o **gráfico de barras** torna a comparação visual imediata. No dataset `beer`, que contém mais de 8.000 cervejas artesanais de diversos países, a variável `country` é nominal com dezenas de níveis. Vejamos os dez países com maior número de rótulos:
+
+```{r}
+#| label: fig-barras-paises
+#| fig-cap: "Gráfico de barras para o país de origem — uma variável nominal. A ordem das barras é arbitrária (aqui, por frequência), porque não existe hierarquia entre países."
+#| fig-width: 7
+#| fig-height: 5
+
+beer |>
+  count(country, sort = TRUE) |>
+  slice_head(n = 10) |>
+  mutate(country = factor(country, levels = rev(country))) |>
+  ggplot(aes(x = country, y = n)) +
+  geom_col(fill = "#3B82F6", color = "#1E40AF", linewidth = 0.3, alpha = 0.85, show.legend = FALSE) +
+  labs(x = "País", y = "Número de cervejas") +
+  coord_flip() +
+  theme_minimal(base_size = 12) +
+  theme(panel.grid.minor = element_blank())
+```
+
+Note que as barras estão ordenadas por frequência — mas poderiam estar em ordem alfabética ou qualquer outra. Para dados nominais, **a ordem das barras é uma escolha estética**, não uma propriedade dos dados. Reorganizar os países não muda a informação, mas torna o gráfico muito mais fácil de interpretar.
+
+### Categóricos Nominais binários
+
+Um caso particular — e extremamente frequente em saúde — são as variáveis nominais com exatamente **dois níveis**: as variáveis **binárias** (ou dicotômicas). Exemplos: diagnóstico (presente/ausente), desfecho (óbito/alta), exposição (sim/não), teste diagnóstico (positivo/negativo).
+
+Variáveis binárias ocupam uma posição especial na estatística porque podem ser codificadas como 0 e 1 — o que permite calcular a **proporção** diretamente como uma média aritmética. Se codificamos "male" = 1 e "female" = 0, a média da variável será a proporção de homens na amostra. Essa propriedade é a base de modelos como a regressão logística.
+
+::: {.callout-note}
+## Binária nominal ≠ binária numérica
+Quando codificamos sexo como 0 e 1, estamos criando uma representação numérica de uma variável categórica. Os números são **rótulos**, não magnitudes — o "1" não é "maior" que o "0" em termos de grandeza. Essa distinção é crucial para não tratar uma codificação como uma medição.
+:::
+
+
+## Categóricos Ordinais
+
+Dados ordinais classificam sujeitos em categorias que possuem uma **hierarquia natural** — uma relação de "maior que" ou "menor que" — mas cujas **distâncias entre os níveis não são necessariamente iguais** [@stevens1946; @agresti2018].
+
+Sabemos que um tumor em estágio III é mais avançado que um em estágio II. Mas não podemos afirmar que a "distância" entre estágio I e II é a mesma que entre II e III — a progressão tumoral não segue incrementos uniformes.
+
+Exemplos em saúde: estadiamento de câncer (I < II < III < IV), classe funcional NYHA (I–IV), escala de dor (leve < moderada < intensa), classificação ASA de risco cirúrgico (I–V), escolaridade (fundamental < médio < superior).
+
+No nosso estudo, a variável `biotipo` é ordinal:
+
+```{r}
+#| label: tbl-freq-biotipo
+#| tbl-cap: "Distribuição do biotipo — uma variável ordinal. A ordem dos níveis importa."
+
+pacientes |>
+  filter(!is.na(biotipo)) |>
+  mutate(biotipo = factor(biotipo, levels = c("small", "medium", "large"), ordered = TRUE)) |>
+  count(biotipo) |>
+  mutate(
+    proporcao = round(n / sum(n) * 100, 1),
+    acumulado = round(cumsum(proporcao), 1)
+  ) |>
+  kable(
+    col.names = c("Biotipo", "n", "%", "% acumulado"),
+    align = "lrrr"
+  ) |>
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed"),
+    full_width = FALSE
+  )
+```
+
+Note a coluna **% acumulado** — ela faz sentido para dados ordinais (57,6% dos pacientes são *small* ou *medium*), mas **não faria sentido** para dados nominais (o "% acumulado" de tipo sanguíneo A + B não tem interpretação útil).
+
+Para ilustrar melhor a importância da ordenação, vejamos outro exemplo. O dataset `escolaridade` contém 300 registros fictícios com proporções baseadas na PNAD Contínua. A variável `escolaridade` tem seis níveis ordenados — de "Fundamental incompleto" a "Pós-graduação". Quando representamos essa variável num gráfico de barras, **a ordem das barras deve respeitar a hierarquia dos níveis**:
+
+```{r}
+#| label: fig-escolaridade-ordenada
+#| fig-cap: "Escolaridade em ordem correta — as barras seguem a hierarquia natural dos níveis, do menor para o maior grau de instrução."
+#| fig-width: 7
+#| fig-height: 4.5
+
+niveis_esc <- c("Fundamental incompleto", "Fundamental completo",
+                "Ensino médio", "Superior incompleto",
+                "Superior completo", "Pós-graduação")
+
+escolaridade |>
+  mutate(escolaridade = factor(escolaridade, levels = niveis_esc, ordered = TRUE)) |>
+  count(escolaridade) |>
+  mutate(proporcao = n / sum(n) * 100) |>
+  ggplot(aes(y = escolaridade, x = proporcao, fill = escolaridade)) +
+  geom_col(alpha = 0.85, show.legend = FALSE) +
+  scale_fill_manual(values = c("#DBEAFE", "#93C5FD", "#60A5FA", "#3B82F6", "#2563EB", "#1E40AF")) +
+  labs(x = NULL, y = "Proporção (%)") +
+  theme_minimal(base_size = 12) +
+  theme(panel.grid.minor = element_blank(),
+        axis.text.x = element_text(angle = 25, hjust = 1))
+```
+
+Compare com o que acontece quando deixamos o software ordenar as categorias por conta própria — geralmente em ordem **alfabética**:
+
+```{r}
+#| label: fig-escolaridade-errada
+#| fig-cap: "Escolaridade em ordem alfabética — a hierarquia desaparece e o gráfico perde o sentido. 'Ensino médio' aparece antes de 'Fundamental', e 'Pós-graduação' antes de 'Superior'."
+#| fig-width: 7
+#| fig-height: 4.5
+
+escolaridade |>
+  count(escolaridade) |>
+  mutate(proporcao = n / sum(n) * 100) |>
+  ggplot(aes(y = escolaridade, x = proporcao, fill = escolaridade)) +
+  geom_col(alpha = 0.85, show.legend = FALSE) +
+  scale_fill_manual(values = c("#F87171", "#F87171", "#F87171", "#F87171", "#F87171", "#F87171")) +
+  labs(x = NULL, y = "Proporção (%)") +
+  theme_minimal(base_size = 12) +
+  theme(panel.grid.minor = element_blank(),
+        axis.text.x = element_text(angle = 25, hjust = 1))
+```
+
+A diferença é evidente. No primeiro gráfico, o leitor enxerga imediatamente a distribuição da população por grau de instrução — a concentração no ensino médio, a queda acentuada no superior incompleto. No segundo, as categorias estão embaralhadas e a leitura se perde. Para dados nominais, como os países do gráfico anterior, qualquer ordem serve. Para dados ordinais, **a ordem é parte da informação**.
+
+### A mediana como medida central
+
+Para dados ordinais, a **mediana** é a medida de tendência central adequada — ela identifica o nível "central" da distribuição. A **moda** (o nível mais frequente) também é válida. A **média**, porém, não tem sentido: requer distâncias iguais entre os níveis, algo que dados ordinais não garantem [@siegel1988].
+
+```{r}
+#| label: tbl-mediana-ordinal
+#| tbl-cap: "Medida de tendência central para o biotipo — a mediana identifica o nível central."
+
+pacientes |>
+  filter(!is.na(biotipo)) |>
+  mutate(biotipo_num = case_when(
+    biotipo == "small" ~ 1,
+    biotipo == "medium" ~ 2,
+    biotipo == "large" ~ 3
+  )) |>
+  summarise(
+    n = n(),
+    moda = "medium",
+    mediana_nivel = c("small", "medium", "large")[round(median(biotipo_num))]
+  ) |>
+  kable(
+    col.names = c("n", "Moda", "Mediana"),
+    align = "rll"
+  ) |>
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed"),
+    full_width = FALSE
+  )
+```
+
+
+## Os níveis são definidos pelo pesquisador
+
+Uma das ideias mais importantes sobre dados categóricos — e uma extensão direta da lição de Graunt — é que **os níveis de uma variável categórica são uma decisão do pesquisador**. A mesma realidade pode ser categorizada de formas diferentes, e essa decisão tem consequências diretas para a análise.
+
+Considere a variável "escolaridade". Um pesquisador pode defini-la com três níveis (fundamental, médio, superior), com cinco (fundamental incompleto, fundamental completo, médio, superior incompleto, superior completo) ou até com categorias mais detalhadas que incluam pós-graduação. Cada escolha gera uma variável diferente — com granularidade diferente e poder de discriminação diferente.
+
+```{r}
+#| label: tbl-niveis-decisao
+#| tbl-cap: "A mesma variável, diferentes níveis — a granularidade é decisão do pesquisador."
+
+tibble::tibble(
+  variavel = c("Escolaridade", "Escolaridade", "Escolaridade",
+               "IMC", "IMC", "IMC",
+               "Dor", "Dor", "Dor"),
+  versao = c("3 níveis", "5 níveis", "7 níveis",
+             "2 níveis", "4 níveis", "6 níveis",
+             "2 níveis", "4 níveis", "11 níveis"),
+  niveis = c("Fundamental, Médio, Superior",
+             "Fund. incompleto, Fund. completo, Médio, Sup. incompleto, Sup. completo",
+             "Inclui pós-graduação (mestrado, doutorado)",
+             "Normal, Excesso de peso",
+             "Baixo peso, Normal, Sobrepeso, Obesidade",
+             "Inclui graus de obesidade (I, II, III)",
+             "Sim, Não",
+             "Ausente, Leve, Moderada, Intensa",
+             "Escala numérica 0–10 (tratada como ordinal)")
+) |>
+  kable(
+    col.names = c("Variável", "Versão", "Níveis"),
+    align = "lll"
+  ) |>
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed"),
+    full_width = FALSE
+  )
+```
+
+::: {.callout-important}
+## Mais níveis nem sempre é melhor
+
+Aumentar o número de níveis aumenta a granularidade, mas pode **reduzir o tamanho amostral em cada nível**, dificultando comparações estatísticas. A escolha ideal equilibra precisão clínica com viabilidade analítica. Uma regra prática: cada nível deve conter casos suficientes para que as frequências sejam interpretáveis.
+:::
+
+
+## Tabelas de contingência: cruzando categorias
+
+Quando queremos analisar a **associação** entre duas variáveis categóricas, usamos uma **tabela de contingência** (ou tabela cruzada). Cada célula mostra a frequência de sujeitos que pertencem simultaneamente a uma categoria de cada variável.
+
+```{r}
+#| label: tbl-contingencia
+#| tbl-cap: "Tabela de contingência — sexo vs. biotipo. Cada célula é uma combinação de categorias."
+
+pacientes |>
+  filter(!is.na(biotipo)) |>
+  mutate(biotipo = factor(biotipo, levels = c("small", "medium", "large"), ordered = TRUE)) |>
+  count(sexo, biotipo) |>
+  pivot_wider(names_from = biotipo, values_from = n, values_fill = 0) |>
+  mutate(Total = small + medium + large) |>
+  kable(
+    col.names = c("Sexo", "Small", "Medium", "Large", "Total"),
+    align = "lrrrr"
+  ) |>
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed"),
+    full_width = FALSE
+  )
+```
+
+A tabela de contingência é o ponto de partida para testes de associação como o **qui-quadrado** (χ²) e o **teste exato de Fisher** — os equivalentes categóricos do teste *t* e da correlação para dados numéricos.
+
+A tabela de contingência resume os dados numericamente, mas nem sempre permite perceber de imediato os padrões de distribuição. Por isso, é útil complementar a tabela com um gráfico. No gráfico de barras empilhadas proporcionais, cada barra corresponde a um sexo, e cada segmento indica a proporção de indivíduos classificados em cada biotipo. Esse tipo de visualização ajuda a comparar se a distribuição dos biotipos é semelhante ou diferente entre os grupos.
+
+
+```{r}
+#| label: fig-barras-empilhadas
+#| fig-cap: "Distribuição do biotipo por sexo — barras empilhadas proporcionais."
+#| fig-width: 7
+#| fig-height: 4
+
+pacientes |>
+  filter(!is.na(biotipo)) |>
+  mutate(biotipo = factor(biotipo, levels = c("small", "medium", "large"), ordered = TRUE)) |>
+  count(sexo, biotipo) |>
+  group_by(sexo) |>
+  mutate(proporcao = n / sum(n) * 100) |>
+  ggplot(aes(x = sexo, y = proporcao, fill = biotipo)) +
+  geom_col(alpha = 0.85, position = "stack") +
+  scale_fill_manual(values = c("small" = "#93C5FD", "medium" = "#3B82F6", "large" = "#1E40AF"),
+                     name = "Biotipo") +
+  labs(x = "Sexo", y = "Proporção (%)") +
+  theme_minimal(base_size = 12) +
+  theme(panel.grid.minor = element_blank())
+```
+
+Se as proporções dos segmentos forem parecidas entre as barras, isso sugere distribuições semelhantes entre os sexos. Se houver diferenças visíveis no tamanho relativo dos segmentos, isso pode indicar uma possível associação entre as variáveis, a ser formalmente avaliada por testes como o qui-quadrado ou o teste exato de Fisher.
+
+
+## O perigo dos números que parecem numéricos
+
+Um dos erros mais comuns em pesquisa é tratar variáveis categóricas ordinais **como se fossem numéricas** — simplesmente porque os níveis foram codificados com números. Se atribuímos 1 = leve, 2 = moderado, 3 = grave a uma escala de dor, o software aceita calcular a "média = 2,3" sem nenhum protesto. Mas essa média **não tem significado clínico**: ela pressupõe que a distância entre "leve" e "moderado" é a mesma que entre "moderado" e "grave" — o que raramente é verdade [@velleman1993; @hand2004].
+
+```{r}
+#| label: tbl-falsa-precisao
+#| tbl-cap: "O mesmo dado ordinal codificado de três formas diferentes — note como a 'média' muda."
+
+tibble::tibble(
+  nivel = c("Leve", "Moderado", "Grave"),
+  cod_a = c(1, 2, 3),
+  cod_b = c(1, 2, 5),
+  cod_c = c(1, 3, 10)
+) |>
+  kable(
+    col.names = c("Nível de dor", "Codificação A", "Codificação B", "Codificação C"),
+    align = "lrrr"
+  ) |>
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed"),
+    full_width = FALSE
+  )
+```
+
+Se tivermos 3 pacientes com dor leve, 5 com moderada e 2 com grave, a "média" será 1,9 na codificação A, 2,3 na B e 4,1 na C — três respostas diferentes para os mesmos dados. A média é um artefato da codificação, não uma propriedade dos dados.
+
+::: {.callout-warning}
+## E a escala de Likert?
+
+O exemplo mais debatido desse dilema é a **escala de Likert** — aquela em que o respondente marca seu grau de concordância de "discordo totalmente" (1) a "concordo totalmente" (5). Pode-se calcular a média de respostas Likert? Existem argumentos apaixonados dos dois lados. Esse debate — que envolve as contribuições de Jamieson, Norman, Carifio e outros — é o tema central do **Capítulo 6** [@likert1932].
+:::
+
+
+## Como reportar dados categóricos
+
+A forma padrão de reportar dados categóricos em artigos científicos é por meio de **frequências absolutas e relativas** (n e %), organizadas em tabelas:
+
+```{r}
+#| label: tbl-como-reportar-cat
+#| tbl-cap: "Modelo de tabela descritiva para dados categóricos — formato padrão em artigos científicos."
+
+bind_rows(
+  pacientes |>
+    count(sexo) |>
+    mutate(variavel = "Sexo", nivel = sexo, prop = round(n / sum(n) * 100, 1)) |>
+    select(variavel, nivel, n, prop),
+  pacientes |>
+    filter(!is.na(biotipo)) |>
+    mutate(biotipo = factor(biotipo, levels = c("small", "medium", "large"), ordered = TRUE)) |>
+    count(biotipo) |>
+    mutate(variavel = "Biotipo", nivel = as.character(biotipo), prop = round(n / sum(n) * 100, 1)) |>
+    select(variavel, nivel, n, prop),
+  pacientes |>
+    count(cidade) |>
+    mutate(variavel = "Cidade", nivel = cidade, prop = round(n / sum(n) * 100, 1)) |>
+    select(variavel, nivel, n, prop)
+) |>
+  kable(
+    col.names = c("Variável", "Nível", "n", "%"),
+    align = "llrr"
+  ) |>
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed"),
+    full_width = FALSE
+  )
+```
+
+::: {.callout-important}
+## Sempre reporte n e %
+
+Reportar apenas a porcentagem sem o n absoluto dificulta a interpretação — 50% pode significar 5 de 10 ou 500 de 1000. A convenção é apresentar ambos: **n (%)**, como em "feminino: 234 (58,1%)". Isso permite ao leitor avaliar tanto a proporção quanto a precisão da estimativa.
+:::
+
+
+## Nominal vs. ordinal: resumo comparativo
+
+```{r}
+#| label: tbl-nominal-ordinal
+#| tbl-cap: "Comparação entre variáveis nominais e ordinais — as diferenças que importam na prática."
+
+tibble::tibble(
+  aspecto = c("Ordem entre níveis", "Medida de centro",
+              "Frequência acumulada", "Codificação numérica",
+              "Gráfico", "Teste de associação",
+              "Exemplo do estudo"),
+  nominal = c("Não existe", "Moda",
+              "Sem sentido", "Rótulos arbitrários (0/1)",
+              "Barras (qualquer ordem)", "Qui-quadrado, Fisher",
+              "Sexo (female, male)"),
+  ordinal = c("Existe (hierarquia natural)", "Mediana",
+              "Faz sentido (% acumulado)", "Reflete a ordem, mas distâncias não garantidas",
+              "Barras (ordem fixa)", "Mann-Whitney, Kruskal-Wallis",
+              "Biotipo (small < medium < large)")
+) |>
+  kable(
+    col.names = c("Aspecto", "Nominal", "Ordinal"),
+    align = "lll"
+  ) |>
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed"),
+    full_width = FALSE
+  )
+```
+
+
+## Resumo do capítulo
+
+```{r}
+#| label: tbl-resumo-cap5
+#| tbl-cap: "Resumo — dados categóricos em pesquisa em saúde."
+
+tibble::tibble(
+  conceito = c("Variáveis nominais", "Variáveis ordinais",
+               "Variáveis binárias", "Níveis",
+               "Tabela de frequência", "Tabela de contingência",
+               "Gráfico de barras"),
+  definicao = c("Categorias sem ordem; rótulos intercambiáveis",
+                "Categorias com hierarquia; ordem sem distâncias iguais",
+                "Caso especial com exatamente dois níveis (sim/não, 0/1)",
+                "As categorias possíveis, definidas pelo pesquisador antes da coleta",
+                "Frequência absoluta (n) e relativa (%) por nível",
+                "Cruzamento de duas variáveis categóricas (linha × coluna)",
+                "Representação visual adequada para dados categóricos"),
+  exemplo = c("Sexo, tipo sanguíneo, cidade",
+              "Biotipo, estadiamento de câncer, escala de dor",
+              "Sexo (female/male), óbito (sim/não)",
+              "Biotipo: small, medium, large — definidos pelo protocolo",
+              "Female: 234 (58,1%); Male: 169 (41,9%)",
+              "Sexo × biotipo: quantos homens são 'large'?",
+              "Barras verticais com proporção (%) no eixo y")
+) |>
+  kable(
+    col.names = c("Conceito", "Definição", "Exemplo do estudo"),
+    align = "lll"
+  ) |>
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed"),
+    full_width = FALSE
+  )
+```
+
+::: {.callout-note}
+## Próximos passos
+
+Este capítulo apresentou os dados categóricos — nominais, ordinais e suas propriedades. No próximo capítulo, enfrentaremos os **casos especiais**: variáveis que desafiam a classificação simples, como a escala de Likert, o IMC (contínuo que vira categórico) e outros limites entre o numérico e o categórico.
+:::

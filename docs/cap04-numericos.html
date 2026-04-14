@@ -1,0 +1,1576 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Dados Numéricos – Tipos de Dados em Saúde</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-5b4ad623e5705c0698d39aec6f10cf02.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles/custom.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Tipos de Dados em Saúde</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Procurar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Alternar de navegação" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Início</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-fundamentos" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Fundamentos</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-fundamentos">    
+        <li>
+    <a class="dropdown-item" href="./cap01-dados-pesquisa.html">
+ <span class="dropdown-text">Os Dados da Pesquisa</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./cap02-classificacao.html">
+ <span class="dropdown-text">Classificação dos Tipos de Dados</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./cap03-dicionario.html">
+ <span class="dropdown-text">Dicionário de Variáveis</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tiposdedados" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Tipos de Dados</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-tiposdedados">    
+        <li>
+    <a class="dropdown-item" href="./cap04-numericos.html">
+ <span class="dropdown-text">Dados Numéricos</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./cap05-categoricos.html">
+ <span class="dropdown-text">Dados Categóricos</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./cap06-casos-especiais.html">
+ <span class="dropdown-text">Casos Especiais</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-na-prática" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Na Prática</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-na-prática">    
+        <li>
+    <a class="dropdown-item" href="./cap07-planilhas.html">
+ <span class="dropdown-text">Organizando Dados em Planilhas</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./cap08-visualizacao.html">
+ <span class="dropdown-text">Visualizando por Tipo de Dado</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./cap09-publicando.html">
+ <span class="dropdown-text">Publicando seus Dados</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./cap10-tipos-r-python.html">
+ <span class="dropdown-text">Tipos de Dados no R e no Python</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./referencias.html"> 
+<span class="menu-text">Referências</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./about.html"> 
+<span class="menu-text">Sobre</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/halvarengda"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Nesta página</h2>
+   
+  <ul>
+  <li><a href="#a-história" id="toc-a-história" class="nav-link active" data-scroll-target="#a-história">A história</a></li>
+  <li><a href="#o-que-são-dados-numéricos" id="toc-o-que-são-dados-numéricos" class="nav-link" data-scroll-target="#o-que-são-dados-numéricos">O que são dados numéricos?</a></li>
+  <li><a href="#discretos-vs.-contínuos" id="toc-discretos-vs.-contínuos" class="nav-link" data-scroll-target="#discretos-vs.-contínuos">Discretos vs.&nbsp;contínuos</a>
+  <ul class="collapse">
+  <li><a href="#variáveis-numéricas-discretas" id="toc-variáveis-numéricas-discretas" class="nav-link" data-scroll-target="#variáveis-numéricas-discretas">Variáveis numéricas discretas</a></li>
+  <li><a href="#variáveis-numéricas-contínuas" id="toc-variáveis-numéricas-contínuas" class="nav-link" data-scroll-target="#variáveis-numéricas-contínuas">Variáveis numéricas contínuas</a></li>
+  </ul></li>
+  <li><a href="#escalas-intervalar-e-de-razão-uma-distinção-que-ficou-na-teoria" id="toc-escalas-intervalar-e-de-razão-uma-distinção-que-ficou-na-teoria" class="nav-link" data-scroll-target="#escalas-intervalar-e-de-razão-uma-distinção-que-ficou-na-teoria">Escalas intervalar e de razão: uma distinção que ficou na teoria</a>
+  <ul class="collapse">
+  <li><a href="#por-que-essa-distinção-ficou-na-teoria" id="toc-por-que-essa-distinção-ficou-na-teoria" class="nav-link" data-scroll-target="#por-que-essa-distinção-ficou-na-teoria">Por que essa distinção ficou na teoria</a></li>
+  <li><a href="#o-que-adotamos-neste-livro" id="toc-o-que-adotamos-neste-livro" class="nav-link" data-scroll-target="#o-que-adotamos-neste-livro">O que adotamos neste livro</a></li>
+  </ul></li>
+  <li><a href="#descrevendo-dados-numéricos" id="toc-descrevendo-dados-numéricos" class="nav-link" data-scroll-target="#descrevendo-dados-numéricos">Descrevendo dados numéricos</a>
+  <ul class="collapse">
+  <li><a href="#medidas-de-tendência-central" id="toc-medidas-de-tendência-central" class="nav-link" data-scroll-target="#medidas-de-tendência-central">Medidas de tendência central</a></li>
+  <li><a href="#medidas-de-dispersão" id="toc-medidas-de-dispersão" class="nav-link" data-scroll-target="#medidas-de-dispersão">Medidas de dispersão</a></li>
+  <li><a href="#a-forma-da-distribuição" id="toc-a-forma-da-distribuição" class="nav-link" data-scroll-target="#a-forma-da-distribuição">A forma da distribuição</a></li>
+  </ul></li>
+  <li><a href="#o-boxplot-cinco-números-que-contam-uma-história" id="toc-o-boxplot-cinco-números-que-contam-uma-história" class="nav-link" data-scroll-target="#o-boxplot-cinco-números-que-contam-uma-história">O boxplot: cinco números que contam uma história</a></li>
+  <li><a href="#o-resumo-dos-cinco-números" id="toc-o-resumo-dos-cinco-números" class="nav-link" data-scroll-target="#o-resumo-dos-cinco-números">O resumo dos cinco números</a></li>
+  <li><a href="#como-reportar-dados-numéricos" id="toc-como-reportar-dados-numéricos" class="nav-link" data-scroll-target="#como-reportar-dados-numéricos">Como reportar dados numéricos</a></li>
+  <li><a href="#transformações-quando-os-dados-não-cooperam" id="toc-transformações-quando-os-dados-não-cooperam" class="nav-link" data-scroll-target="#transformações-quando-os-dados-não-cooperam">Transformações: quando os dados não cooperam</a></li>
+  <li><a href="#resumo-do-capítulo" id="toc-resumo-do-capítulo" class="nav-link" data-scroll-target="#resumo-do-capítulo">Resumo do capítulo</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Dados Numéricos</h1>
+<p class="subtitle lead">Discretos, contínuos e tudo o que podemos medir</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="a-história" class="level2">
+<h2 class="anchored" data-anchor-id="a-história">A história</h2>
+<p>Em 1835, o astrônomo e matemático belga Adolphe Quetelet publicou <em>Sur l’Homme et le Développement de ses Facultés</em> — um tratado ambicioso que propunha aplicar à sociedade humana os mesmos métodos que a astronomia usava para medir estrelas. Quetelet coletou milhares de medidas de altura, peso e perímetro torácico de soldados e civis, e descobriu algo que o fascinava: quando agrupadas, essas medições formavam uma curva em sino — a distribuição normal — com notável regularidade. Ele chamou o centro dessa curva de <em>l’homme moyen</em>: o “homem médio” <span class="citation" data-cites="quetelet1835 stigler1986">(<a href="#ref-quetelet1835" role="doc-biblioref">1</a>,<a href="#ref-stigler1986" role="doc-biblioref">2</a>)</span>.</p>
+<p>A ideia era revolucionária. Até então, variações individuais eram vistas como erros de observação — ruído a ser eliminado. Quetelet inverteu a lógica: a <strong>variação</strong> entre indivíduos era real e mensurável, e a <strong>média</strong> era uma descrição legítima do grupo. Nasciam ali dois conceitos que até hoje são a base de qualquer análise de dados numéricos: a tendência central e a dispersão.</p>
+<p>Mais de um século depois, em 1977, John Tukey publicou <em>Exploratory Data Analysis</em>, um livro que mudaria a forma como estatísticos olham para números antes de testá-los. A premissa de Tukey era direta: <strong>“É importante entender o que você pode fazer antes de aprender a medir quão bem você parece ter feito”</strong> <span class="citation" data-cites="tukey1977">(<a href="#ref-tukey1977" role="doc-biblioref">3</a>)</span>. Em vez de começar com hipóteses e testes formais, Tukey propunha que o analista primeiro <em>explorasse</em> seus dados — usando gráficos simples, resumos numéricos e ferramentas visuais como o diagrama de ramo-e-folhas e o boxplot. A exploração revelaria padrões, anomalias e surpresas que testes confirmatórios jamais detectariam sozinhos.</p>
+<p>A lição conjunta de Quetelet e Tukey é o tema deste capítulo: dados numéricos carregam informação rica — média, dispersão, forma, outliers — mas essa riqueza só se revela quando sabemos o que procurar e como descrever.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>A lição de Tukey
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Antes de testar, explore. Antes de modelar, descreva. A análise exploratória não é um passo opcional — é o primeiro passo.</p>
+</div>
+</div>
+</section>
+<section id="o-que-são-dados-numéricos" class="level2">
+<h2 class="anchored" data-anchor-id="o-que-são-dados-numéricos">O que são dados numéricos?</h2>
+<p>Dados numéricos (ou quantitativos) representam <strong>quantidades mensuráveis</strong>. São valores sobre os quais operações aritméticas — soma, subtração, média, desvio-padrão — produzem resultados com significado. No R, são armazenados como <code>integer</code> (inteiros) ou <code>numeric</code>/<code>double</code> (decimais).</p>
+<p>A definição parece simples, mas carrega uma implicação profunda: se um valor é numérico, a <strong>distância</strong> entre dois valores tem significado. A diferença entre 120 e 140 mmHg de pressão sistólica (20 mmHg) é a mesma que entre 140 e 160 mmHg. Isso não ocorre com dados categóricos ordinais — a distância entre “leve” e “moderado” não é necessariamente igual à distância entre “moderado” e “grave”.</p>
+<p>No nosso banco de dados, a maioria das variáveis é numérica:</p>
+<div class="cell">
+<div id="tbl-variaveis-numericas" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-variaveis-numericas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabela&nbsp;1: Variáveis numéricas do estudo — cada uma com unidade e tipo de medição definidos.
+</figcaption>
+<div aria-describedby="tbl-variaveis-numericas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variável</th>
+<th style="text-align: left;">Unidade</th>
+<th style="text-align: left;">Tipo</th>
+<th style="text-align: left;">Instrumento / origem</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">idade</td>
+<td style="text-align: left;">anos</td>
+<td style="text-align: left;">Contínua*</td>
+<td style="text-align: left;">Registro civil</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">colesterol</td>
+<td style="text-align: left;">mg/dL</td>
+<td style="text-align: left;">Contínua</td>
+<td style="text-align: left;">Dosagem laboratorial</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">glicose</td>
+<td style="text-align: left;">mg/dL</td>
+<td style="text-align: left;">Contínua</td>
+<td style="text-align: left;">Dosagem laboratorial</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">hdl</td>
+<td style="text-align: left;">mg/dL</td>
+<td style="text-align: left;">Contínua</td>
+<td style="text-align: left;">Dosagem laboratorial</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ratio</td>
+<td style="text-align: left;">adimensional</td>
+<td style="text-align: left;">Contínua</td>
+<td style="text-align: left;">Calculado (colesterol/hdl)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">glicohemoglobina</td>
+<td style="text-align: left;">% (HbA1c)</td>
+<td style="text-align: left;">Contínua</td>
+<td style="text-align: left;">Dosagem laboratorial</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">peso</td>
+<td style="text-align: left;">kg</td>
+<td style="text-align: left;">Contínua</td>
+<td style="text-align: left;">Balança</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">altura</td>
+<td style="text-align: left;">cm</td>
+<td style="text-align: left;">Contínua</td>
+<td style="text-align: left;">Estadiômetro</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">sistolica</td>
+<td style="text-align: left;">mmHg</td>
+<td style="text-align: left;">Contínua</td>
+<td style="text-align: left;">Esfigmomanômetro</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">diastolica</td>
+<td style="text-align: left;">mmHg</td>
+<td style="text-align: left;">Contínua</td>
+<td style="text-align: left;">Esfigmomanômetro</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">cintura</td>
+<td style="text-align: left;">cm</td>
+<td style="text-align: left;">Contínua</td>
+<td style="text-align: left;">Fita métrica</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">quadril</td>
+<td style="text-align: left;">cm</td>
+<td style="text-align: left;">Contínua</td>
+<td style="text-align: left;">Fita métrica</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>* A variável <code>idade</code> merece uma discussão à parte — veja o callout mais adiante.</p>
+</section>
+<section id="discretos-vs.-contínuos" class="level2">
+<h2 class="anchored" data-anchor-id="discretos-vs.-contínuos">Discretos vs.&nbsp;contínuos</h2>
+<p>A distinção mais fundamental entre dados numéricos é entre <strong>discretos</strong> e <strong>contínuos</strong>. Embora o Capítulo 2 já tenha introduzido essa classificação, aqui a aprofundamos com exemplos, critérios e casos-limite.</p>
+<section id="variáveis-numéricas-discretas" class="level3">
+<h3 class="anchored" data-anchor-id="variáveis-numéricas-discretas">Variáveis numéricas discretas</h3>
+<p>Dados discretos assumem valores inteiros e finitos (ou infinitos enumeráveis), sem frações significativas no contexto da medição. Um teste prático ajuda a identificá-los: se, para qualquer par de valores observados, o valor intermediário <strong>não faz sentido</strong> no contexto da variável, ela é discreta <span class="citation" data-cites="kaliyadan2019">(<a href="#ref-kaliyadan2019" role="doc-biblioref">4</a>)</span>. Entre 5 e 8 lesões, “6,5 lesões” não existe. Não faz sentido dizer que um paciente teve 2,7 internações ou que uma família tem 1,3 filhos.</p>
+<div class="cell">
+<div id="tbl-exemplos-discretos" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-exemplos-discretos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabela&nbsp;2: Exemplos de variáveis numéricas discretas em pesquisa em saúde.
+</figcaption>
+<div aria-describedby="tbl-exemplos-discretos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 32%">
+<col style="width: 21%">
+<col style="width: 10%">
+<col style="width: 34%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variável</th>
+<th style="text-align: left;">Valores possíveis</th>
+<th style="text-align: left;">Operação</th>
+<th style="text-align: left;">Distribuição típica</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Número de internações</td>
+<td style="text-align: left;">0, 1, 2, 3, …</td>
+<td style="text-align: left;">Contagem</td>
+<td style="text-align: left;">Poisson</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Número de filhos</td>
+<td style="text-align: left;">0, 1, 2, 3, …</td>
+<td style="text-align: left;">Contagem</td>
+<td style="text-align: left;">Poisson</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Quantidade de medicamentos</td>
+<td style="text-align: left;">0, 1, 2, 3, …</td>
+<td style="text-align: left;">Contagem</td>
+<td style="text-align: left;">Poisson</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Número de consultas/ano</td>
+<td style="text-align: left;">0, 1, 2, 3, …</td>
+<td style="text-align: left;">Contagem</td>
+<td style="text-align: left;">Poisson</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Número de lesões cutâneas</td>
+<td style="text-align: left;">0, 1, 2, 3, …</td>
+<td style="text-align: left;">Contagem</td>
+<td style="text-align: left;">Poisson / Binomial negativa</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Número de dentes cariados</td>
+<td style="text-align: left;">0, 1, 2, 3, …</td>
+<td style="text-align: left;">Contagem</td>
+<td style="text-align: left;">Binomial</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</section>
+<section id="variáveis-numéricas-contínuas" class="level3">
+<h3 class="anchored" data-anchor-id="variáveis-numéricas-contínuas">Variáveis numéricas contínuas</h3>
+<p>Dados contínuos podem assumir qualquer valor dentro de um intervalo — incluindo frações arbitrariamente precisas. A precisão é limitada apenas pelo <strong>instrumento de medida</strong>, não pela natureza da variável.</p>
+<p>O mesmo teste prático funciona ao inverso: se, para qualquer par de valores, o valor intermediário <strong>faz sentido</strong>, a variável é contínua <span class="citation" data-cites="kaliyadan2019">(<a href="#ref-kaliyadan2019" role="doc-biblioref">4</a>)</span>. Entre um paciente com 72,0 kg e outro com 74,0 kg, um paciente com 73,0 kg é perfeitamente plausível — assim como 72,5 ou 73,217 kg.</p>
+<div class="cell">
+<div id="tbl-continuas-descritivas" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-continuas-descritivas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabela&nbsp;3: Variáveis numéricas contínuas do estudo — amplitude e estatísticas descritivas.
+</figcaption>
+<div aria-describedby="tbl-continuas-descritivas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variável</th>
+<th style="text-align: left;">Unidade</th>
+<th style="text-align: right;">n válidos</th>
+<th style="text-align: right;">Mín</th>
+<th style="text-align: right;">Máx</th>
+<th style="text-align: right;">Média</th>
+<th style="text-align: right;">DP</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">colesterol</td>
+<td style="text-align: left;">mg/dL</td>
+<td style="text-align: right;">402</td>
+<td style="text-align: right;">78.00</td>
+<td style="text-align: right;">443.00</td>
+<td style="text-align: right;">207.8</td>
+<td style="text-align: right;">44.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">glicose</td>
+<td style="text-align: left;">mg/dL</td>
+<td style="text-align: right;">403</td>
+<td style="text-align: right;">48.00</td>
+<td style="text-align: right;">385.00</td>
+<td style="text-align: right;">106.7</td>
+<td style="text-align: right;">53.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">hdl</td>
+<td style="text-align: left;">mg/dL</td>
+<td style="text-align: right;">402</td>
+<td style="text-align: right;">12.00</td>
+<td style="text-align: right;">120.00</td>
+<td style="text-align: right;">50.4</td>
+<td style="text-align: right;">17.3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">glicohemoglobina</td>
+<td style="text-align: left;">% (HbA1c)</td>
+<td style="text-align: right;">390</td>
+<td style="text-align: right;">2.68</td>
+<td style="text-align: right;">16.11</td>
+<td style="text-align: right;">5.6</td>
+<td style="text-align: right;">2.2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">peso</td>
+<td style="text-align: left;">kg</td>
+<td style="text-align: right;">402</td>
+<td style="text-align: right;">44.91</td>
+<td style="text-align: right;">147.42</td>
+<td style="text-align: right;">80.6</td>
+<td style="text-align: right;">18.3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">altura</td>
+<td style="text-align: left;">cm</td>
+<td style="text-align: right;">398</td>
+<td style="text-align: right;">132.08</td>
+<td style="text-align: right;">193.04</td>
+<td style="text-align: right;">167.7</td>
+<td style="text-align: right;">10.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">sistolica</td>
+<td style="text-align: left;">mmHg</td>
+<td style="text-align: right;">398</td>
+<td style="text-align: right;">90.00</td>
+<td style="text-align: right;">250.00</td>
+<td style="text-align: right;">136.9</td>
+<td style="text-align: right;">22.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">diastolica</td>
+<td style="text-align: left;">mmHg</td>
+<td style="text-align: right;">398</td>
+<td style="text-align: right;">48.00</td>
+<td style="text-align: right;">124.00</td>
+<td style="text-align: right;">83.3</td>
+<td style="text-align: right;">13.6</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Aviso</span>Idade: discreta ou contínua?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>No nosso banco de dados, a variável <code>idade</code> aparece registrada como números inteiros (19, 23, 45, …). Isso torna a idade uma variável discreta? A resposta exige cuidado.</p>
+<p>O tempo — e, portanto, o envelhecimento — é um fenômeno intrinsecamente contínuo. O fato de a idade ser comumente expressa em anos inteiros não a transforma em variável discreta: o que define a natureza da escala não são os valores efetivamente registrados, mas o <strong>potencial da escala de acomodar valores decimais</strong> <span class="citation" data-cites="chittaranjan2017">(<a href="#ref-chittaranjan2017" role="doc-biblioref">5</a>)</span>. A prova é que a idade de crianças é rotineiramente expressa em meses e a de neonatos em dias — precisamente porque a precisão em anos inteiros seria insuficiente.</p>
+<p>Um teste simples ajuda a esclarecer: se, para qualquer par de valores observados, o valor intermediário é significativo, a variável é contínua <span class="citation" data-cites="kaliyadan2019">(<a href="#ref-kaliyadan2019" role="doc-biblioref">4</a>)</span>. Entre um paciente de 40 anos e outro de 41, um paciente de 40,5 anos faz perfeito sentido — diferentemente de “6,5 lesões”, que não faz.</p>
+<p>Na prática da pesquisa, a maioria dos artigos sequer especifica <em>como</em> a idade foi calculada — se na admissão, na inclusão no estudo ou no momento do desfecho — e se foram considerados meses ou apenas anos inteiros <span class="citation" data-cites="voor2019">(<a href="#ref-voor2019" role="doc-biblioref">6</a>)</span>.</p>
+<p>O risco maior, porém, está em <strong>categorizar</strong> a idade em faixas etárias quando isso não é necessário. Altman e Royston demonstram que dicotomizar uma variável contínua pela mediana reduz o poder estatístico tanto quanto descartar um terço dos dados <span class="citation" data-cites="altman2006">(<a href="#ref-altman2006" role="doc-biblioref">7</a>)</span>. A recomendação é clara: sempre que possível, mantenha a idade como variável contínua na análise.</p>
+<p><strong>Em resumo</strong>: a idade é uma variável <strong>contínua por natureza</strong>, frequentemente <strong>registrada de forma discreta</strong> (em anos inteiros) e por vezes indevidamente <strong>categorizada</strong> em faixas etárias. Reconhecer essa distinção é fundamental para escolher a análise estatística correta.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="escalas-intervalar-e-de-razão-uma-distinção-que-ficou-na-teoria" class="level2">
+<h2 class="anchored" data-anchor-id="escalas-intervalar-e-de-razão-uma-distinção-que-ficou-na-teoria">Escalas intervalar e de razão: uma distinção que ficou na teoria</h2>
+<p>Nos capítulos anteriores, classificamos variáveis em dois grandes grupos: numéricas e categóricas. Peso é numérico. Sexo é categórico. Pressão arterial é numérica. Tipo sanguíneo é categórico. Essa divisão é intuitiva, funciona bem na prática e guia praticamente todas as decisões que tomamos ao escolher um teste estatístico ou um tipo de gráfico.</p>
+<p>Mas quem já cursou uma disciplina de bioestatística — ou folheou um livro-texto antes de chegar a este — provavelmente aprendeu uma classificação mais detalhada. Não dois tipos, mas quatro: nominal, ordinal, intervalar e de razão. A sigla NOIR (<em>Nominal, Ordinal, Interval, Ratio</em>), proposta por Stevens em 1946, aparece em praticamente todo curso introdutório e foi apresentada no Capítulo 2 deste livro <span class="citation" data-cites="stevens1946">(<a href="#ref-stevens1946" role="doc-biblioref">8</a>)</span>. E se nominal e ordinal correspondem ao que chamamos de categórico, o ramo numérico deveria, pela lógica de Stevens, ser subdividido em mais dois: intervalar e de razão.</p>
+<p>A diferença entre escalas intervalar e de razão se resume a uma pergunta: <strong>o zero da escala significa ausência da grandeza?</strong></p>
+<p>Na <strong>escala intervalar</strong>, o zero é arbitrário — não representa ausência da grandeza. O exemplo clássico é a temperatura em graus Celsius: 0 °C não significa “ausência de temperatura”, mas sim o ponto de congelamento da água. Consequência: podemos calcular diferenças (a diferença entre 20 °C e 30 °C são 10 °C), mas não razões (30 °C não é “o dobro” de 15 °C em termos de calor).</p>
+<p>Na <strong>escala de razão</strong>, o zero é absoluto — representa ausência da grandeza. Peso, altura, concentração de colesterol e pressão arterial são exemplos. Um paciente com 80 kg pesa exatamente o dobro de um com 40 kg. As quatro operações aritméticas e todas as estatísticas descritivas são válidas.</p>
+<div class="cell">
+<div id="tbl-intervalar-razao" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-intervalar-razao-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabela&nbsp;4: Comparação entre escalas intervalar e de razão — a diferença está no zero.
+</figcaption>
+<div aria-describedby="tbl-intervalar-razao-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 37%">
+<col style="width: 45%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Aspecto</th>
+<th style="text-align: left;">Escala intervalar</th>
+<th style="text-align: left;">Escala de razão</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Zero</td>
+<td style="text-align: left;">Arbitrário (convenção)</td>
+<td style="text-align: left;">Absoluto (ausência da grandeza)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Diferenças</td>
+<td style="text-align: left;">Significativas (10 °C de diferença)</td>
+<td style="text-align: left;">Significativas (10 kg de diferença)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Razões</td>
+<td style="text-align: left;">Sem sentido (30 °C ≠ 2 × 15 °C)</td>
+<td style="text-align: left;">Significativas (80 kg = 2 × 40 kg)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Exemplo clínico</td>
+<td style="text-align: left;">Temperatura em °C, ano calendário</td>
+<td style="text-align: left;">Peso (kg), colesterol (mg/dL), altura (cm)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Estatísticas</td>
+<td style="text-align: left;">Média, DP, correlação de Pearson</td>
+<td style="text-align: left;">Todas + média geométrica, CV</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<section id="por-que-essa-distinção-ficou-na-teoria" class="level3">
+<h3 class="anchored" data-anchor-id="por-que-essa-distinção-ficou-na-teoria">Por que essa distinção ficou na teoria</h3>
+<p>A distinção é conceitualmente correta. Mas na prática da análise de dados — especialmente em saúde — ela perdeu relevância por quatro razões convergentes.</p>
+<p><strong>O software não a reconhece.</strong> As duas linguagens dominantes na análise de dados em saúde — R e Python — organizam suas variáveis em tipos que <em>não incluem</em> a distinção intervalar/razão. No R, uma variável numérica é <code>numeric</code> ou <code>integer</code>; uma categórica é <code>factor</code>. No Python (pandas), temos <code>float64</code> e <code>category</code>. Em nenhum dos dois ambientes existe um tipo <code>interval</code> separado de <code>ratio</code>. Quando a ferramenta que o mundo inteiro usa para analisar dados não reconhece uma distinção, é um sinal forte de que essa distinção não muda as decisões práticas de análise.</p>
+<p><strong>As operações estatísticas são as mesmas.</strong> Média, desvio-padrão, teste <em>t</em>, ANOVA, correlação de Pearson, regressão linear — todas essas ferramentas pressupõem apenas que as <strong>distâncias</strong> entre valores são significativas, o que é verdade tanto para escalas intervalares quanto para escalas de razão. A única operação que a escala de razão permite e a intervalar não — a razão entre valores (ex: “o dobro”) — raramente aparece como parte de um teste estatístico formal.</p>
+<p><strong>Variáveis intervalares são raras em saúde.</strong> Na pesquisa clínica e epidemiológica, a grande maioria das variáveis numéricas é de razão: peso, altura, pressão, colesterol, glicose, frequência cardíaca, contagens celulares. Os exemplos clássicos de escala intervalar — temperatura em °C, ano calendário, escore de QI — aparecem com pouca frequência em bancos de dados clínicos. Uma distinção que raramente se aplica é uma distinção que raramente importa.</p>
+<p><strong>A literatura aponta na mesma direção.</strong> Velleman e Wilkinson, em uma crítica influente à taxonomia de Stevens, concluem que a distinção operacional relevante na prática é entre <em>“categorical factors”</em> (nominais e ordinais) e <em>“continuous covariates”</em> (intervalares e de razão) — exatamente a divisão que adotamos neste livro. A seção 7 de seu artigo é intitulada, significativamente, <em>“Good data analysis does not assume data types”</em>, e a seção 8 conclui que <em>“the scale type of data depends on the questions we intend to ask”</em> <span class="citation" data-cites="velleman1993">(<a href="#ref-velleman1993" role="doc-biblioref">9</a>)</span>. Agresti, em seu livro-texto de referência, organiza a classificação principal em <em>“quantitative”</em> e <em>“categorical”</em>, apresentando a subdivisão intervalar/razão como nota conceitual, não como divisor de análise <span class="citation" data-cites="agresti2018">(<a href="#ref-agresti2018" role="doc-biblioref">10</a>)</span>. Norman demonstra que testes paramétricos produzem resultados válidos independentemente de o dado ser intervalar ou de razão — a robustez a violações de pressupostos de escala é documentada há décadas <span class="citation" data-cites="norman2010">(<a href="#ref-norman2010" role="doc-biblioref">11</a>)</span>.</p>
+</section>
+<section id="o-que-adotamos-neste-livro" class="level3">
+<h3 class="anchored" data-anchor-id="o-que-adotamos-neste-livro">O que adotamos neste livro</h3>
+<p>Diante dessas evidências, este livro trabalha com a classificação em dois grandes ramos: <strong>numérico</strong> (discreto ou contínuo) e <strong>categórico</strong> (nominal ou ordinal). Essa é a divisão que determina as decisões reais do dia a dia: se usamos média ou proporção, histograma ou barras, teste <em>t</em> ou qui-quadrado.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>A distinção intervalar/razão importa quando?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Em alguns contextos específicos, a diferença entre escalas intervalar e de razão pode ser relevante — por exemplo, na interpretação do coeficiente de variação (que pressupõe zero absoluto) ou no uso da média geométrica. Mas, para a grande maioria das análises em saúde, a pergunta que realmente muda a abordagem é: <strong>o dado é numérico ou categórico?</strong></p>
+</div>
+</div>
+</section>
+</section>
+<section id="descrevendo-dados-numéricos" class="level2">
+<h2 class="anchored" data-anchor-id="descrevendo-dados-numéricos">Descrevendo dados numéricos</h2>
+<p>Descrever adequadamente uma variável numérica exige responder a três perguntas: <strong>onde estão os dados?</strong> (tendência central), <strong>quão espalhados estão?</strong> (dispersão) e <strong>qual a forma da distribuição?</strong> (simetria, outliers).</p>
+<section id="medidas-de-tendência-central" class="level3">
+<h3 class="anchored" data-anchor-id="medidas-de-tendência-central">Medidas de tendência central</h3>
+<p>As três medidas clássicas — média, mediana e moda — respondem de formas diferentes à pergunta “qual é o valor típico?”.</p>
+<div class="cell">
+<div id="tbl-tendencia-central" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-tendencia-central-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabela&nbsp;5: Medidas de tendência central para variáveis selecionadas do estudo.
+</figcaption>
+<div aria-describedby="tbl-tendencia-central-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 6%">
+<col style="width: 8%">
+<col style="width: 11%">
+<col style="width: 60%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variável</th>
+<th style="text-align: right;">Média</th>
+<th style="text-align: right;">Mediana</th>
+<th style="text-align: right;">Diferença</th>
+<th style="text-align: left;">Interpretação</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">colesterol</td>
+<td style="text-align: right;">207.8</td>
+<td style="text-align: right;">204.0</td>
+<td style="text-align: right;">3.8</td>
+<td style="text-align: left;">Assimetria à direita (cauda longa para valores altos)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">glicose</td>
+<td style="text-align: right;">106.7</td>
+<td style="text-align: right;">89.0</td>
+<td style="text-align: right;">17.7</td>
+<td style="text-align: left;">Assimetria à direita (cauda longa para valores altos)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">peso</td>
+<td style="text-align: right;">80.6</td>
+<td style="text-align: right;">78.2</td>
+<td style="text-align: right;">2.4</td>
+<td style="text-align: left;">Assimetria à direita (cauda longa para valores altos)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">idade</td>
+<td style="text-align: right;">46.9</td>
+<td style="text-align: right;">45.0</td>
+<td style="text-align: right;">1.9</td>
+<td style="text-align: left;">Distribuição aproximadamente simétrica</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">sistolica</td>
+<td style="text-align: right;">136.9</td>
+<td style="text-align: right;">136.0</td>
+<td style="text-align: right;">0.9</td>
+<td style="text-align: left;">Distribuição aproximadamente simétrica</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>Quando a média e a mediana são próximas, a distribuição tende a ser simétrica. Quando divergem, há assimetria — e a mediana é geralmente a medida mais representativa do “valor típico”, pois é menos influenciada por valores extremos <span class="citation" data-cites="freedman2007">(<a href="#ref-freedman2007" role="doc-biblioref">12</a>)</span>.</p>
+</section>
+<section id="medidas-de-dispersão" class="level3">
+<h3 class="anchored" data-anchor-id="medidas-de-dispersão">Medidas de dispersão</h3>
+<p>A tendência central sozinha não basta. Dois grupos podem ter a mesma média e distribuições completamente diferentes. As medidas de dispersão capturam essa variabilidade.</p>
+<div class="cell">
+<div id="tbl-dispersao" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-dispersao-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabela&nbsp;6: Medidas de dispersão para variáveis selecionadas do estudo.
+</figcaption>
+<div aria-describedby="tbl-dispersao-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variável</th>
+<th style="text-align: right;">Desvio-padrão</th>
+<th style="text-align: right;">Intervalo interquartil</th>
+<th style="text-align: right;">Amplitude</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">colesterol</td>
+<td style="text-align: right;">44.4</td>
+<td style="text-align: right;">51.0</td>
+<td style="text-align: right;">365.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">glicose</td>
+<td style="text-align: right;">53.1</td>
+<td style="text-align: right;">25.0</td>
+<td style="text-align: right;">337.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">peso</td>
+<td style="text-align: right;">18.3</td>
+<td style="text-align: right;">22.2</td>
+<td style="text-align: right;">102.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">idade</td>
+<td style="text-align: right;">16.3</td>
+<td style="text-align: right;">26.0</td>
+<td style="text-align: right;">73.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">sistolica</td>
+<td style="text-align: right;">22.7</td>
+<td style="text-align: right;">25.5</td>
+<td style="text-align: right;">160.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>O <strong>desvio-padrão</strong> (DP) é a medida mais usada: quanto maior, mais os dados se espalham ao redor da média. O <strong>intervalo interquartil</strong> (IIQ) — a diferença entre o percentil 75 e o percentil 25 — é robusto a outliers e complementa a mediana da mesma forma que o DP complementa a média. A <strong>amplitude</strong> (máximo − mínimo) é simples mas muito sensível a valores extremos.</p>
+</section>
+<section id="a-forma-da-distribuição" class="level3">
+<h3 class="anchored" data-anchor-id="a-forma-da-distribuição">A forma da distribuição</h3>
+<p>A <strong>distribuição</strong> de uma variável numérica revela padrões que nenhuma estatística isolada consegue capturar: simetria, caudas longas, picos múltiplos e valores atípicos. É aqui que a lição de Tukey se materializa — a exploração visual é insubstituível <span class="citation" data-cites="tukey1977">(<a href="#ref-tukey1977" role="doc-biblioref">3</a>)</span>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-histogramas" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-histogramas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="cap04-numericos_files/figure-html/fig-histogramas-1.png" class="img-fluid figure-img" width="1350">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-histogramas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1: Distribuição de quatro variáveis numéricas — note a diferença de forma entre elas.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Observe como as distribuições diferem: a idade e o peso apresentam distribuições mais simétricas, enquanto a glicose apresenta forte assimetria à direita — com uma cauda longa de valores elevados, típica de variáveis metabólicas em populações que incluem pacientes diabéticos.</p>
+</section>
+</section>
+<section id="o-boxplot-cinco-números-que-contam-uma-história" class="level2">
+<h2 class="anchored" data-anchor-id="o-boxplot-cinco-números-que-contam-uma-história">O boxplot: cinco números que contam uma história</h2>
+<p>O boxplot (diagrama de caixa) é talvez a ferramenta mais elegante que Tukey legou à estatística. Com apenas cinco números — mínimo, primeiro quartil (Q1), mediana, terceiro quartil (Q3) e máximo — ele resume a distribuição inteira e ainda identifica valores atípicos <span class="citation" data-cites="tukey1977">(<a href="#ref-tukey1977" role="doc-biblioref">3</a>)</span>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-boxplot-explicado" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-boxplot-explicado-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="cap04-numericos_files/figure-html/fig-boxplot-explicado-1.png" class="img-fluid figure-img" width="1050">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-boxplot-explicado-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2: Anatomia do boxplot — os cinco números de Tukey aplicados ao colesterol do estudo.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>A <strong>caixa</strong> cobre o intervalo interquartil (IIQ = Q3 − Q1), contendo os 50% centrais dos dados. A <strong>linha central</strong> é a mediana. Os <strong>bigodes</strong> se estendem até o valor mais extremo que esteja dentro de 1,5 × IIQ a partir da caixa. Pontos além dos bigodes são sinalizados como potenciais <strong>outliers</strong> — valores que merecem investigação (não necessariamente exclusão).</p>
+<p>O boxplot é especialmente útil para <strong>comparar grupos</strong>:</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-boxplot-comparacao" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-boxplot-comparacao-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="cap04-numericos_files/figure-html/fig-boxplot-comparacao-1.png" class="img-fluid figure-img" width="1050">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-boxplot-comparacao-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3: Comparação da pressão sistólica entre sexos — o boxplot revela diferenças de mediana, dispersão e outliers.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="o-resumo-dos-cinco-números" class="level2">
+<h2 class="anchored" data-anchor-id="o-resumo-dos-cinco-números">O resumo dos cinco números</h2>
+<p>O <em>five-number summary</em> de Tukey — mínimo, Q1, mediana, Q3 e máximo — é a base do boxplot e uma forma poderosa de descrever qualquer variável numérica sem pressupor simetria ou normalidade <span class="citation" data-cites="tukey1977">(<a href="#ref-tukey1977" role="doc-biblioref">3</a>)</span>.</p>
+<div class="cell">
+<div id="tbl-cinco-numeros" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-cinco-numeros-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabela&nbsp;7: Resumo dos cinco números para as variáveis numéricas do estudo.
+</figcaption>
+<div aria-describedby="tbl-cinco-numeros-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variável</th>
+<th style="text-align: right;">Mín</th>
+<th style="text-align: right;">Q1</th>
+<th style="text-align: right;">Mediana</th>
+<th style="text-align: right;">Q3</th>
+<th style="text-align: right;">Máx</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">idade</td>
+<td style="text-align: right;">19.0</td>
+<td style="text-align: right;">34.0</td>
+<td style="text-align: right;">45.0</td>
+<td style="text-align: right;">60.0</td>
+<td style="text-align: right;">92.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">colesterol</td>
+<td style="text-align: right;">78.0</td>
+<td style="text-align: right;">179.0</td>
+<td style="text-align: right;">204.0</td>
+<td style="text-align: right;">230.0</td>
+<td style="text-align: right;">443.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">glicose</td>
+<td style="text-align: right;">48.0</td>
+<td style="text-align: right;">81.0</td>
+<td style="text-align: right;">89.0</td>
+<td style="text-align: right;">106.0</td>
+<td style="text-align: right;">385.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">hdl</td>
+<td style="text-align: right;">12.0</td>
+<td style="text-align: right;">38.0</td>
+<td style="text-align: right;">46.0</td>
+<td style="text-align: right;">59.0</td>
+<td style="text-align: right;">120.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">peso</td>
+<td style="text-align: right;">44.9</td>
+<td style="text-align: right;">68.5</td>
+<td style="text-align: right;">78.2</td>
+<td style="text-align: right;">90.7</td>
+<td style="text-align: right;">147.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">altura</td>
+<td style="text-align: right;">132.1</td>
+<td style="text-align: right;">160.0</td>
+<td style="text-align: right;">167.6</td>
+<td style="text-align: right;">175.3</td>
+<td style="text-align: right;">193.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">sistolica</td>
+<td style="text-align: right;">90.0</td>
+<td style="text-align: right;">121.2</td>
+<td style="text-align: right;">136.0</td>
+<td style="text-align: right;">146.8</td>
+<td style="text-align: right;">250.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">diastolica</td>
+<td style="text-align: right;">48.0</td>
+<td style="text-align: right;">75.0</td>
+<td style="text-align: right;">82.0</td>
+<td style="text-align: right;">90.0</td>
+<td style="text-align: right;">124.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</section>
+<section id="como-reportar-dados-numéricos" class="level2">
+<h2 class="anchored" data-anchor-id="como-reportar-dados-numéricos">Como reportar dados numéricos</h2>
+<p>A forma de reportar uma variável numérica depende da simetria de sua distribuição. As duas convenções mais comuns na literatura em saúde são:</p>
+<div class="cell">
+<div id="tbl-como-reportar" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-como-reportar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabela&nbsp;8: Convenções para reportar dados numéricos em artigos científicos.
+</figcaption>
+<div aria-describedby="tbl-como-reportar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 31%">
+<col style="width: 27%">
+<col style="width: 22%">
+<col style="width: 18%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Situação</th>
+<th style="text-align: left;">Como reportar</th>
+<th style="text-align: left;">Exemplo do estudo</th>
+<th style="text-align: left;">Teste de comparação</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Distribuição simétrica (aproximadamente normal)</td>
+<td style="text-align: left;">Média ± desvio-padrão (DP)</td>
+<td style="text-align: left;">Colesterol: 207,8 ± 44,4 mg/dL</td>
+<td style="text-align: left;">Teste t, ANOVA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Distribuição assimétrica ou com outliers</td>
+<td style="text-align: left;">Mediana (intervalo interquartil: Q1 – Q3)</td>
+<td style="text-align: left;">Glicose: 90,0 (81,0 – 106,0) mg/dL</td>
+<td style="text-align: left;">Mann-Whitney, Kruskal-Wallis</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Não misture as convenções
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Se a variável é reportada como mediana (IIQ), o teste de comparação deve ser não paramétrico (Mann-Whitney, Kruskal-Wallis). Se é reportada como média ± DP, o teste correspondente é o paramétrico (teste <em>t</em>, ANOVA). A coerência entre a estatística descritiva e o teste inferencial é fundamental — e revisores de periódicos frequentemente apontam essa inconsistência <span class="citation" data-cites="altman2006">(<a href="#ref-altman2006" role="doc-biblioref">7</a>)</span>.</p>
+</div>
+</div>
+</section>
+<section id="transformações-quando-os-dados-não-cooperam" class="level2">
+<h2 class="anchored" data-anchor-id="transformações-quando-os-dados-não-cooperam">Transformações: quando os dados não cooperam</h2>
+<p>Variáveis com distribuição muito assimétrica — como a glicose no nosso estudo — podem dificultar a aplicação de métodos que pressupõem normalidade. Uma estratégia comum é aplicar uma <strong>transformação matemática</strong> que aproxime a distribuição de uma forma mais simétrica.</p>
+<p>A transformação mais usada é o <strong>logaritmo natural</strong> (ln). Ela comprime os valores mais altos mais intensamente do que os mais baixos, o que frequentemente reduz a assimetria à direita.”</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-transformacao" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-transformacao-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="cap04-numericos_files/figure-html/fig-transformacao-1.png" class="img-fluid figure-img" width="1350">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-transformacao-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;4: Efeito da transformação logarítmica sobre a distribuição da glicose.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>A transformação logarítmica é especialmente útil para variáveis biológicas estritamente positivas e com assimetria à direita, como concentrações sanguíneas, tempos de reação e algumas medidas laboratoriais. Em muitos casos, ela reduz a assimetria e estabiliza a variabilidade, o que pode tornar mais apropriado o uso de métodos paramétricos. Após a análise, os resultados podem ser reexpressos na escala original; por exemplo, a média dos valores transformados em log, quando retransformada, corresponde à média geométrica. <span class="citation" data-cites="freedman2007">(<a href="#ref-freedman2007" role="doc-biblioref">12</a>)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Cuidado com a interpretação
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A transformação facilita a análise estatística, mas os <strong>resultados devem ser interpretados na escala original</strong>. Uma diferença de 0,3 em ln(glicose) não é intuitiva para o clínico — é preciso converter de volta para mg/dL.</p>
+</div>
+</div>
+</section>
+<section id="resumo-do-capítulo" class="level2">
+<h2 class="anchored" data-anchor-id="resumo-do-capítulo">Resumo do capítulo</h2>
+<div class="cell">
+<div id="tbl-resumo-cap4" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-resumo-cap4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabela&nbsp;9: Resumo — dados numéricos em pesquisa em saúde.
+</figcaption>
+<div aria-describedby="tbl-resumo-cap4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 50%">
+<col style="width: 32%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Conceito</th>
+<th style="text-align: left;">Definição</th>
+<th style="text-align: left;">Exemplo do estudo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Variáveis discretas</td>
+<td style="text-align: left;">Resultado de contagem; valores inteiros sem frações significativas</td>
+<td style="text-align: left;">Nº de internações, nº de filhos</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Variáveis contínuas</td>
+<td style="text-align: left;">Resultado de medição; qualquer valor em um intervalo contínuo</td>
+<td style="text-align: left;">Peso (kg), colesterol (mg/dL), pressão (mmHg)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Escala intervalar</td>
+<td style="text-align: left;">Zero arbitrário; diferenças significativas, razões sem sentido</td>
+<td style="text-align: left;">Temperatura (°C), ano calendário</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Escala de razão</td>
+<td style="text-align: left;">Zero absoluto; todas as operações aritméticas são válidas</td>
+<td style="text-align: left;">Peso (kg), altura (cm), colesterol (mg/dL)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Tendência central</td>
+<td style="text-align: left;">Média (distribuição simétrica) ou mediana (assimétrica)</td>
+<td style="text-align: left;">Colesterol: média = 207,8; Glicose: mediana = 90,0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dispersão</td>
+<td style="text-align: left;">DP (com a média) ou IIQ (com a mediana)</td>
+<td style="text-align: left;">Colesterol: DP = 44,4; Glicose: IIQ = 81,0 – 106,0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Boxplot</td>
+<td style="text-align: left;">Resumo visual dos cinco números de Tukey — revela centro, dispersão e outliers</td>
+<td style="text-align: left;">Comparação de pressão sistólica entre sexos</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Transformação logarítmica</td>
+<td style="text-align: left;">Comprime assimetria à direita; útil para variáveis biológicas</td>
+<td style="text-align: left;">Glicose em escala log → distribuição simétrica</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Próximos passos
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Este capítulo explorou os dados numéricos — sua classificação, descrição e visualização. No próximo capítulo, faremos o mesmo percurso para os <strong>dados categóricos</strong>: nominais, ordinais e as armadilhas de tratar categorias como números.</p>
+</div>
+</div>
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">Referências</h2><div id="refs" class="references csl-bib-body" role="list">
+<div id="ref-quetelet1835" class="csl-entry" role="listitem">
+<div class="csl-left-margin">1. </div><div class="csl-right-inline">Quetelet A. Sur l’<span>Homme</span> et Le Développement de Ses Facultés, Ou Essai de Physique Sociale. Paris: Bachelier; 1835. </div>
+</div>
+<div id="ref-stigler1986" class="csl-entry" role="listitem">
+<div class="csl-left-margin">2. </div><div class="csl-right-inline">Stigler SM. The History of Statistics: <span>The</span> Measurement of Uncertainty before 1900. Cambridge, MA: Harvard University Press; 1986. </div>
+</div>
+<div id="ref-tukey1977" class="csl-entry" role="listitem">
+<div class="csl-left-margin">3. </div><div class="csl-right-inline">Tukey JW. Exploratory Data Analysis. Reading, MA: Addison-Wesley; 1977. </div>
+</div>
+<div id="ref-kaliyadan2019" class="csl-entry" role="listitem">
+<div class="csl-left-margin">4. </div><div class="csl-right-inline">Kaliyadan F, Kulkarni V. <a href="https://doi.org/10.4103/idoj.IDOJ_468_18">Types of <span>Variables</span>, <span>Descriptive Statistics</span>, and <span>Sample Size</span>.</a> Indian dermatology online journal. 2019 Jan-Feb;10(1):82–6. </div>
+</div>
+<div id="ref-chittaranjan2017" class="csl-entry" role="listitem">
+<div class="csl-left-margin">5. </div><div class="csl-right-inline">Andrade C. <a href="https://doi.org/10.4103/psychiatry.IndianJPsychiatry_354_17">Age as a Variable: <span>Continuous</span> or Categorical?</a> Indian Journal of Psychiatry. outubro de 2017;59:524–5. </div>
+</div>
+<div id="ref-voor2019" class="csl-entry" role="listitem">
+<div class="csl-left-margin">6. </div><div class="csl-right-inline">Voor in ‘t holt AF. <a href="https://doi.org/10.1017/ice.2019.271">Age: <span>A</span> Variable Whose Definition We Should Not Ignore</a>. Infection Control &amp;#38; Hospital Epidemiology. 2019;40(12):1444–5. </div>
+</div>
+<div id="ref-altman2006" class="csl-entry" role="listitem">
+<div class="csl-left-margin">7. </div><div class="csl-right-inline">Altman DG, Royston P. <a href="https://doi.org/10.1136/bmj.332.7549.1080">The Cost of Dichotomising Continuous Variables</a>. BMJ (Clinical research ed). 2006;332(7549):1080. </div>
+</div>
+<div id="ref-stevens1946" class="csl-entry" role="listitem">
+<div class="csl-left-margin">8. </div><div class="csl-right-inline">Stevens SS. <a href="https://doi.org/10.1126/science.103.2684.677">On the Theory of Scales of Measurement</a>. Science. 1946;103(2684):677–80. </div>
+</div>
+<div id="ref-velleman1993" class="csl-entry" role="listitem">
+<div class="csl-left-margin">9. </div><div class="csl-right-inline">Velleman PF, Wilkinson L. <a href="https://doi.org/10.1080/00031305.1993.10475938">Nominal, Ordinal, Interval, and Ratio Typologies Are Misleading</a>. The American Statistician. 1993;47(1):65–72. </div>
+</div>
+<div id="ref-agresti2018" class="csl-entry" role="listitem">
+<div class="csl-left-margin">10. </div><div class="csl-right-inline">Agresti A. Statistical Methods for the Social Sciences. 5.ª ed. Boston: Pearson; 2018. </div>
+</div>
+<div id="ref-norman2010" class="csl-entry" role="listitem">
+<div class="csl-left-margin">11. </div><div class="csl-right-inline">Norman G. <a href="https://doi.org/10.1007/s10459-010-9222-y">Likert Scales, Levels of Measurement and the <span>«Laws»</span> of Statistics</a>. Advances in Health Sciences Education. 2010;15(5):625–32. </div>
+</div>
+<div id="ref-freedman2007" class="csl-entry" role="listitem">
+<div class="csl-left-margin">12. </div><div class="csl-right-inline">Freedman DA, Pisani R, Purves RA. Statistics. 4.ª ed. New York: W. W. Norton &amp; Company; 2007. </div>
+</div>
+</div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiada");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiada");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

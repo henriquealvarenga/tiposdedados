@@ -1,0 +1,289 @@
+---
+title: "Publicando seus Dados"
+subtitle: "Dados abertos, princípios FAIR e a crise de reprodutibilidade"
+---
+
+```{r}
+#| label: setup
+#| message: false
+
+library(readr)
+library(dplyr)
+library(knitr)
+library(ggplot2)
+library(tidyr)
+
+pacientes <- read_csv("data/pacientes.csv")
+```
+
+## A história
+
+Em 2005, um epidemiologista grego radicado nos Estados Unidos publicou um artigo com um título provocativo: *Why Most Published Research Findings Are False*. O artigo, publicado na *PLOS Medicine*, tornou-se o mais acessado da história da revista — e um dos mais citados da ciência moderna. A tese era perturbadora: combinando vieses de publicação, tamanhos amostrais pequenos, flexibilidade na análise e pressão por resultados positivos, a maioria dos achados publicados em periódicos científicos era provavelmente **falsa** [@ioannidis2005].
+
+O argumento não era retórico — era matemático. Usando modelos bayesianos simples, o artigo demonstrava que, em cenários comuns de pesquisa (estudos pequenos, muitas variáveis testadas, poucos achados verdadeiros), a probabilidade de um resultado "significativo" ser verdadeiro era inferior a 50%. O problema não estava nos pesquisadores — estava no **sistema**: incentivos que premiavam descobertas e puniam replicações, periódicos que publicavam novidades e rejeitavam confirmações, e uma cultura que tratava dados como propriedade privada em vez de bem público.
+
+Dez anos depois, a previsão se confirmou empiricamente. Em 2015, o Open Science Collaboration tentou replicar 100 estudos publicados em três importantes periódicos de psicologia. O resultado: apenas **36%** dos estudos originais produziram resultados significativos quando replicados. Os tamanhos de efeito médios caíram pela metade. A crise de reprodutibilidade não era mais uma hipótese — era um fato documentado [@osc2015].
+
+A resposta da comunidade científica veio em múltiplas frentes: pré-registro de estudos, análises estatísticas mais rigorosas, combate ao *p-hacking*. Mas uma das respostas mais fundamentais foi surpreendentemente simples: **tornar os dados disponíveis**. Se os dados por trás de uma publicação forem acessíveis, qualquer pesquisador pode verificar os resultados, reaplicar as análises e detectar erros — exatamente como Thomas Herndon fez com a planilha de Reinhart e Rogoff.
+
+::: {.callout-tip}
+## A lição de Ioannidis
+
+A transparência é o antídoto para a irreplicabilidade. Quando os dados são abertos, os erros são corrigíveis, os resultados são verificáveis e a ciência avança — mesmo quando os achados originais estavam errados.
+:::
+
+
+## Por que publicar dados?
+
+A publicação de dados — ou *data sharing* — não é apenas uma questão ética. É cada vez mais uma **exigência** dos principais periódicos e agências de fomento.
+
+```{r}
+#| label: tbl-razoes-publicar
+#| tbl-cap: "Por que publicar dados — razões científicas, éticas e práticas."
+
+tibble::tibble(
+  razao = c("Reprodutibilidade",
+            "Verificação",
+            "Reutilização",
+            "Exigência editorial",
+            "Citação",
+            "Transparência ética"),
+  descricao = c("Outros pesquisadores podem reaplicar suas análises e confirmar (ou corrigir) seus resultados",
+                "Erros como o de Reinhart-Rogoff podem ser identificados e corrigidos — a ciência se autocorrige",
+                "Seus dados podem ser combinados com outros em meta-análises ou usados para responder perguntas que você não fez",
+                "Periódicos como PLOS ONE, Nature, BMJ e The Lancet exigem ou incentivam dados abertos como condição de publicação",
+                "Dados publicados em repositórios recebem DOI e podem ser citados como uma publicação independente",
+                "Pesquisa financiada com dinheiro público gera dados que pertencem à sociedade — não ao pesquisador")
+) |>
+  kable(
+    col.names = c("Razão", "Descrição"),
+    align = "ll"
+  )
+```
+
+
+## Princípios FAIR
+
+Em 2016, um consórcio internacional de pesquisadores, agências de fomento e editores científicos propôs um conjunto de princípios para orientar a gestão de dados científicos. Chamados de **FAIR**, os princípios estabelecem que dados devem ser **F**indable (encontráveis), **A**ccessible (acessíveis), **I**nteroperable (interoperáveis) e **R**eusable (reutilizáveis) [@wilkinson2016].
+
+```{r}
+#| label: tbl-fair
+#| tbl-cap: "Os princípios FAIR — o que cada letra significa na prática."
+
+tibble::tibble(
+  principio = c("F — Findable (Encontrável)",
+                "A — Accessible (Acessível)",
+                "I — Interoperable (Interoperável)",
+                "R — Reusable (Reutilizável)"),
+  significado = c("Os dados podem ser encontrados por humanos e máquinas",
+                   "Os dados podem ser obtidos por quem precisa deles",
+                   "Os dados podem ser combinados com outros dados",
+                   "Os dados podem ser usados em novas análises"),
+  como = c("Identificador persistente (DOI), metadados ricos e indexados em repositórios",
+           "Protocolo aberto (HTTP), metadados sempre acessíveis — mesmo que os dados tenham restrições de acesso",
+           "Formato aberto (CSV, não .xlsx proprietário), vocabulário padronizado, unidades explícitas",
+           "Licença clara (ex: CC-BY), documentação completa — incluindo o dicionário de variáveis"),
+  nosso_banco = c("Publicar em repositório com DOI (ex: Zenodo)",
+                   "Formato CSV aberto, sem autenticação para download",
+                   "Nomes de variáveis em inglês, unidades no dicionário, formato UTF-8",
+                   "Dicionário completo (Cap. 7), licença definida, metodologia documentada")
+) |>
+  kable(
+    col.names = c("Princípio", "Significado", "Como implementar", "No nosso banco"),
+    align = "llll"
+  )
+```
+
+Note que FAIR **não significa acesso irrestrito**. Dados de pacientes, por exemplo, podem exigir anonimização ou acesso controlado. O princípio "Accessible" diz que os *metadados* devem ser sempre acessíveis — mesmo que os dados em si exijam autorização. A transparência está na **documentação**, não necessariamente no acesso livre [@wilkinson2016].
+
+
+## Repositórios de dados
+
+Onde publicar? Os dados não devem ficar apenas como "material suplementar" no site do periódico (que pode mudar de URL ou desaparecer). Devem ser depositados em **repositórios** que garantam persistência, DOI e indexação.
+
+```{r}
+#| label: tbl-repositorios
+#| tbl-cap: "Principais repositórios para publicação de dados científicos."
+
+tibble::tibble(
+  repositorio = c("Zenodo", "Figshare", "Dryad", "OSF", "Repositórios institucionais"),
+  mantenedor = c("CERN (Genebra)", "Digital Science", "Dryad Digital Repository",
+                 "Center for Open Science", "Universidades"),
+  custo = c("Gratuito", "Gratuito (até 5 GB)", "Cobrado por alguns periódicos",
+            "Gratuito", "Varia"),
+  doi = c("Sim (automático)", "Sim (automático)", "Sim", "Sim", "Varia"),
+  destaque = c("Integração com GitHub; versões; comunidades temáticas",
+               "Visualização online de dados e figuras; métricas de uso",
+               "Curadoria: os dados são revisados antes de publicar",
+               "Projetos completos: dados + código + pré-registro + artigo",
+               "Exigência de algumas universidades para teses e dissertações")
+) |>
+  kable(
+    col.names = c("Repositório", "Mantenedor", "Custo", "DOI", "Destaque"),
+    align = "lllll"
+  )
+```
+
+::: {.callout-important}
+## A escolha do repositório importa
+
+Antes de publicar, verifique: (1) o periódico tem repositório preferencial? (2) sua universidade exige depósito institucional? (3) os dados contêm informação identificável que exija acesso controlado? A resposta a essas perguntas determina qual repositório é mais adequado.
+:::
+
+
+## O que publicar junto com os dados
+
+Dados sem contexto são inúteis. Um arquivo CSV sem explicação é tão opaco quanto um artigo sem metodologia. Para que os dados sejam **reutilizáveis** (o R de FAIR), é preciso acompanhá-los de documentação mínima:
+
+```{r}
+#| label: tbl-o-que-publicar
+#| tbl-cap: "O pacote mínimo para publicação de dados — o que acompanha o CSV."
+
+tibble::tibble(
+  componente = c("Arquivo de dados",
+                 "Dicionário de variáveis",
+                 "README",
+                 "Script de análise",
+                 "Licença"),
+  descricao = c("O banco de dados em formato aberto (CSV, UTF-8), com nomes de variáveis padronizados",
+                "Documento descrevendo cada variável: nome, tipo, unidade, valores possíveis, regras de codificação (como no Cap. 7)",
+                "Arquivo de texto descrevendo o estudo, a coleta, o período, os critérios de inclusão/exclusão e a versão dos dados",
+                "Código (R, Python) que reproduz as análises do artigo a partir dos dados brutos — o oposto de fórmulas escondidas no Excel",
+                "Licença que especifica como os dados podem ser usados (ex: CC-BY 4.0 — uso livre com atribuição)"),
+  formato = c(".csv (UTF-8, vírgula como separador)",
+              ".csv ou .md ou .pdf",
+              "README.md ou README.txt",
+              ".R, .py, .qmd",
+              "LICENSE.md ou campo no repositório")
+) |>
+  kable(
+    col.names = c("Componente", "Descrição", "Formato sugerido"),
+    align = "lll"
+  )
+```
+
+
+## O dicionário como ato de transparência
+
+O dicionário de variáveis — que construímos no Capítulo 7 — não é apenas uma boa prática de organização. Ele é o componente que transforma dados **acessíveis** em dados **reutilizáveis**. Sem o dicionário, um pesquisador que baixe seu CSV verá colunas como `glicohemoglobina`, `ratio` e `time.ppn` sem saber o que significam, em que unidade foram medidas ou qual a faixa de valores esperada [@wilkinson2016].
+
+O dicionário é para os dados o que a seção de Métodos é para o artigo: o elemento que permite a **reprodução**. As diretrizes STROBE para estudos observacionais recomendam explicitamente que os autores descrevam como cada variável foi definida e medida [@vonelm2007].
+
+```{r}
+#| label: tbl-dicionario-exemplo
+#| tbl-cap: "Exemplo de dicionário publicável — cada variável documentada para reutilização."
+
+tibble::tibble(
+  variavel = c("id", "idade", "sexo", "colesterol", "glicose", "biotipo", "sistolica"),
+  tipo_dado = c("Identificador", "Numérica contínua", "Categórica nominal (binária)",
+                "Numérica contínua", "Numérica contínua",
+                "Categórica ordinal", "Numérica contínua"),
+  unidade = c("—", "anos completos", "—", "mg/dL", "mg/dL", "—", "mmHg"),
+  valores = c("1000–1402", "19–92", "female, male",
+              "78–443", "48–385", "small < medium < large", "82–250"),
+  ausentes = c("Nenhum", "Nenhum", "Nenhum",
+               "Codificados como NA", "Codificados como NA",
+               "Codificados como NA", "Codificados como NA"),
+  observacao = c("Identificador único, não usar em análises",
+                 "Calculada na data de inclusão; ver Cap. 4 sobre idade contínua vs. discreta",
+                 "Sexo biológico declarado",
+                 "Colesterol total em jejum; dosagem laboratorial",
+                 "Glicemia em jejum; dosagem laboratorial",
+                 "Classificação antropométrica: small, medium, large",
+                 "Pressão arterial sistólica; esfigmomanômetro calibrado")
+) |>
+  kable(
+    col.names = c("Variável", "Tipo de dado", "Unidade", "Valores", "Ausentes", "Observação"),
+    align = "llllll"
+  )
+```
+
+Note como o tipo de dado — tema central de todo este projeto — aparece no dicionário como informação essencial. Saber que `biotipo` é ordinal (e não nominal) muda a análise: permite frequência acumulada, mediana e testes não paramétricos de tendência. Saber que `colesterol` é contínua de razão permite média, DP e teste *t*. O tipo de dado **não é óbvio** pelo nome da variável — precisa ser documentado.
+
+
+## O ciclo completo: do dado ao artigo, do artigo ao dado
+
+Os nove capítulos deste projeto seguiram um percurso:
+
+```{r}
+#| label: tbl-ciclo
+#| tbl-cap: "O percurso completo — de Nightingale à publicação aberta."
+
+tibble::tibble(
+  capitulo = paste0("Cap. ", 1:9),
+  tema = c("Dados e pesquisa", "Classificação de variáveis",
+           "Dicionário de dados", "Dados numéricos",
+           "Dados categóricos", "Casos especiais",
+           "Organização em planilhas", "Visualização por tipo",
+           "Publicação e dados abertos"),
+  pergunta = c("O que é um dado? O que é uma variável?",
+               "Como classificar variáveis? (Stevens, NOIR)",
+               "Como documentar o banco de dados?",
+               "Como descrever variáveis numéricas?",
+               "Como descrever variáveis categóricas?",
+               "O que fazer quando a classificação não é clara?",
+               "Como organizar dados para que sejam analisáveis?",
+               "Qual gráfico para qual tipo de dado?",
+               "Como tornar os dados disponíveis para a comunidade?"),
+  narrativa = c("Florence Nightingale (1854)",
+                "S. S. Stevens (1946)",
+                "—",
+                "Quetelet (1835) + Tukey (1977)",
+                "John Graunt (1662)",
+                "Rensis Likert (1932)",
+                "Reinhart-Rogoff (2010/2013)",
+                "—",
+                "Ioannidis (2005) + OSC (2015)")
+) |>
+  kable(
+    col.names = c("Capítulo", "Tema", "Pergunta central", "Narrativa histórica"),
+    align = "llll"
+  )
+```
+
+O fio condutor é o **tipo de dado**: como classificá-lo, como descrevê-lo, como visualizá-lo e, finalmente, como documentá-lo para que outros possam fazer o mesmo. A publicação de dados abertos — com dicionário, licença e código reproduzível — é o último passo desse ciclo, mas também o primeiro de um novo: o ciclo em que outros pesquisadores usam seus dados para fazer ciência que você não imaginou.
+
+::: {.callout-warning}
+## O paradoxo de Ioannidis
+
+Se a maioria dos achados publicados é provavelmente falsa, a solução **não é** publicar menos — é publicar **melhor**. Dados abertos, análises reproduzíveis e documentação transparente não eliminam o erro, mas o tornam **detectável e corrigível**. A ciência não avança por ser perfeita — avança por ser autocorrigível.
+:::
+
+
+## Resumo do capítulo
+
+```{r}
+#| label: tbl-resumo-cap9
+#| tbl-cap: "Resumo — publicação de dados e ciência aberta."
+
+tibble::tibble(
+  conceito = c("Crise de reprodutibilidade",
+               "Princípios FAIR",
+               "Repositórios de dados",
+               "Dicionário de variáveis",
+               "Pacote mínimo de publicação",
+               "Tipo de dado no dicionário"),
+  definicao = c("Muitos resultados publicados não se replicam — dados abertos são parte da solução",
+                "Findable, Accessible, Interoperable, Reusable — o padrão internacional para dados científicos",
+                "Zenodo, Figshare, Dryad, OSF — garantem DOI, persistência e indexação",
+                "O documento que transforma um CSV opaco em dados reutilizáveis",
+                "Dados (CSV) + dicionário + README + script de análise + licença",
+                "Especificar se a variável é numérica/categórica, discreta/contínua, nominal/ordinal — informação essencial para reutilização"),
+  acao = c("Tornar dados disponíveis para verificação e replicação",
+           "Seguir os quatro princípios ao preparar dados para publicação",
+           "Depositar dados em repositório com DOI antes de submeter o artigo",
+           "Incluir tipo de dado, unidade, valores possíveis e regras de codificação",
+           "Preparar todos os componentes antes da submissão ao periódico",
+           "Documentar o tipo de dado para cada variável — o tema central deste projeto")
+) |>
+  kable(
+    col.names = c("Conceito", "Definição", "Ação prática"),
+    align = "lll"
+  )
+```
+
+::: {.callout-tip}
+## Fechando o ciclo
+
+Este capítulo encerra o projeto — mas o tema não se encerra aqui. Cada artigo que você publicar, cada banco de dados que compartilhar, cada tabela descritiva que montar, começará pela mesma pergunta: **que tipo de dado é este?** A resposta a essa pergunta determina como descrever, como visualizar, como analisar e como documentar. É o primeiro passo — e o mais importante.
+:::

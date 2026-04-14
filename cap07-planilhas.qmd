@@ -1,0 +1,390 @@
+---
+title: "Organizando Dados em Planilhas"
+subtitle: "Boas práticas de organização de dados"
+---
+
+```{r}
+#| label: setup
+#| message: false
+
+library(readr)
+library(dplyr)
+library(knitr)
+library(ggplot2)
+library(tidyr)
+
+pacientes <- read_csv("data/pacientes.csv")
+```
+
+## O arquivos de dados de uma pesquisa
+
+Toda pesquisa gera um conjunto de dados que precisam ser armazenados de alguma forma. Via de regra, são armazenados em formato de tabelas, nas quais cada variável é representada por uma coluna e cada participante da pesquisa por uma linha. A primeira linha contém os nomes das variáveis; as linhas seguintes são os dados de cada participante. O banco de dados que usamos neste livro — `pacientes.csv` — segue exatamente esse formato:
+
+```{r}
+#| label: tbl-pacientes-intro
+#| tbl-cap: "Primeiras linhas do banco de dados pacientes.csv — cada linha é um paciente, cada coluna é uma variável."
+
+pacientes |>
+  select(id, idade, sexo, colesterol, glicose, cidade) |>
+  head(4) |>
+  kable(
+    col.names = c("ID", "Idade", "Sexo", "Colesterol", "Glicose", "Cidade"),
+    align = "cccccc"
+  )
+```
+
+Existem vários formatos para armazenar tabelas como essa. O mais comum é o formato de planilhas eletrônicas: o Excel usa arquivos `.xlsx`, o Numbers da Apple usa `.numbers`, o LibreOffice usa `.ods`. O problema é que cada formato só é plenamente legível pelo software que o criou.
+
+Um dos formatos mais comuns para armazenar os dados de uma pesquisa é o **csv** (*comma-separated values* — valores separados por vírgula), com extensão `.csv`. Um arquivo **csv** é texto puro: nada mais que valores separados por vírgulas, um participante por linha. Se abrirmos o arquivo `pacientes.csv` num editor de texto simples, como o Bloco de Notas do Windows ou o TextEdit do Mac, vemos apenas isso:
+
+```
+id,colesterol,glicose,hdl,idade,sexo,altura,peso,cidade
+1000,203,82,56,46,female,157.48,54.88,Buckingham
+1001,165,97,24,29,female,162.56,98.88,Buckingham
+1002,228,92,37,58,female,154.94,116.12,Buckingham
+1003,78,93,12,67,male,170.18,53.98,Buckingham
+```
+
+Sem formatação, sem cores, sem fórmulas escondidas — apenas dados. Qualquer software lê esse formato: R, Python, SPSS, Stata, Excel, em qualquer sistema operacional, sem depender de versão ou licença. É o formato de intercâmbio universal para dados de pesquisa.
+
+A simplicidade do CSV é a sua maior força — e também a sua limitação. Um arquivo CSV é apenas texto: linhas e colunas separadas por um delimitador. Qualquer software consegue abri-lo, qualquer linguagem consegue lê-lo. Mas essa simplicidade tem um custo: o CSV não carrega nenhuma informação sobre o significado dos dados. Ele não sabe que a coluna `sexo` contém valores `1` e `2` que representam "masculino" e "feminino". Não sabe que `glicose` é medida em mg/dL. Não sabe quais valores devem ser tratados como ausentes. O CSV guarda os dados, mas não os metadados.
+
+Formatos de softwares estatísticos como `.sav` (SPSS) e `.dta` (Stata) funcionam de maneira diferente. Além dos dados em si, esses arquivos armazenam **metadados**: o rótulo descritivo de cada variável (por exemplo, `"Glicemia de jejum (mg/dL)"`), os rótulos de cada valor categórico (`1 = masculino`, `2 = feminino`), os valores definidos como ausentes e até o formato de exibição. Em outras palavras, o dicionário de variáveis já vem embutido no arquivo — dados e documentação viajam juntos.
+
+Para importar esses formatos mais ricos sem perder os metadados, o R oferece o pacote `haven` e o Python oferece o pacote `pyreadstat`. Ambos leem os dados e os metadados de uma só vez: ao abrir um `.sav` com `haven::read_sav()`, cada coluna já chega com seu rótulo e seus valores codificados. Isso evita aquele passo manual de consultar um dicionário separado para entender o que cada variável significa.
+
+Nada disso significa que você deva abandonar o CSV — ele continua sendo o formato mais comum para armazenamento. Mas é importante saber que, ao escolher CSV, você está abrindo mão dos metadados. O dicionário de variáveis precisa existir em algum lugar — só não vai ser dentro do arquivo.
+
+::: {.callout-note}
+## Vírgulas, ponto e vírgula e decimais
+
+O nome **csv** vem de *comma-separated values* — valores separados por vírgula. Mas nem todo CSV usa vírgula como separador. Na prática, existem três separadores comuns:
+
+- **Vírgula** (`,`): o padrão original, usado em países de língua inglesa.  
+- **Ponto e vírgula** (`;`): comum no Brasil e em outros países que usam vírgula como separador decimal.  
+- **Tabulação** (`Tab`): usado em arquivos `.tsv`, mas às vezes com extensão `.csv`.  
+
+O motivo dessa variação é o **separador decimal**. Em inglês, o número três e meio se escreve `3.5` (com ponto). Em português, se escreve `3,5` (com vírgula). Se o arquivo usasse vírgula como separador decimal *e* como separador de colunas, o resultado seria uma confusão. Por isso, quando os decimais usam vírgula, o separador de colunas precisa ser outro — geralmente ponto e vírgula. Nesse exemplo abaixo a vírgula representa a separador de decimais e o ponto e virgula o separador dos valores 
+
+```
+id;colesterol;glicose
+1000;203,5;82,3
+```
+
+Antes de importar um `csv`, abra o arquivo em um editor de texto simples (Bloco de Notas, TextEdit) e verifique: qual é o separador de colunas? E qual é o separador decimal? No R, a função `read.csv()` espera vírgula e ponto decimal; `read.csv2()` espera ponto e vírgula e vírgula decimal.
+:::
+
+
+## A história
+
+Em 2010, dois economistas de Harvard — Carmen Reinhart e Kenneth Rogoff — publicaram um artigo influente intitulado *Growth in a Time of Debt*. A conclusão era contundente: países com dívida pública acima de 90% do PIB apresentavam crescimento econômico **negativo** (média de −0,1%). O artigo tornou-se rapidamente uma das referências mais citadas no debate global sobre austeridade. Foi invocado no orçamento federal dos Estados Unidos, nos cortes de gastos do Reino Unido e nas políticas de austeridade da zona do euro após a crise de 2008 [@reinhart2010].
+
+Em abril de 2013, Thomas Herndon — um aluno de mestrado da Universidade de Massachusetts Amherst — tentou replicar os resultados como exercício de aula. Não conseguiu. Quando Reinhart e Rogoff gentilmente compartilharam sua planilha original do Excel, Herndon descobriu o que se tornaria um dos escândalos metodológicos mais célebres da economia moderna [@herndon2014].
+
+O problema tinha três camadas. Primeiro, ao calcular a média de crescimento para a categoria ">90% de dívida", a fórmula do Excel selecionava as células das linhas 30 a 44 em vez de 30 a 49 — **excluindo acidentalmente cinco países** (Austrália, Áustria, Bélgica, Canadá e Dinamarca) simplesmente porque estavam no topo da lista em ordem alfabética. Segundo, Reinhart e Rogoff haviam excluído deliberadamente dados da Austrália, do Canadá e da Nova Zelândia no pós-guerra sem justificativa explícita — países que, aliás, cresceram durante períodos de dívida alta. Terceiro, a metodologia de ponderação tratava cada país como uma única observação, independentemente de quantos anos aparecia na categoria — assim, os 19 anos do Reino Unido tinham o mesmo peso que o único ano da Nova Zelândia (que, convenientemente, registrou crescimento negativo naquele ano) [@herndon2014].
+
+Quando Herndon corrigiu os três problemas, a média de crescimento para países com dívida acima de 90% do PIB não era −0,1% — era **+2,2%**. A conclusão central do artigo original evaporava.
+
+::: {.callout-warning}
+## A lição de Reinhart-Rogoff
+
+O erro não estava na teoria econômica, nem na qualidade dos dados. Estava na **planilha**. Uma fórmula que não selecionou todas as células. Dados organizados de forma que o erro fosse invisível. Nenhuma verificação automática. O episódio demonstra que a organização dos dados não é um detalhe técnico — é uma **decisão metodológica** com consequências reais.
+:::
+
+
+## A regra fundamental
+
+O erro de Reinhart e Rogoff não foi um acidente isolado — foi consequência de usar a planilha para algo que ela não deveria fazer. A fórmula que excluiu cinco países era invisível: nenhum colega, nenhum revisor e nenhum leitor poderia ter notado o problema olhando para os resultados. O erro só apareceu quando alguém abriu a planilha e inspecionou célula por célula.
+
+A lição é direta: **planilhas servem para armazenar dados, não para analisar**. A análise — cálculos, transformações, modelos, gráficos — deve ser feita em software estatístico com código documentado: R, Python, SPSS, Stata ou qualquer ferramenta em que cada passo fique registrado e seja reproduzível. Num script em R ou Python, o erro de Reinhart e Rogoff seria uma linha de código legível, revisável e rastreável — não uma fórmula escondida numa célula.
+
+O formato que faz a ponte entre a planilha e o software de análise é o **CSV** (*comma-separated values* — valores separados por vírgula). Um arquivo `.csv` é texto puro: qualquer software lê, em qualquer sistema operacional, sem depender de versão ou licença. Não tem formatação oculta, não converte nomes de genes em datas, não esconde fórmulas em células.
+
+::: {.callout-important}
+## Planilha = armazenamento. Código = análise.
+
+Use o Excel (ou Google Sheets) apenas para **organizar** os dados. Salve em formato **CSV**. Faça toda a análise em **software estatístico com código reproduzível**. Nunca use fórmulas em planilhas eletrônicas para gerar resultados de pesquisa.
+:::
+
+## Por que a organização importa
+
+Se a planilha é apenas o lugar onde os dados ficam guardados, a forma como os organizamos determina se o software de análise vai conseguir lê-los sem problemas. Pesquisadores passam até 80% do tempo de uma análise com **limpeza e reorganização** de dados — quase sempre porque os dados foram organizados para o olho humano, não para o computador [@wickham2014; @broman2018].
+
+A boa notícia é que existem princípios claros, baseados em décadas de experiência, que tornam qualquer planilha mais robusta e mais fácil de importar para R, Python ou qualquer outro software. Esses princípios podem ser resumidos numa ideia central: **organize os dados para o computador, não para o olho humano**.
+
+## Tidy data: os três princípios
+
+O conceito de *tidy data* (dados arrumados), formalizado em 2014, fornece uma estrutura simples e poderosa para organizar dados tabulares. A ideia é análoga ao conceito de terceira forma normal em bancos de dados relacionais, mas traduzida para a linguagem da estatística [@wickham2014].
+
+Dados *tidy* obedecem a três regras:
+
+```{r}
+#| label: tbl-tidy-principios
+#| tbl-cap: "Os três princípios de dados arrumados (tidy data) — simples na teoria, transformadores na prática."
+
+tibble::tibble(
+  principio = c("1. Cada variável é uma coluna",
+                "2. Cada observação é uma linha",
+                "3. Cada tipo de unidade observacional é uma tabela"),
+  significado = c("Todas as medições do mesmo atributo (ex: peso) ficam numa única coluna",
+                   "Todos os atributos de um mesmo sujeito (ex: paciente 1001) ficam numa única linha",
+                   "Dados de naturezas diferentes (ex: pacientes e exames) ficam em tabelas separadas"),
+  violacao = c("Peso de homens e peso de mulheres em colunas separadas",
+               "Mesmo paciente em duas linhas por estar em dois centros",
+               "Misturar dados de pacientes e dados de hospitais na mesma tabela")
+) |>
+  kable(
+    col.names = c("Princípio", "O que significa", "Exemplo de violação"),
+    align = "lll"
+  )
+```
+
+O nosso banco de dados `pacientes.csv` — que vimos no início do capítulo — é um exemplo de dados *tidy*: cada linha é um paciente, cada coluna é uma variável, e há uma única tabela com um tipo de unidade observacional (pacientes).
+
+### Dados messy: os cinco problemas comuns
+
+A maioria dos dados reais **não** é *tidy*. Os cinco problemas mais comuns, com seus remédios, são [@wickham2014]:
+
+```{r}
+#| label: tbl-messy-problemas
+#| tbl-cap: "Os cinco problemas mais comuns de dados 'messy' — e como corrigi-los."
+
+tibble::tibble(
+  problema = c("Cabeçalhos de coluna são valores, não nomes",
+               "Múltiplas variáveis em uma única coluna",
+               "Variáveis armazenadas em linhas e colunas",
+               "Múltiplos tipos de unidade na mesma tabela",
+               "Uma unidade espalhada por múltiplas tabelas"),
+  exemplo = c("Colunas 'semana_1', 'semana_2', ... em vez de uma coluna 'semana' e outra 'valor'",
+              "Coluna 'm1524' que codifica sexo masculino + faixa etária 15–24 juntos",
+              "Uma coluna 'elemento' com valores 'tmax' e 'tmin' que são variáveis diferentes",
+              "Dados do hospital e do paciente misturados na mesma planilha",
+              "Dados de janeiro num arquivo, fevereiro noutro, sem estrutura consistente"),
+  remedio = c("Pivotar (pivot_longer): transformar colunas em linhas",
+              "Separar (separate): dividir a coluna em duas variáveis",
+              "Pivotar para mais largo (pivot_wider): linhas viram colunas",
+              "Separar em tabelas distintas com chave de ligação (ID)",
+              "Empilhar (bind_rows) com estrutura padronizada")
+) |>
+  kable(
+    col.names = c("Problema", "Exemplo", "Remédio"),
+    align = "lll"
+  )
+```
+
+## Boas práticas em planilhas
+
+As recomendações a seguir — baseadas em experiência acumulada e erros reais — tornam qualquer planilha mais robusta, mais reproduzível e menos propensa aos tipos de erro que afundaram Reinhart e Rogoff [@broman2018].
+
+### 1. Seja consistente
+
+A primeira regra é a mais simples e a mais violada: **seja consistente**. Se a variável sexo é codificada como `female`, use sempre `female` — nunca `Female`, `fem`, `F` ou `feminino` no meio do banco. Se as datas estão em formato `YYYY-MM-DD`, mantenha esse formato em todas as células. Se os valores ausentes são codificados como `NA`, use sempre `NA` — nunca `-999`, célula vazia ou a palavra "missing" [@broman2018].
+
+A inconsistência é invisível para quem digita e devastadora para quem analisa. Um simples espaço extra (` male` vs. `male`) cria duas categorias diferentes para o software.
+
+### 2. Escolha bons nomes de variáveis
+
+Nomes de variáveis devem ser **curtos, significativos e legíveis por máquina**. Na prática, isso significa: sem espaços, sem acentos, sem caracteres especiais, preferencialmente em `snake_case` [@broman2018].
+
+```{r}
+#| label: tbl-bons-nomes
+#| tbl-cap: "Exemplos de nomes de variáveis — boas e más práticas."
+
+tibble::tibble(
+  bom = c("peso_kg", "pressao_sistolica", "data_coleta",
+          "glicose_jejum", "sexo", "idade_anos"),
+  evitar = c("Peso (kg)", "Pressão Sistólica", "Data da Coleta",
+             "Glicose em jejum (mg/dL)", "Sexo do Paciente", "Idade (em anos completos)"),
+  motivo = c("Parênteses e espaços", "Acentos e maiúsculas",
+             "Espaços e preposição", "Espaços, parênteses e unidade",
+             "Redundante — óbvio pelo contexto", "Parênteses e redundância")
+) |>
+  kable(
+    col.names = c("Bom nome", "Nome a evitar", "Problema"),
+    align = "lll"
+  )
+```
+
+Nosso banco de dados segue essa prática: `colesterol`, `glicose`, `hdl`, `peso`, `altura`, `sistolica`, `diastolica`, `cintura`, `quadril`. Nomes curtos, sem espaços, sem acentos.
+
+### 3. Datas em formato ISO
+
+Datas devem ser registradas no formato **YYYY-MM-DD** (ISO 8601): `2024-03-15`, não `15/03/2024` nem `March 15, 2024`. Esse formato evita a confusão entre dia e mês (o que significa 03/04/2024?), é ordenável cronologicamente como texto e é reconhecido universalmente por software estatístico [@broman2018].
+
+::: {.callout-warning}
+## Excel e datas: uma relação perigosa
+
+O Excel armazena datas internamente como números (dias desde uma data de referência) e pode reformatar datas silenciosamente ao abrir um arquivo. Pior: em algumas versões, nomes de genes como *OCT4* e *MARCH1* são convertidos automaticamente em datas. Um estudo encontrou que cerca de 20% dos artigos com listas de genes em arquivos suplementares continham erros de conversão de datas [@broman2018]. A recomendação é formatar a coluna como "Texto" *antes* de digitar as datas.
+:::
+
+### 4. Sem células vazias
+
+Toda célula deve conter um valor. Se o dado está ausente, use um código explícito — preferencialmente `NA`. Nunca deixe a célula vazia, porque o software não consegue distinguir entre "dado ausente" e "esqueci de preencher". Nunca use códigos numéricos como `-999` ou `0` para representar ausência, pois podem ser confundidos com valores reais [@broman2018].
+
+### 5. Uma coisa por célula
+
+Cada célula deve conter **uma única informação**. Se a posição na placa é `13-A01`, é melhor ter três colunas: `placa` = 13, `linha` = A, `coluna` = 01. Se o peso inclui unidade (`45 g`), separe em `peso` = 45 e documente a unidade no dicionário de dados [@broman2018].
+
+### 6. Faça um retângulo
+
+Os dados devem formar **um retângulo**: sujeitos nas linhas, variáveis nas colunas, uma única linha de cabeçalho com os nomes das variáveis. Sem tabelas espalhadas pela planilha, sem linhas de título mescladas, sem subtotais intercalados, sem múltiplas tabelas na mesma aba [@broman2018].
+
+```{r}
+#| label: tbl-retangulo
+#| tbl-cap: "O banco de dados como retângulo — a estrutura que todo software espera."
+
+pacientes |>
+  select(id, idade, sexo, colesterol, glicose, cidade) |>
+  head(5) |>
+  kable(
+    col.names = c("id", "idade", "sexo", "colesterol", "glicose", "cidade"),
+    align = "rlrlrl"
+  )
+```
+
+### 7. Crie um dicionário de dados
+
+Todo banco de dados deveria ser acompanhado de um **dicionário** (ou *codebook*) que descreva cada variável: nome, significado, unidade, tipo, valores possíveis e regras de codificação. O dicionário é um documento separado — nunca dentro da planilha de dados [@broman2018].
+
+```{r}
+#| label: tbl-dicionario
+#| tbl-cap: "Exemplo de dicionário de dados para o banco pacientes.csv — o 'manual de instruções' do banco."
+
+tibble::tibble(
+  variavel = c("id", "idade", "sexo", "colesterol", "glicose", "hdl",
+               "peso", "altura", "biotipo", "sistolica", "cidade"),
+  descricao = c("Identificador único do paciente", "Idade em anos completos",
+                "Sexo biológico", "Colesterol total em jejum",
+                "Glicemia em jejum", "HDL-colesterol",
+                "Peso corporal", "Estatura",
+                "Classificação do biotipo corporal",
+                "Pressão arterial sistólica", "Cidade de residência"),
+  tipo = c("Numérica (ID)", "Numérica contínua", "Categórica nominal",
+           "Numérica contínua", "Numérica contínua", "Numérica contínua",
+           "Numérica contínua", "Numérica contínua", "Categórica ordinal",
+           "Numérica contínua", "Categórica nominal"),
+  unidade = c("—", "anos", "—", "mg/dL", "mg/dL", "mg/dL",
+              "kg", "cm", "—", "mmHg", "—"),
+  valores = c("1000–1402", "19–92", "female, male",
+              "78–443", "48–385", "12–120",
+              "27,2–159,7", "130,8–195,6", "small, medium, large",
+              "82–250", "Buckingham, Louisa")
+) |>
+  kable(
+    col.names = c("Variável", "Descrição", "Tipo", "Unidade", "Valores"),
+    align = "lllll"
+  )
+```
+
+### 8. Sem cálculos no arquivo de dados brutos
+
+Esta é a regra fundamental do capítulo aplicada ao arquivo: o arquivo de dados primário deve conter **apenas dados** — sem fórmulas, sem médias calculadas, sem gráficos embutidos. Toda análise vai para o código (R, Python, etc.), nunca para células do Excel. O arquivo original deve ser tratado como um registro imutável — o equivalente a um caderno de laboratório [@broman2018].
+
+### 9. Não use cores como dados
+
+É tentador destacar com cores as linhas com problemas, marcar outliers em vermelho ou indicar o sexo dos pacientes com azul e rosa. Mas cores não são dados — são formatação que se perde ao exportar para CSV e que nenhum software estatístico consegue ler automaticamente. Se uma informação precisa ser registrada, crie uma **coluna** para ela (ex: `outlier` = TRUE/FALSE) [@broman2018].
+
+### 10. Salve em formato CSV
+
+Como vimos no início do capítulo, o CSV é o formato que faz a ponte entre a planilha e o software de análise. Sempre mantenha uma cópia dos dados em **CSV** (ou TSV). Esses formatos são texto puro — abertos, universais, legíveis por qualquer software e imunes às armadilhas de formatação do Excel [@broman2018].
+
+
+## Verificando nosso banco de dados
+
+Vamos aplicar os princípios ao nosso próprio banco de dados e verificar se ele atende às boas práticas:
+
+```{r}
+#| label: tbl-verificacao
+#| tbl-cap: "Auditoria do banco pacientes.csv — verificando aderência às boas práticas."
+
+# Verificações
+n_total <- nrow(pacientes)
+n_vars <- ncol(pacientes)
+n_na_total <- sum(is.na(pacientes))
+vars_com_na <- pacientes |>
+  summarise(across(everything(), ~sum(is.na(.)))) |>
+  pivot_longer(everything()) |>
+  filter(value > 0) |>
+  nrow()
+
+tibble::tibble(
+  criterio = c("Formato retangular?",
+               "Uma linha por observação?",
+               "Nomes sem espaços/acentos?",
+               "Valores ausentes codificados?",
+               "Uma coisa por célula?",
+               "Sem cálculos embutidos?",
+               "Formato CSV?"),
+  resultado = c(paste0("Sim — ", n_total, " linhas × ", n_vars, " colunas"),
+                paste0("Sim — cada linha é um paciente (n = ", n_total, ")"),
+                "Sim — todos em snake_case (ex: glicohemoglobina, time.ppn)",
+                paste0("Sim — NA usado para ausência (", n_na_total, " valores ausentes em ", vars_com_na, " variáveis)"),
+                "Sim — cada célula contém um único valor",
+                "Sim — apenas dados brutos, sem fórmulas",
+                "Sim — arquivo .csv com separador vírgula"),
+  status = c("OK", "OK", "OK", "OK", "OK", "OK", "OK")
+) |>
+  kable(
+    col.names = c("Critério", "Resultado", "Status"),
+    align = "lll"
+  )
+```
+
+::: {.callout-note}
+## Um detalhe para melhorar
+
+O nome `time.ppn` usa ponto em vez de underscore — uma convenção mista que poderia gerar inconsistência. O ideal seria `time_ppn` para manter o padrão `snake_case`. Pequenas inconsistências como essa são comuns em dados reais e ilustram por que a padronização desde o início é tão importante.
+:::
+
+
+## Voltando a Reinhart e Rogoff
+
+Cada princípio deste capítulo — dados em formato retangular, nomes consistentes, CSV como formato de intercâmbio, análise em código — teria evitado ou tornado visível o erro que mudou a política econômica de países inteiros. A fórmula que excluiu cinco países não existiria se a análise estivesse em R ou Python. A exclusão de dados sem justificativa teria sido documentada num dicionário de dados. A ponderação enviesada seria transparente num script reproduzível. E o erro teria sido detectado antes da publicação se os dados e o código estivessem disponíveis para replicação — como eventualmente Thomas Herndon fez [@herndon2014].
+
+
+## Resumo do capítulo
+
+```{r}
+#| label: tbl-resumo-cap7
+#| tbl-cap: "Resumo — organização de dados em planilhas."
+
+tibble::tibble(
+  conceito = c("Tidy data",
+               "Consistência",
+               "Nomes de variáveis",
+               "Datas (ISO 8601)",
+               "Células vazias",
+               "Retângulo",
+               "Dicionário de dados",
+               "Dados brutos intocáveis",
+               "Formato CSV"),
+  definicao = c("Cada variável é uma coluna; cada observação é uma linha; cada unidade é uma tabela",
+                "Mesmo código para a mesma informação em todo o banco (NA, female, YYYY-MM-DD)",
+                "Curtos, significativos, sem espaços/acentos, em snake_case",
+                "YYYY-MM-DD — formato universal, ordenável, sem ambiguidade dia/mês",
+                "Nunca deixar vazio; usar NA para dados ausentes; nunca usar -999 ou 0",
+                "Sujeitos nas linhas, variáveis nas colunas, uma única linha de cabeçalho",
+                "Documento separado descrevendo cada variável: nome, tipo, unidade, valores",
+                "O arquivo primário contém apenas dados — sem fórmulas, sem gráficos, sem cores como informação",
+                "Manter cópia em texto simples — formato aberto, universal e imune ao Excel"),
+  consequencia = c("Facilita análise, visualização e compartilhamento",
+                    "Evita categorias duplicadas e erros de parsing",
+                    "Facilita programação e reduz erros de digitação",
+                    "Evita confusão 03/04 = março 4 ou 3 de abril?",
+                    "Permite distinguir ausência intencional de erro de digitação",
+                    "Todo software estatístico espera dados nesse formato",
+                    "Permite que qualquer pessoa entenda e reproduza a análise",
+                    "Preserva a integridade dos dados originais — como um caderno de laboratório",
+                    "Garante que os dados sobrevivam a qualquer mudança de software")
+) |>
+  kable(
+    col.names = c("Conceito", "Definição", "Por que importa"),
+    align = "lll"
+  )
+```
+
+::: {.callout-note}
+## Próximos passos
+
+Este capítulo apresentou como organizar dados para que sejam analisáveis e reproduzíveis. No próximo capítulo, usaremos esses dados bem organizados para criar **visualizações** — gráficos que revelam padrões, comunicam resultados e, quando mal feitos, enganam.
+:::

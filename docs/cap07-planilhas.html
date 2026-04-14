@@ -1,0 +1,1402 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Organizando Dados em Planilhas – Tipos de Dados em Saúde</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-5b4ad623e5705c0698d39aec6f10cf02.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles/custom.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Tipos de Dados em Saúde</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Procurar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Alternar de navegação" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Início</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-fundamentos" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Fundamentos</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-fundamentos">    
+        <li>
+    <a class="dropdown-item" href="./cap01-dados-pesquisa.html">
+ <span class="dropdown-text">Os Dados da Pesquisa</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./cap02-classificacao.html">
+ <span class="dropdown-text">Classificação dos Tipos de Dados</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./cap03-dicionario.html">
+ <span class="dropdown-text">Dicionário de Variáveis</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tiposdedados" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Tipos de Dados</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-tiposdedados">    
+        <li>
+    <a class="dropdown-item" href="./cap04-numericos.html">
+ <span class="dropdown-text">Dados Numéricos</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./cap05-categoricos.html">
+ <span class="dropdown-text">Dados Categóricos</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./cap06-casos-especiais.html">
+ <span class="dropdown-text">Casos Especiais</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-na-prática" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Na Prática</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-na-prática">    
+        <li>
+    <a class="dropdown-item" href="./cap07-planilhas.html">
+ <span class="dropdown-text">Organizando Dados em Planilhas</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./cap08-visualizacao.html">
+ <span class="dropdown-text">Visualizando por Tipo de Dado</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./cap09-publicando.html">
+ <span class="dropdown-text">Publicando seus Dados</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./cap10-tipos-r-python.html">
+ <span class="dropdown-text">Tipos de Dados no R e no Python</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./referencias.html"> 
+<span class="menu-text">Referências</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./about.html"> 
+<span class="menu-text">Sobre</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/halvarengda"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Nesta página</h2>
+   
+  <ul>
+  <li><a href="#o-arquivos-de-dados-de-uma-pesquisa" id="toc-o-arquivos-de-dados-de-uma-pesquisa" class="nav-link active" data-scroll-target="#o-arquivos-de-dados-de-uma-pesquisa">O arquivos de dados de uma pesquisa</a></li>
+  <li><a href="#a-história" id="toc-a-história" class="nav-link" data-scroll-target="#a-história">A história</a></li>
+  <li><a href="#a-regra-fundamental" id="toc-a-regra-fundamental" class="nav-link" data-scroll-target="#a-regra-fundamental">A regra fundamental</a></li>
+  <li><a href="#por-que-a-organização-importa" id="toc-por-que-a-organização-importa" class="nav-link" data-scroll-target="#por-que-a-organização-importa">Por que a organização importa</a></li>
+  <li><a href="#tidy-data-os-três-princípios" id="toc-tidy-data-os-três-princípios" class="nav-link" data-scroll-target="#tidy-data-os-três-princípios">Tidy data: os três princípios</a>
+  <ul class="collapse">
+  <li><a href="#dados-messy-os-cinco-problemas-comuns" id="toc-dados-messy-os-cinco-problemas-comuns" class="nav-link" data-scroll-target="#dados-messy-os-cinco-problemas-comuns">Dados messy: os cinco problemas comuns</a></li>
+  </ul></li>
+  <li><a href="#boas-práticas-em-planilhas" id="toc-boas-práticas-em-planilhas" class="nav-link" data-scroll-target="#boas-práticas-em-planilhas">Boas práticas em planilhas</a>
+  <ul class="collapse">
+  <li><a href="#seja-consistente" id="toc-seja-consistente" class="nav-link" data-scroll-target="#seja-consistente">1. Seja consistente</a></li>
+  <li><a href="#escolha-bons-nomes-de-variáveis" id="toc-escolha-bons-nomes-de-variáveis" class="nav-link" data-scroll-target="#escolha-bons-nomes-de-variáveis">2. Escolha bons nomes de variáveis</a></li>
+  <li><a href="#datas-em-formato-iso" id="toc-datas-em-formato-iso" class="nav-link" data-scroll-target="#datas-em-formato-iso">3. Datas em formato ISO</a></li>
+  <li><a href="#sem-células-vazias" id="toc-sem-células-vazias" class="nav-link" data-scroll-target="#sem-células-vazias">4. Sem células vazias</a></li>
+  <li><a href="#uma-coisa-por-célula" id="toc-uma-coisa-por-célula" class="nav-link" data-scroll-target="#uma-coisa-por-célula">5. Uma coisa por célula</a></li>
+  <li><a href="#faça-um-retângulo" id="toc-faça-um-retângulo" class="nav-link" data-scroll-target="#faça-um-retângulo">6. Faça um retângulo</a></li>
+  <li><a href="#crie-um-dicionário-de-dados" id="toc-crie-um-dicionário-de-dados" class="nav-link" data-scroll-target="#crie-um-dicionário-de-dados">7. Crie um dicionário de dados</a></li>
+  <li><a href="#sem-cálculos-no-arquivo-de-dados-brutos" id="toc-sem-cálculos-no-arquivo-de-dados-brutos" class="nav-link" data-scroll-target="#sem-cálculos-no-arquivo-de-dados-brutos">8. Sem cálculos no arquivo de dados brutos</a></li>
+  <li><a href="#não-use-cores-como-dados" id="toc-não-use-cores-como-dados" class="nav-link" data-scroll-target="#não-use-cores-como-dados">9. Não use cores como dados</a></li>
+  <li><a href="#salve-em-formato-csv" id="toc-salve-em-formato-csv" class="nav-link" data-scroll-target="#salve-em-formato-csv">10. Salve em formato CSV</a></li>
+  </ul></li>
+  <li><a href="#verificando-nosso-banco-de-dados" id="toc-verificando-nosso-banco-de-dados" class="nav-link" data-scroll-target="#verificando-nosso-banco-de-dados">Verificando nosso banco de dados</a></li>
+  <li><a href="#voltando-a-reinhart-e-rogoff" id="toc-voltando-a-reinhart-e-rogoff" class="nav-link" data-scroll-target="#voltando-a-reinhart-e-rogoff">Voltando a Reinhart e Rogoff</a></li>
+  <li><a href="#resumo-do-capítulo" id="toc-resumo-do-capítulo" class="nav-link" data-scroll-target="#resumo-do-capítulo">Resumo do capítulo</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Organizando Dados em Planilhas</h1>
+<p class="subtitle lead">Boas práticas de organização de dados</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="o-arquivos-de-dados-de-uma-pesquisa" class="level2">
+<h2 class="anchored" data-anchor-id="o-arquivos-de-dados-de-uma-pesquisa">O arquivos de dados de uma pesquisa</h2>
+<p>Toda pesquisa gera um conjunto de dados que precisam ser armazenados de alguma forma. Via de regra, são armazenados em formato de tabelas, nas quais cada variável é representada por uma coluna e cada participante da pesquisa por uma linha. A primeira linha contém os nomes das variáveis; as linhas seguintes são os dados de cada participante. O banco de dados que usamos neste livro — <code>pacientes.csv</code> — segue exatamente esse formato:</p>
+<div class="cell">
+<div id="tbl-pacientes-intro" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-pacientes-intro-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabela&nbsp;1: Primeiras linhas do banco de dados pacientes.csv — cada linha é um paciente, cada coluna é uma variável.
+</figcaption>
+<div aria-describedby="tbl-pacientes-intro-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: center;">ID</th>
+<th style="text-align: center;">Idade</th>
+<th style="text-align: center;">Sexo</th>
+<th style="text-align: center;">Colesterol</th>
+<th style="text-align: center;">Glicose</th>
+<th style="text-align: center;">Cidade</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1000</td>
+<td style="text-align: center;">46</td>
+<td style="text-align: center;">female</td>
+<td style="text-align: center;">203</td>
+<td style="text-align: center;">82</td>
+<td style="text-align: center;">Buckingham</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">1001</td>
+<td style="text-align: center;">29</td>
+<td style="text-align: center;">female</td>
+<td style="text-align: center;">165</td>
+<td style="text-align: center;">97</td>
+<td style="text-align: center;">Buckingham</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">1002</td>
+<td style="text-align: center;">58</td>
+<td style="text-align: center;">female</td>
+<td style="text-align: center;">228</td>
+<td style="text-align: center;">92</td>
+<td style="text-align: center;">Buckingham</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">1003</td>
+<td style="text-align: center;">67</td>
+<td style="text-align: center;">male</td>
+<td style="text-align: center;">78</td>
+<td style="text-align: center;">93</td>
+<td style="text-align: center;">Buckingham</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>Existem vários formatos para armazenar tabelas como essa. O mais comum é o formato de planilhas eletrônicas: o Excel usa arquivos <code>.xlsx</code>, o Numbers da Apple usa <code>.numbers</code>, o LibreOffice usa <code>.ods</code>. O problema é que cada formato só é plenamente legível pelo software que o criou.</p>
+<p>Um dos formatos mais comuns para armazenar os dados de uma pesquisa é o <strong>csv</strong> (<em>comma-separated values</em> — valores separados por vírgula), com extensão <code>.csv</code>. Um arquivo <strong>csv</strong> é texto puro: nada mais que valores separados por vírgulas, um participante por linha. Se abrirmos o arquivo <code>pacientes.csv</code> num editor de texto simples, como o Bloco de Notas do Windows ou o TextEdit do Mac, vemos apenas isso:</p>
+<pre><code>id,colesterol,glicose,hdl,idade,sexo,altura,peso,cidade
+1000,203,82,56,46,female,157.48,54.88,Buckingham
+1001,165,97,24,29,female,162.56,98.88,Buckingham
+1002,228,92,37,58,female,154.94,116.12,Buckingham
+1003,78,93,12,67,male,170.18,53.98,Buckingham</code></pre>
+<p>Sem formatação, sem cores, sem fórmulas escondidas — apenas dados. Qualquer software lê esse formato: R, Python, SPSS, Stata, Excel, em qualquer sistema operacional, sem depender de versão ou licença. É o formato de intercâmbio universal para dados de pesquisa.</p>
+<p>A simplicidade do CSV é a sua maior força — e também a sua limitação. Um arquivo CSV é apenas texto: linhas e colunas separadas por um delimitador. Qualquer software consegue abri-lo, qualquer linguagem consegue lê-lo. Mas essa simplicidade tem um custo: o CSV não carrega nenhuma informação sobre o significado dos dados. Ele não sabe que a coluna <code>sexo</code> contém valores <code>1</code> e <code>2</code> que representam “masculino” e “feminino”. Não sabe que <code>glicose</code> é medida em mg/dL. Não sabe quais valores devem ser tratados como ausentes. O CSV guarda os dados, mas não os metadados.</p>
+<p>Formatos de softwares estatísticos como <code>.sav</code> (SPSS) e <code>.dta</code> (Stata) funcionam de maneira diferente. Além dos dados em si, esses arquivos armazenam <strong>metadados</strong>: o rótulo descritivo de cada variável (por exemplo, <code>"Glicemia de jejum (mg/dL)"</code>), os rótulos de cada valor categórico (<code>1 = masculino</code>, <code>2 = feminino</code>), os valores definidos como ausentes e até o formato de exibição. Em outras palavras, o dicionário de variáveis já vem embutido no arquivo — dados e documentação viajam juntos.</p>
+<p>Para importar esses formatos mais ricos sem perder os metadados, o R oferece o pacote <code>haven</code> e o Python oferece o pacote <code>pyreadstat</code>. Ambos leem os dados e os metadados de uma só vez: ao abrir um <code>.sav</code> com <code>haven::read_sav()</code>, cada coluna já chega com seu rótulo e seus valores codificados. Isso evita aquele passo manual de consultar um dicionário separado para entender o que cada variável significa.</p>
+<p>Nada disso significa que você deva abandonar o CSV — ele continua sendo o formato mais comum para armazenamento. Mas é importante saber que, ao escolher CSV, você está abrindo mão dos metadados. O dicionário de variáveis precisa existir em algum lugar — só não vai ser dentro do arquivo.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Vírgulas, ponto e vírgula e decimais
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>O nome <strong>csv</strong> vem de <em>comma-separated values</em> — valores separados por vírgula. Mas nem todo CSV usa vírgula como separador. Na prática, existem três separadores comuns:</p>
+<ul>
+<li><strong>Vírgula</strong> (<code>,</code>): o padrão original, usado em países de língua inglesa.<br>
+</li>
+<li><strong>Ponto e vírgula</strong> (<code>;</code>): comum no Brasil e em outros países que usam vírgula como separador decimal.<br>
+</li>
+<li><strong>Tabulação</strong> (<code>Tab</code>): usado em arquivos <code>.tsv</code>, mas às vezes com extensão <code>.csv</code>.</li>
+</ul>
+<p>O motivo dessa variação é o <strong>separador decimal</strong>. Em inglês, o número três e meio se escreve <code>3.5</code> (com ponto). Em português, se escreve <code>3,5</code> (com vírgula). Se o arquivo usasse vírgula como separador decimal <em>e</em> como separador de colunas, o resultado seria uma confusão. Por isso, quando os decimais usam vírgula, o separador de colunas precisa ser outro — geralmente ponto e vírgula. Nesse exemplo abaixo a vírgula representa a separador de decimais e o ponto e virgula o separador dos valores</p>
+<pre><code>id;colesterol;glicose
+1000;203,5;82,3</code></pre>
+<p>Antes de importar um <code>csv</code>, abra o arquivo em um editor de texto simples (Bloco de Notas, TextEdit) e verifique: qual é o separador de colunas? E qual é o separador decimal? No R, a função <code>read.csv()</code> espera vírgula e ponto decimal; <code>read.csv2()</code> espera ponto e vírgula e vírgula decimal.</p>
+</div>
+</div>
+</section>
+<section id="a-história" class="level2">
+<h2 class="anchored" data-anchor-id="a-história">A história</h2>
+<p>Em 2010, dois economistas de Harvard — Carmen Reinhart e Kenneth Rogoff — publicaram um artigo influente intitulado <em>Growth in a Time of Debt</em>. A conclusão era contundente: países com dívida pública acima de 90% do PIB apresentavam crescimento econômico <strong>negativo</strong> (média de −0,1%). O artigo tornou-se rapidamente uma das referências mais citadas no debate global sobre austeridade. Foi invocado no orçamento federal dos Estados Unidos, nos cortes de gastos do Reino Unido e nas políticas de austeridade da zona do euro após a crise de 2008 <span class="citation" data-cites="reinhart2010">(<a href="#ref-reinhart2010" role="doc-biblioref">1</a>)</span>.</p>
+<p>Em abril de 2013, Thomas Herndon — um aluno de mestrado da Universidade de Massachusetts Amherst — tentou replicar os resultados como exercício de aula. Não conseguiu. Quando Reinhart e Rogoff gentilmente compartilharam sua planilha original do Excel, Herndon descobriu o que se tornaria um dos escândalos metodológicos mais célebres da economia moderna <span class="citation" data-cites="herndon2014">(<a href="#ref-herndon2014" role="doc-biblioref">2</a>)</span>.</p>
+<p>O problema tinha três camadas. Primeiro, ao calcular a média de crescimento para a categoria “&gt;90% de dívida”, a fórmula do Excel selecionava as células das linhas 30 a 44 em vez de 30 a 49 — <strong>excluindo acidentalmente cinco países</strong> (Austrália, Áustria, Bélgica, Canadá e Dinamarca) simplesmente porque estavam no topo da lista em ordem alfabética. Segundo, Reinhart e Rogoff haviam excluído deliberadamente dados da Austrália, do Canadá e da Nova Zelândia no pós-guerra sem justificativa explícita — países que, aliás, cresceram durante períodos de dívida alta. Terceiro, a metodologia de ponderação tratava cada país como uma única observação, independentemente de quantos anos aparecia na categoria — assim, os 19 anos do Reino Unido tinham o mesmo peso que o único ano da Nova Zelândia (que, convenientemente, registrou crescimento negativo naquele ano) <span class="citation" data-cites="herndon2014">(<a href="#ref-herndon2014" role="doc-biblioref">2</a>)</span>.</p>
+<p>Quando Herndon corrigiu os três problemas, a média de crescimento para países com dívida acima de 90% do PIB não era −0,1% — era <strong>+2,2%</strong>. A conclusão central do artigo original evaporava.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Aviso</span>A lição de Reinhart-Rogoff
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>O erro não estava na teoria econômica, nem na qualidade dos dados. Estava na <strong>planilha</strong>. Uma fórmula que não selecionou todas as células. Dados organizados de forma que o erro fosse invisível. Nenhuma verificação automática. O episódio demonstra que a organização dos dados não é um detalhe técnico — é uma <strong>decisão metodológica</strong> com consequências reais.</p>
+</div>
+</div>
+</section>
+<section id="a-regra-fundamental" class="level2">
+<h2 class="anchored" data-anchor-id="a-regra-fundamental">A regra fundamental</h2>
+<p>O erro de Reinhart e Rogoff não foi um acidente isolado — foi consequência de usar a planilha para algo que ela não deveria fazer. A fórmula que excluiu cinco países era invisível: nenhum colega, nenhum revisor e nenhum leitor poderia ter notado o problema olhando para os resultados. O erro só apareceu quando alguém abriu a planilha e inspecionou célula por célula.</p>
+<p>A lição é direta: <strong>planilhas servem para armazenar dados, não para analisar</strong>. A análise — cálculos, transformações, modelos, gráficos — deve ser feita em software estatístico com código documentado: R, Python, SPSS, Stata ou qualquer ferramenta em que cada passo fique registrado e seja reproduzível. Num script em R ou Python, o erro de Reinhart e Rogoff seria uma linha de código legível, revisável e rastreável — não uma fórmula escondida numa célula.</p>
+<p>O formato que faz a ponte entre a planilha e o software de análise é o <strong>CSV</strong> (<em>comma-separated values</em> — valores separados por vírgula). Um arquivo <code>.csv</code> é texto puro: qualquer software lê, em qualquer sistema operacional, sem depender de versão ou licença. Não tem formatação oculta, não converte nomes de genes em datas, não esconde fórmulas em células.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Planilha = armazenamento. Código = análise.
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Use o Excel (ou Google Sheets) apenas para <strong>organizar</strong> os dados. Salve em formato <strong>CSV</strong>. Faça toda a análise em <strong>software estatístico com código reproduzível</strong>. Nunca use fórmulas em planilhas eletrônicas para gerar resultados de pesquisa.</p>
+</div>
+</div>
+</section>
+<section id="por-que-a-organização-importa" class="level2">
+<h2 class="anchored" data-anchor-id="por-que-a-organização-importa">Por que a organização importa</h2>
+<p>Se a planilha é apenas o lugar onde os dados ficam guardados, a forma como os organizamos determina se o software de análise vai conseguir lê-los sem problemas. Pesquisadores passam até 80% do tempo de uma análise com <strong>limpeza e reorganização</strong> de dados — quase sempre porque os dados foram organizados para o olho humano, não para o computador <span class="citation" data-cites="wickham2014 broman2018">(<a href="#ref-wickham2014" role="doc-biblioref">3</a>,<a href="#ref-broman2018" role="doc-biblioref">4</a>)</span>.</p>
+<p>A boa notícia é que existem princípios claros, baseados em décadas de experiência, que tornam qualquer planilha mais robusta e mais fácil de importar para R, Python ou qualquer outro software. Esses princípios podem ser resumidos numa ideia central: <strong>organize os dados para o computador, não para o olho humano</strong>.</p>
+</section>
+<section id="tidy-data-os-três-princípios" class="level2">
+<h2 class="anchored" data-anchor-id="tidy-data-os-três-princípios">Tidy data: os três princípios</h2>
+<p>O conceito de <em>tidy data</em> (dados arrumados), formalizado em 2014, fornece uma estrutura simples e poderosa para organizar dados tabulares. A ideia é análoga ao conceito de terceira forma normal em bancos de dados relacionais, mas traduzida para a linguagem da estatística <span class="citation" data-cites="wickham2014">(<a href="#ref-wickham2014" role="doc-biblioref">3</a>)</span>.</p>
+<p>Dados <em>tidy</em> obedecem a três regras:</p>
+<div class="cell">
+<div id="tbl-tidy-principios" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-tidy-principios-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabela&nbsp;2: Os três princípios de dados arrumados (tidy data) — simples na teoria, transformadores na prática.
+</figcaption>
+<div aria-describedby="tbl-tidy-principios-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 41%">
+<col style="width: 32%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Princípio</th>
+<th style="text-align: left;">O que significa</th>
+<th style="text-align: left;">Exemplo de violação</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1. Cada variável é uma coluna</td>
+<td style="text-align: left;">Todas as medições do mesmo atributo (ex: peso) ficam numa única coluna</td>
+<td style="text-align: left;">Peso de homens e peso de mulheres em colunas separadas</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2. Cada observação é uma linha</td>
+<td style="text-align: left;">Todos os atributos de um mesmo sujeito (ex: paciente 1001) ficam numa única linha</td>
+<td style="text-align: left;">Mesmo paciente em duas linhas por estar em dois centros</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3. Cada tipo de unidade observacional é uma tabela</td>
+<td style="text-align: left;">Dados de naturezas diferentes (ex: pacientes e exames) ficam em tabelas separadas</td>
+<td style="text-align: left;">Misturar dados de pacientes e dados de hospitais na mesma tabela</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>O nosso banco de dados <code>pacientes.csv</code> — que vimos no início do capítulo — é um exemplo de dados <em>tidy</em>: cada linha é um paciente, cada coluna é uma variável, e há uma única tabela com um tipo de unidade observacional (pacientes).</p>
+<section id="dados-messy-os-cinco-problemas-comuns" class="level3">
+<h3 class="anchored" data-anchor-id="dados-messy-os-cinco-problemas-comuns">Dados messy: os cinco problemas comuns</h3>
+<p>A maioria dos dados reais <strong>não</strong> é <em>tidy</em>. Os cinco problemas mais comuns, com seus remédios, são <span class="citation" data-cites="wickham2014">(<a href="#ref-wickham2014" role="doc-biblioref">3</a>)</span>:</p>
+<div class="cell">
+<div id="tbl-messy-problemas" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-messy-problemas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabela&nbsp;3: Os cinco problemas mais comuns de dados ‘messy’ — e como corrigi-los.
+</figcaption>
+<div aria-describedby="tbl-messy-problemas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 44%">
+<col style="width: 32%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Problema</th>
+<th style="text-align: left;">Exemplo</th>
+<th style="text-align: left;">Remédio</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Cabeçalhos de coluna são valores, não nomes</td>
+<td style="text-align: left;">Colunas ‘semana_1’, ‘semana_2’, … em vez de uma coluna ‘semana’ e outra ‘valor’</td>
+<td style="text-align: left;">Pivotar (pivot_longer): transformar colunas em linhas</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Múltiplas variáveis em uma única coluna</td>
+<td style="text-align: left;">Coluna ‘m1524’ que codifica sexo masculino + faixa etária 15–24 juntos</td>
+<td style="text-align: left;">Separar (separate): dividir a coluna em duas variáveis</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Variáveis armazenadas em linhas e colunas</td>
+<td style="text-align: left;">Uma coluna ‘elemento’ com valores ‘tmax’ e ‘tmin’ que são variáveis diferentes</td>
+<td style="text-align: left;">Pivotar para mais largo (pivot_wider): linhas viram colunas</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Múltiplos tipos de unidade na mesma tabela</td>
+<td style="text-align: left;">Dados do hospital e do paciente misturados na mesma planilha</td>
+<td style="text-align: left;">Separar em tabelas distintas com chave de ligação (ID)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Uma unidade espalhada por múltiplas tabelas</td>
+<td style="text-align: left;">Dados de janeiro num arquivo, fevereiro noutro, sem estrutura consistente</td>
+<td style="text-align: left;">Empilhar (bind_rows) com estrutura padronizada</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</section>
+</section>
+<section id="boas-práticas-em-planilhas" class="level2">
+<h2 class="anchored" data-anchor-id="boas-práticas-em-planilhas">Boas práticas em planilhas</h2>
+<p>As recomendações a seguir — baseadas em experiência acumulada e erros reais — tornam qualquer planilha mais robusta, mais reproduzível e menos propensa aos tipos de erro que afundaram Reinhart e Rogoff <span class="citation" data-cites="broman2018">(<a href="#ref-broman2018" role="doc-biblioref">4</a>)</span>.</p>
+<section id="seja-consistente" class="level3">
+<h3 class="anchored" data-anchor-id="seja-consistente">1. Seja consistente</h3>
+<p>A primeira regra é a mais simples e a mais violada: <strong>seja consistente</strong>. Se a variável sexo é codificada como <code>female</code>, use sempre <code>female</code> — nunca <code>Female</code>, <code>fem</code>, <code>F</code> ou <code>feminino</code> no meio do banco. Se as datas estão em formato <code>YYYY-MM-DD</code>, mantenha esse formato em todas as células. Se os valores ausentes são codificados como <code>NA</code>, use sempre <code>NA</code> — nunca <code>-999</code>, célula vazia ou a palavra “missing” <span class="citation" data-cites="broman2018">(<a href="#ref-broman2018" role="doc-biblioref">4</a>)</span>.</p>
+<p>A inconsistência é invisível para quem digita e devastadora para quem analisa. Um simples espaço extra (<code>male</code> vs.&nbsp;<code>male</code>) cria duas categorias diferentes para o software.</p>
+</section>
+<section id="escolha-bons-nomes-de-variáveis" class="level3">
+<h3 class="anchored" data-anchor-id="escolha-bons-nomes-de-variáveis">2. Escolha bons nomes de variáveis</h3>
+<p>Nomes de variáveis devem ser <strong>curtos, significativos e legíveis por máquina</strong>. Na prática, isso significa: sem espaços, sem acentos, sem caracteres especiais, preferencialmente em <code>snake_case</code> <span class="citation" data-cites="broman2018">(<a href="#ref-broman2018" role="doc-biblioref">4</a>)</span>.</p>
+<div class="cell">
+<div id="tbl-bons-nomes" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-bons-nomes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabela&nbsp;4: Exemplos de nomes de variáveis — boas e más práticas.
+</figcaption>
+<div aria-describedby="tbl-bons-nomes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 33%">
+<col style="width: 42%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Bom nome</th>
+<th style="text-align: left;">Nome a evitar</th>
+<th style="text-align: left;">Problema</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">peso_kg</td>
+<td style="text-align: left;">Peso (kg)</td>
+<td style="text-align: left;">Parênteses e espaços</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">pressao_sistolica</td>
+<td style="text-align: left;">Pressão Sistólica</td>
+<td style="text-align: left;">Acentos e maiúsculas</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">data_coleta</td>
+<td style="text-align: left;">Data da Coleta</td>
+<td style="text-align: left;">Espaços e preposição</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">glicose_jejum</td>
+<td style="text-align: left;">Glicose em jejum (mg/dL)</td>
+<td style="text-align: left;">Espaços, parênteses e unidade</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">sexo</td>
+<td style="text-align: left;">Sexo do Paciente</td>
+<td style="text-align: left;">Redundante — óbvio pelo contexto</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">idade_anos</td>
+<td style="text-align: left;">Idade (em anos completos)</td>
+<td style="text-align: left;">Parênteses e redundância</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>Nosso banco de dados segue essa prática: <code>colesterol</code>, <code>glicose</code>, <code>hdl</code>, <code>peso</code>, <code>altura</code>, <code>sistolica</code>, <code>diastolica</code>, <code>cintura</code>, <code>quadril</code>. Nomes curtos, sem espaços, sem acentos.</p>
+</section>
+<section id="datas-em-formato-iso" class="level3">
+<h3 class="anchored" data-anchor-id="datas-em-formato-iso">3. Datas em formato ISO</h3>
+<p>Datas devem ser registradas no formato <strong>YYYY-MM-DD</strong> (ISO 8601): <code>2024-03-15</code>, não <code>15/03/2024</code> nem <code>March 15, 2024</code>. Esse formato evita a confusão entre dia e mês (o que significa 03/04/2024?), é ordenável cronologicamente como texto e é reconhecido universalmente por software estatístico <span class="citation" data-cites="broman2018">(<a href="#ref-broman2018" role="doc-biblioref">4</a>)</span>.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Aviso</span>Excel e datas: uma relação perigosa
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>O Excel armazena datas internamente como números (dias desde uma data de referência) e pode reformatar datas silenciosamente ao abrir um arquivo. Pior: em algumas versões, nomes de genes como <em>OCT4</em> e <em>MARCH1</em> são convertidos automaticamente em datas. Um estudo encontrou que cerca de 20% dos artigos com listas de genes em arquivos suplementares continham erros de conversão de datas <span class="citation" data-cites="broman2018">(<a href="#ref-broman2018" role="doc-biblioref">4</a>)</span>. A recomendação é formatar a coluna como “Texto” <em>antes</em> de digitar as datas.</p>
+</div>
+</div>
+</section>
+<section id="sem-células-vazias" class="level3">
+<h3 class="anchored" data-anchor-id="sem-células-vazias">4. Sem células vazias</h3>
+<p>Toda célula deve conter um valor. Se o dado está ausente, use um código explícito — preferencialmente <code>NA</code>. Nunca deixe a célula vazia, porque o software não consegue distinguir entre “dado ausente” e “esqueci de preencher”. Nunca use códigos numéricos como <code>-999</code> ou <code>0</code> para representar ausência, pois podem ser confundidos com valores reais <span class="citation" data-cites="broman2018">(<a href="#ref-broman2018" role="doc-biblioref">4</a>)</span>.</p>
+</section>
+<section id="uma-coisa-por-célula" class="level3">
+<h3 class="anchored" data-anchor-id="uma-coisa-por-célula">5. Uma coisa por célula</h3>
+<p>Cada célula deve conter <strong>uma única informação</strong>. Se a posição na placa é <code>13-A01</code>, é melhor ter três colunas: <code>placa</code> = 13, <code>linha</code> = A, <code>coluna</code> = 01. Se o peso inclui unidade (<code>45 g</code>), separe em <code>peso</code> = 45 e documente a unidade no dicionário de dados <span class="citation" data-cites="broman2018">(<a href="#ref-broman2018" role="doc-biblioref">4</a>)</span>.</p>
+</section>
+<section id="faça-um-retângulo" class="level3">
+<h3 class="anchored" data-anchor-id="faça-um-retângulo">6. Faça um retângulo</h3>
+<p>Os dados devem formar <strong>um retângulo</strong>: sujeitos nas linhas, variáveis nas colunas, uma única linha de cabeçalho com os nomes das variáveis. Sem tabelas espalhadas pela planilha, sem linhas de título mescladas, sem subtotais intercalados, sem múltiplas tabelas na mesma aba <span class="citation" data-cites="broman2018">(<a href="#ref-broman2018" role="doc-biblioref">4</a>)</span>.</p>
+<div class="cell">
+<div id="tbl-retangulo" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-retangulo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabela&nbsp;5: O banco de dados como retângulo — a estrutura que todo software espera.
+</figcaption>
+<div aria-describedby="tbl-retangulo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: right;">id</th>
+<th style="text-align: left;">idade</th>
+<th style="text-align: right;">sexo</th>
+<th style="text-align: left;">colesterol</th>
+<th style="text-align: right;">glicose</th>
+<th style="text-align: left;">cidade</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1000</td>
+<td style="text-align: left;">46</td>
+<td style="text-align: right;">female</td>
+<td style="text-align: left;">203</td>
+<td style="text-align: right;">82</td>
+<td style="text-align: left;">Buckingham</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1001</td>
+<td style="text-align: left;">29</td>
+<td style="text-align: right;">female</td>
+<td style="text-align: left;">165</td>
+<td style="text-align: right;">97</td>
+<td style="text-align: left;">Buckingham</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1002</td>
+<td style="text-align: left;">58</td>
+<td style="text-align: right;">female</td>
+<td style="text-align: left;">228</td>
+<td style="text-align: right;">92</td>
+<td style="text-align: left;">Buckingham</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1003</td>
+<td style="text-align: left;">67</td>
+<td style="text-align: right;">male</td>
+<td style="text-align: left;">78</td>
+<td style="text-align: right;">93</td>
+<td style="text-align: left;">Buckingham</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1005</td>
+<td style="text-align: left;">64</td>
+<td style="text-align: right;">male</td>
+<td style="text-align: left;">249</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: left;">Buckingham</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</section>
+<section id="crie-um-dicionário-de-dados" class="level3">
+<h3 class="anchored" data-anchor-id="crie-um-dicionário-de-dados">7. Crie um dicionário de dados</h3>
+<p>Todo banco de dados deveria ser acompanhado de um <strong>dicionário</strong> (ou <em>codebook</em>) que descreva cada variável: nome, significado, unidade, tipo, valores possíveis e regras de codificação. O dicionário é um documento separado — nunca dentro da planilha de dados <span class="citation" data-cites="broman2018">(<a href="#ref-broman2018" role="doc-biblioref">4</a>)</span>.</p>
+<div class="cell">
+<div id="tbl-dicionario" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-dicionario-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabela&nbsp;6: Exemplo de dicionário de dados para o banco pacientes.csv — o ‘manual de instruções’ do banco.
+</figcaption>
+<div aria-describedby="tbl-dicionario-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 36%">
+<col style="width: 20%">
+<col style="width: 8%">
+<col style="width: 22%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variável</th>
+<th style="text-align: left;">Descrição</th>
+<th style="text-align: left;">Tipo</th>
+<th style="text-align: left;">Unidade</th>
+<th style="text-align: left;">Valores</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">Identificador único do paciente</td>
+<td style="text-align: left;">Numérica (ID)</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">1000–1402</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">idade</td>
+<td style="text-align: left;">Idade em anos completos</td>
+<td style="text-align: left;">Numérica contínua</td>
+<td style="text-align: left;">anos</td>
+<td style="text-align: left;">19–92</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">sexo</td>
+<td style="text-align: left;">Sexo biológico</td>
+<td style="text-align: left;">Categórica nominal</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">female, male</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">colesterol</td>
+<td style="text-align: left;">Colesterol total em jejum</td>
+<td style="text-align: left;">Numérica contínua</td>
+<td style="text-align: left;">mg/dL</td>
+<td style="text-align: left;">78–443</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">glicose</td>
+<td style="text-align: left;">Glicemia em jejum</td>
+<td style="text-align: left;">Numérica contínua</td>
+<td style="text-align: left;">mg/dL</td>
+<td style="text-align: left;">48–385</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">hdl</td>
+<td style="text-align: left;">HDL-colesterol</td>
+<td style="text-align: left;">Numérica contínua</td>
+<td style="text-align: left;">mg/dL</td>
+<td style="text-align: left;">12–120</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">peso</td>
+<td style="text-align: left;">Peso corporal</td>
+<td style="text-align: left;">Numérica contínua</td>
+<td style="text-align: left;">kg</td>
+<td style="text-align: left;">27,2–159,7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">altura</td>
+<td style="text-align: left;">Estatura</td>
+<td style="text-align: left;">Numérica contínua</td>
+<td style="text-align: left;">cm</td>
+<td style="text-align: left;">130,8–195,6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">biotipo</td>
+<td style="text-align: left;">Classificação do biotipo corporal</td>
+<td style="text-align: left;">Categórica ordinal</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">small, medium, large</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">sistolica</td>
+<td style="text-align: left;">Pressão arterial sistólica</td>
+<td style="text-align: left;">Numérica contínua</td>
+<td style="text-align: left;">mmHg</td>
+<td style="text-align: left;">82–250</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">cidade</td>
+<td style="text-align: left;">Cidade de residência</td>
+<td style="text-align: left;">Categórica nominal</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">Buckingham, Louisa</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</section>
+<section id="sem-cálculos-no-arquivo-de-dados-brutos" class="level3">
+<h3 class="anchored" data-anchor-id="sem-cálculos-no-arquivo-de-dados-brutos">8. Sem cálculos no arquivo de dados brutos</h3>
+<p>Esta é a regra fundamental do capítulo aplicada ao arquivo: o arquivo de dados primário deve conter <strong>apenas dados</strong> — sem fórmulas, sem médias calculadas, sem gráficos embutidos. Toda análise vai para o código (R, Python, etc.), nunca para células do Excel. O arquivo original deve ser tratado como um registro imutável — o equivalente a um caderno de laboratório <span class="citation" data-cites="broman2018">(<a href="#ref-broman2018" role="doc-biblioref">4</a>)</span>.</p>
+</section>
+<section id="não-use-cores-como-dados" class="level3">
+<h3 class="anchored" data-anchor-id="não-use-cores-como-dados">9. Não use cores como dados</h3>
+<p>É tentador destacar com cores as linhas com problemas, marcar outliers em vermelho ou indicar o sexo dos pacientes com azul e rosa. Mas cores não são dados — são formatação que se perde ao exportar para CSV e que nenhum software estatístico consegue ler automaticamente. Se uma informação precisa ser registrada, crie uma <strong>coluna</strong> para ela (ex: <code>outlier</code> = TRUE/FALSE) <span class="citation" data-cites="broman2018">(<a href="#ref-broman2018" role="doc-biblioref">4</a>)</span>.</p>
+</section>
+<section id="salve-em-formato-csv" class="level3">
+<h3 class="anchored" data-anchor-id="salve-em-formato-csv">10. Salve em formato CSV</h3>
+<p>Como vimos no início do capítulo, o CSV é o formato que faz a ponte entre a planilha e o software de análise. Sempre mantenha uma cópia dos dados em <strong>CSV</strong> (ou TSV). Esses formatos são texto puro — abertos, universais, legíveis por qualquer software e imunes às armadilhas de formatação do Excel <span class="citation" data-cites="broman2018">(<a href="#ref-broman2018" role="doc-biblioref">4</a>)</span>.</p>
+</section>
+</section>
+<section id="verificando-nosso-banco-de-dados" class="level2">
+<h2 class="anchored" data-anchor-id="verificando-nosso-banco-de-dados">Verificando nosso banco de dados</h2>
+<p>Vamos aplicar os princípios ao nosso próprio banco de dados e verificar se ele atende às boas práticas:</p>
+<div class="cell">
+<div id="tbl-verificacao" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-verificacao-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabela&nbsp;7: Auditoria do banco pacientes.csv — verificando aderência às boas práticas.
+</figcaption>
+<div aria-describedby="tbl-verificacao-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 28%">
+<col style="width: 64%">
+<col style="width: 6%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Critério</th>
+<th style="text-align: left;">Resultado</th>
+<th style="text-align: left;">Status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Formato retangular?</td>
+<td style="text-align: left;">Sim — 403 linhas × 18 colunas</td>
+<td style="text-align: left;">OK</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Uma linha por observação?</td>
+<td style="text-align: left;">Sim — cada linha é um paciente (n = 403)</td>
+<td style="text-align: left;">OK</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Nomes sem espaços/acentos?</td>
+<td style="text-align: left;">Sim — todos em snake_case (ex: glicohemoglobina, time.ppn)</td>
+<td style="text-align: left;">OK</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Valores ausentes codificados?</td>
+<td style="text-align: left;">Sim — NA usado para ausência (51 valores ausentes em 12 variáveis)</td>
+<td style="text-align: left;">OK</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Uma coisa por célula?</td>
+<td style="text-align: left;">Sim — cada célula contém um único valor</td>
+<td style="text-align: left;">OK</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sem cálculos embutidos?</td>
+<td style="text-align: left;">Sim — apenas dados brutos, sem fórmulas</td>
+<td style="text-align: left;">OK</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Formato CSV?</td>
+<td style="text-align: left;">Sim — arquivo .csv com separador vírgula</td>
+<td style="text-align: left;">OK</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Um detalhe para melhorar
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>O nome <code>time.ppn</code> usa ponto em vez de underscore — uma convenção mista que poderia gerar inconsistência. O ideal seria <code>time_ppn</code> para manter o padrão <code>snake_case</code>. Pequenas inconsistências como essa são comuns em dados reais e ilustram por que a padronização desde o início é tão importante.</p>
+</div>
+</div>
+</section>
+<section id="voltando-a-reinhart-e-rogoff" class="level2">
+<h2 class="anchored" data-anchor-id="voltando-a-reinhart-e-rogoff">Voltando a Reinhart e Rogoff</h2>
+<p>Cada princípio deste capítulo — dados em formato retangular, nomes consistentes, CSV como formato de intercâmbio, análise em código — teria evitado ou tornado visível o erro que mudou a política econômica de países inteiros. A fórmula que excluiu cinco países não existiria se a análise estivesse em R ou Python. A exclusão de dados sem justificativa teria sido documentada num dicionário de dados. A ponderação enviesada seria transparente num script reproduzível. E o erro teria sido detectado antes da publicação se os dados e o código estivessem disponíveis para replicação — como eventualmente Thomas Herndon fez <span class="citation" data-cites="herndon2014">(<a href="#ref-herndon2014" role="doc-biblioref">2</a>)</span>.</p>
+</section>
+<section id="resumo-do-capítulo" class="level2">
+<h2 class="anchored" data-anchor-id="resumo-do-capítulo">Resumo do capítulo</h2>
+<div class="cell">
+<div id="tbl-resumo-cap7" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-resumo-cap7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabela&nbsp;8: Resumo — organização de dados em planilhas.
+</figcaption>
+<div aria-describedby="tbl-resumo-cap7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 48%">
+<col style="width: 38%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Conceito</th>
+<th style="text-align: left;">Definição</th>
+<th style="text-align: left;">Por que importa</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Tidy data</td>
+<td style="text-align: left;">Cada variável é uma coluna; cada observação é uma linha; cada unidade é uma tabela</td>
+<td style="text-align: left;">Facilita análise, visualização e compartilhamento</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Consistência</td>
+<td style="text-align: left;">Mesmo código para a mesma informação em todo o banco (NA, female, YYYY-MM-DD)</td>
+<td style="text-align: left;">Evita categorias duplicadas e erros de parsing</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Nomes de variáveis</td>
+<td style="text-align: left;">Curtos, significativos, sem espaços/acentos, em snake_case</td>
+<td style="text-align: left;">Facilita programação e reduz erros de digitação</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Datas (ISO 8601)</td>
+<td style="text-align: left;">YYYY-MM-DD — formato universal, ordenável, sem ambiguidade dia/mês</td>
+<td style="text-align: left;">Evita confusão 03/04 = março 4 ou 3 de abril?</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Células vazias</td>
+<td style="text-align: left;">Nunca deixar vazio; usar NA para dados ausentes; nunca usar -999 ou 0</td>
+<td style="text-align: left;">Permite distinguir ausência intencional de erro de digitação</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Retângulo</td>
+<td style="text-align: left;">Sujeitos nas linhas, variáveis nas colunas, uma única linha de cabeçalho</td>
+<td style="text-align: left;">Todo software estatístico espera dados nesse formato</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Dicionário de dados</td>
+<td style="text-align: left;">Documento separado descrevendo cada variável: nome, tipo, unidade, valores</td>
+<td style="text-align: left;">Permite que qualquer pessoa entenda e reproduza a análise</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dados brutos intocáveis</td>
+<td style="text-align: left;">O arquivo primário contém apenas dados — sem fórmulas, sem gráficos, sem cores como informação</td>
+<td style="text-align: left;">Preserva a integridade dos dados originais — como um caderno de laboratório</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Formato CSV</td>
+<td style="text-align: left;">Manter cópia em texto simples — formato aberto, universal e imune ao Excel</td>
+<td style="text-align: left;">Garante que os dados sobrevivam a qualquer mudança de software</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Próximos passos
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Este capítulo apresentou como organizar dados para que sejam analisáveis e reproduzíveis. No próximo capítulo, usaremos esses dados bem organizados para criar <strong>visualizações</strong> — gráficos que revelam padrões, comunicam resultados e, quando mal feitos, enganam.</p>
+</div>
+</div>
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">Referências</h2><div id="refs" class="references csl-bib-body" role="list">
+<div id="ref-reinhart2010" class="csl-entry" role="listitem">
+<div class="csl-left-margin">1. </div><div class="csl-right-inline">Reinhart CM, Rogoff KS. <a href="https://doi.org/10.1257/aer.100.2.573">Growth in a Time of Debt</a>. American Economic Review. 2010;100(2):573–8. </div>
+</div>
+<div id="ref-herndon2014" class="csl-entry" role="listitem">
+<div class="csl-left-margin">2. </div><div class="csl-right-inline">Herndon T, Ash M, Pollin R. <a href="https://doi.org/10.1093/cje/bet075">Does High Public Debt Consistently Stifle Economic Growth? <span>A</span> Critique of <span>Reinhart</span> and <span>Rogoff</span></a>. Cambridge Journal of Economics. 2014;38(2):257–79. </div>
+</div>
+<div id="ref-wickham2014" class="csl-entry" role="listitem">
+<div class="csl-left-margin">3. </div><div class="csl-right-inline">Wickham H. <a href="https://doi.org/10.18637/jss.v059.i10">Tidy Data</a>. Journal of Statistical Software. 2014;59(10):1–23. </div>
+</div>
+<div id="ref-broman2018" class="csl-entry" role="listitem">
+<div class="csl-left-margin">4. </div><div class="csl-right-inline">Broman KW, Woo KH. <a href="https://doi.org/10.1080/00031305.2017.1375989">Data Organization in Spreadsheets</a>. The American Statistician. 2018;72(1):2–10. </div>
+</div>
+</div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiada");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiada");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

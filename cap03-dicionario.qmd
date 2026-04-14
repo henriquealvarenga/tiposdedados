@@ -1,0 +1,205 @@
+---
+title: "Dicionário de Variáveis"
+subtitle: "Documentando cada variável"
+---
+
+```{r}
+#| label: setup
+#| message: false
+
+library(readr)
+library(dplyr)
+library(knitr)
+
+pacientes <- read_csv("data/pacientes.csv")
+```
+
+## O que é um dicionário de variáveis?
+
+Um dicionário de variáveis — também chamado de *codebook* ou *data dictionary* — é um documento que descreve, de forma completa e inequívoca, cada variável de um banco de dados. Broman e Woo, em seu artigo sobre organização de dados em planilhas, recomendam que esse documento seja um arquivo separado, em formato retangular, contendo no mínimo o nome da variável, uma descrição em linguagem natural, a categoria temática e os valores esperados [@broman2018].
+
+Na prática da pesquisa em saúde, um bom dicionário de variáveis deve conter:
+
+- **Nome da variável** — exatamente como aparece na planilha de dados (ex: `colesterol`)
+- **Rótulo** — descrição em linguagem natural (ex: "Colesterol total sérico")
+- **Tipo** — numérica discreta, numérica contínua, categórica nominal ou categórica ordinal
+- **Unidade de medida** — para variáveis numéricas (ex: mg/dL, kg, cm, mmHg)
+- **Limites plausíveis** — faixa de valores esperados (ex: colesterol entre 100 e 400 mg/dL)
+- **Níveis** — para variáveis categóricas, a lista exaustiva de categorias possíveis e seus significados
+- **Código de dados faltantes** — como valores ausentes são representados (ex: `NA`, célula vazia)
+
+Esse documento cumpre três funções essenciais. Primeiro, protege contra erros de interpretação — o caso do Mars Climate Orbiter descrito logo a seguir mostra a importancia desse cuidado. Segundo, permite que outros pesquisadores compreendam e reutilizem seus dados sem precisar adivinhar o que cada coluna significa. Terceiro, é uma exigência de diretrizes internacionais de relato de pesquisa, como veremos adiante.
+
+## A história
+
+Em 23 de setembro de 1999, a sonda Mars Climate Orbiter desapareceu ao tentar entrar na órbita de Marte. Após nove meses de viagem e 125 milhões de dólares investidos, a nave chegou 170 quilômetros mais baixa do que o planejado — e foi destruída na atmosfera marciana ou perdida no espaço [@nasa1999].
+
+A investigação da NASA revelou uma causa constrangedoramente simples. O software de navegação de solo, desenvolvido pela Lockheed Martin Astronautics, produzia dados de impulso dos propulsores em **libras-força por segundo** (unidades imperiais). O sistema de navegação do Jet Propulsion Laboratory (JPL), que recebia esses dados, assumia que os valores estavam em **newton-segundos** (unidades do Sistema Internacional) — conforme especificado na documentação de interface entre os dois sistemas [@nasa1999].
+
+Durante os nove meses de travessia, pequenos erros de trajetória se acumularam a cada manobra de correção. O relatório do Mishap Investigation Board listou oito causas contribuintes, entre elas: **"comunicação inadequada entre os elementos do projeto"** e **"o processo de verificação e validação não abordou adequadamente o software de solo"** [@nasa1999].
+
+O que faltou, em essência, foi algo que qualquer pesquisador em saúde deveria conhecer: um **dicionário de variáveis** — um documento que especifica, para cada dado trocado entre sistemas (ou coletado em um estudo), exatamente o que ele representa, em que unidade está medido e quais são seus limites válidos.
+
+::: {.callout-tip}
+## A lição do Mars Climate Orbiter
+
+Se uma agência espacial com milhares de engenheiros pode perder uma missão inteira por falta de documentação clara sobre unidades de medida, imagine o que pode acontecer com um banco de dados clínico em que ninguém registrou se o peso está em quilogramas ou libras, se a glicose está em mg/dL ou mmol/L, ou ninguem especificou que se "1" na coluna de óbito significa sim ou não.
+:::
+
+
+
+
+
+## Exemplo prático
+
+Vamos construir o dicionário de variáveis completo do nosso banco de dados de pacientes. Este é o tipo de documento que deveria acompanhar qualquer planilha de pesquisa:
+
+```{r}
+#| label: tbl-dicionario
+#| tbl-cap: "Dicionário de variáveis do estudo — este documento deve acompanhar todo banco de dados."
+
+col_range <- function(x) {
+  r <- range(x, na.rm = TRUE)
+  paste0(round(r[1], 1), " – ", round(r[2], 1))
+}
+
+tibble::tibble(
+  variavel = c("id", "sexo", "biotipo", "cidade",
+               "idade", "altura", "peso",
+               "colesterol", "hdl", "ratio", "glicose",
+               "glicohemoglobina", "sistolica", "diastolica",
+               "cintura", "quadril"),
+  rotulo = c("Identificador do paciente",
+             "Sexo biológico",
+             "Biotipo corporal",
+             "Cidade de residência",
+             "Idade no momento da coleta",
+             "Altura",
+             "Peso corporal",
+             "Colesterol total sérico",
+             "HDL-colesterol",
+             "Razão colesterol total / HDL",
+             "Glicose de jejum",
+             "Hemoglobina glicada (HbA1c)",
+             "Pressão arterial sistólica",
+             "Pressão arterial diastólica",
+             "Circunferência da cintura",
+             "Circunferência do quadril"),
+  tipo = c("Identificador",
+           "Categórica nominal", "Categórica ordinal", "Categórica nominal",
+           "Numérica contínua", "Numérica contínua", "Numérica contínua",
+           "Numérica contínua", "Numérica contínua", "Numérica contínua",
+           "Numérica contínua", "Numérica contínua",
+           "Numérica contínua", "Numérica contínua",
+           "Numérica contínua", "Numérica contínua"),
+  unidade = c("—", "—", "—", "—",
+              "anos", "cm", "kg",
+              "mg/dL", "mg/dL", "—", "mg/dL",
+              "% (HbA1c)", "mmHg", "mmHg",
+              "polegadas", "polegadas"),
+  limites = c("—", "—", "—", "—",
+              col_range(pacientes$idade),
+              col_range(pacientes$altura),
+              col_range(pacientes$peso),
+              col_range(pacientes$colesterol),
+              col_range(pacientes$hdl),
+              col_range(pacientes$ratio),
+              col_range(pacientes$glicose),
+              col_range(pacientes$glicohemoglobina),
+              col_range(pacientes$sistolica),
+              col_range(pacientes$diastolica),
+              col_range(pacientes$cintura),
+              col_range(pacientes$quadril)),
+  niveis = c("Inteiro único por paciente",
+             "female, male",
+             "small < medium < large",
+             "Buckingham, Louisa",
+             "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—", "—")
+) |>
+  kable(
+    col.names = c("Variável", "Rótulo", "Tipo", "Unidade",
+                  "Amplitude observada", "Níveis"),
+    align = "llllll"
+  )
+```
+
+Note que o dicionário inclui variáveis que muitas vezes passam despercebidas — como `cintura` e `quadril`, cujas unidades (polegadas, neste banco de dados) poderiam facilmente ser confundidas com centímetros se não houvesse documentação. Este é exatamente o tipo de ambiguidade que o dicionário elimina.
+
+::: {.callout-important}
+## Crie o dicionário antes de coletar
+
+O momento ideal para construir o dicionário de variáveis é **durante o planejamento do estudo**, antes da coleta de dados. Definir antecipadamente o nome, tipo, unidade e limites de cada variável reduz erros de digitação, inconsistências e retrabalho.
+:::
+
+
+## O que o STROBE exige
+
+O STROBE (*Strengthening the Reporting of Observational Studies in Epidemiology*) é um checklist de 22 itens publicado simultaneamente em três grandes revistas médicas — *The Lancet*, *Annals of Internal Medicine* e *PLoS Medicine* — com o objetivo de melhorar a qualidade do relato de estudos observacionais [@vonelm2007].
+
+Dois itens do checklist são diretamente relacionados ao dicionário de variáveis:
+
+- **Item 7 (Variáveis)**: *"Defina claramente todos os desfechos, exposições, preditores, confundidores potenciais e modificadores de efeito. Forneça critérios diagnósticos, se aplicável."*
+- **Item 8 (Fontes de dados / mensuração)**: *"Para cada variável de interesse, forneça as fontes de dados e os detalhes dos métodos de avaliação (mensuração). Descreva a comparabilidade dos métodos de avaliação quando houver mais de um grupo."*
+
+O STROBE não usa o termo "dicionário de variáveis", mas o que os itens 7 e 8 exigem é, na prática, exatamente isso: uma documentação completa de cada variável, incluindo sua definição, como foi medida e quais critérios foram usados para classificá-la [@vonelm2007].
+
+```{r}
+#| label: tbl-strobe
+#| tbl-cap: "Itens do STROBE relacionados à documentação de variáveis."
+
+tibble::tibble(
+  item = c("7", "8", "11", "14a"),
+  secao = c("Métodos", "Métodos", "Métodos", "Resultados"),
+  titulo = c("Variáveis",
+             "Fontes de dados / mensuração",
+             "Variáveis quantitativas",
+             "Dados descritivos"),
+  recomendacao = c(
+    "Definir claramente todos os desfechos, exposições, preditores, confundidores e modificadores de efeito",
+    "Para cada variável, fornecer fontes de dados e detalhes dos métodos de mensuração",
+    "Explicar como variáveis quantitativas foram tratadas na análise; descrever agrupamentos, se aplicável",
+    "Fornecer características dos participantes e informações sobre exposições e confundidores potenciais"
+  )
+) |>
+  kable(
+    col.names = c("Item", "Seção", "Título", "Recomendação"),
+    align = "clll"
+  )
+```
+
+A mensagem é clara: publicar um estudo observacional sem documentar adequadamente as variáveis é uma violação das boas práticas internacionais de pesquisa.
+
+
+## Boas práticas de Broman e Woo
+
+Broman e Woo (2018) oferecem um conjunto de recomendações práticas para organização de dados em planilhas que se complementam com o dicionário de variáveis [@broman2018]. As mais relevantes para este contexto são:
+
+- **Seja consistente**: use sempre o mesmo código para cada categoria. Se o sexo feminino é `female` em um registro, não pode ser `Female`, `F` ou `fem` em outro.
+- **Escolha bons nomes**: nomes de variáveis devem ser curtos, descritivos e sem espaços — `colesterol_total` em vez de `Colesterol Total (mg/dL)`. A unidade vai no dicionário, não no nome da variável.
+- **Sem células vazias**: use um código explícito para dados faltantes (`NA` no R) em vez de deixar a célula em branco. Células vazias são ambíguas — o dado é faltante ou alguém esqueceu de preencher?
+- **Um dado por célula**: não coloque `120/80` na coluna de pressão arterial. Crie duas colunas: `sistolica` e `diastolica`.
+- **Formato retangular**: cada linha é uma observação, cada coluna é uma variável, com uma única linha de cabeçalho.
+- **Datas em YYYY-MM-DD**: o formato ISO 8601 evita ambiguidades entre formatos americano (MM/DD/YYYY) e brasileiro (DD/MM/YYYY).
+
+Essas recomendações parecem triviais, mas a realidade mostra que são rotineiramente violadas. Auditorias em planilhas reais encontram uma taxa média de erro de 88% [@broman2018]. O dicionário de variáveis é a primeira linha de defesa contra esse tipo de problema.
+
+
+## Construindo o seu dicionário
+
+1. **Liste todas as variáveis** que pretende coletar — antes de criar a planilha.
+2. **Defina o tipo** de cada uma (numérica discreta, contínua, categórica nominal, ordinal).
+3. **Especifique a unidade de medida** para todas as numéricas.
+4. **Estabeleça limites plausíveis** — valores fora dessa faixa devem disparar um alerta de revisão.
+5. **Liste todos os níveis** de cada variável categórica, com descrição do que cada um significa.
+6. **Defina o código de dados faltantes** — e use-o de forma consistente.
+7. **Salve o dicionário como um arquivo separado** — nunca dentro da planilha de dados.
+
+O dicionário é um documento vivo: pode ser atualizado ao longo do estudo, mas as decisões fundamentais devem estar registradas antes da coleta.
+
+::: {.callout-note}
+## Próximos passos
+
+- **Capítulo 4** — Dados numéricos em profundidade
+- **Capítulo 5** — Dados categóricos em profundidade
+- **Capítulo 6** — Casos especiais que desafiam a classificação
+:::

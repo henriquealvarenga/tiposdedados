@@ -1,0 +1,66 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Tipos de Dados em Saúde"
+  description: "Da coleta à análise — entendendo variáveis para pesquisa em saúde."
+  navbar:
+    left:
+      - href: index.qmd
+        text: Início
+      - text: "Fundamentos"
+        menu:
+          - href: cap01-dados-pesquisa.qmd
+            text: Os Dados da Pesquisa
+          - href: cap02-classificacao.qmd
+            text: Classificação dos Tipos de Dados
+          - href: cap03-dicionario.qmd
+            text: Dicionário de Variáveis
+      - text: "Tipos de Dados"
+        menu:
+          - href: cap04-numericos.qmd
+            text: Dados Numéricos
+          - href: cap05-categoricos.qmd
+            text: Dados Categóricos
+          - href: cap06-casos-especiais.qmd
+            text: Casos Especiais
+      - text: "Na Prática"
+        menu:
+          - href: cap07-planilhas.qmd
+            text: Organizando Dados em Planilhas
+          - href: cap08-visualizacao.qmd
+            text: Visualizando por Tipo de Dado
+          - href: cap09-publicando.qmd
+            text: Publicando seus Dados
+          - href: cap10-tipos-r-python.qmd
+            text: Tipos de Dados no R e no Python
+      - href: referencias.qmd
+        text: Referências
+    right:
+      - href: about.qmd
+        text: Sobre
+      - icon: github
+        href: https://github.com/halvarengda
+  sidebar: false
+
+format:
+  html:
+    theme: cosmo
+    css: styles/custom.css
+    toc: true
+    toc-depth: 3
+    number-sections: false
+    lang: pt
+    fig-responsive: true
+    fig-dpi: 150
+
+bibliography: references/references_zotero.bib
+csl: references/csl_styles/vancouver.csl
+link-citations: true
+
+execute:
+  echo: false
+  warning: false
+  message: false
+  freeze: auto

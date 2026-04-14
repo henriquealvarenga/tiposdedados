@@ -1,0 +1,453 @@
+/* ============================================================
+   Tipos de Dados em Saúde — Custom CSS
+   Prof. Henrique Alvarenga da Silva
+   ============================================================ */
+
+/* --- Variáveis de marca (edite aqui para mudar todo o site) --- */
+:root {
+  /* Cores principais */
+  --brand-primary: #2563EB;       /* azul — Fundamentos */
+  --brand-green: #059669;         /* verde — Tipos de Dados */
+  --brand-amber: #D97706;         /* âmbar — Casos Especiais */
+  --brand-purple: #7C3AED;        /* roxo — Na Prática */
+
+  /* Neutros */
+  --bg-page: #ffffff;
+  --bg-section: #f8fafc;
+  --text-main: #1e293b;
+  --text-muted: #64748b;
+  --border-light: #e2e8f0;
+
+  /* Tipografia */
+  --font-body: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-heading: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-mono: "Fira Code", "JetBrains Mono", ui-monospace, monospace;
+
+  /* Espaçamento */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 2rem;
+  --space-xl: 3rem;
+  --space-2xl: 5rem;
+
+  /* Largura do conteúdo */
+  --content-width: 48rem;
+}
+
+
+/* --- Tipografia do corpo --- */
+body {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: var(--text-main);
+  background-color: var(--bg-page);
+}
+
+/* --- Largura máxima do conteúdo --- */
+.page-columns .content {
+  max-width: var(--content-width);
+}
+
+
+/* --- Headings --- */
+h1, h2, h3 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.25;
+}
+
+h1 {
+  font-size: 2.25rem;
+  margin-top: var(--space-2xl);
+  margin-bottom: var(--space-lg);
+}
+
+h2 {
+  font-size: 1.6rem;
+  margin-top: var(--space-xl);
+  margin-bottom: var(--space-md);
+  padding-bottom: var(--space-xs);
+  border-bottom: 2px solid var(--border-light);
+}
+
+h3 {
+  font-size: 1.25rem;
+  margin-top: var(--space-lg);
+  margin-bottom: var(--space-sm);
+}
+
+
+/* --- Links --- */
+a {
+  color: var(--brand-primary);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+a:hover {
+  color: #1d4ed8;
+  text-decoration: underline;
+}
+
+a:visited {
+  color: var(--brand-purple);
+}
+
+
+/* --- Código inline e blocos --- */
+code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background-color: #f1f5f9;
+  padding: 0.15em 0.35em;
+  border-radius: 4px;
+}
+
+pre {
+  background-color: #f8fafc;
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  padding: var(--space-md);
+  overflow-x: auto;
+}
+
+pre code {
+  background: none;
+  padding: 0;
+}
+
+
+/* --- Figuras e legendas --- */
+.figure-caption,
+figcaption {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  font-style: italic;
+  text-align: center;
+  margin-top: var(--space-sm);
+  line-height: 1.5;
+}
+
+
+/* --- Callout / caixas de nota --- */
+.callout-note {
+  border-left: 4px solid var(--brand-primary);
+  background-color: #eff6ff;
+}
+
+.callout-tip {
+  border-left: 4px solid var(--brand-green);
+  background-color: #ecfdf5;
+}
+
+.callout-warning {
+  border-left: 4px solid var(--brand-amber);
+  background-color: #fffbeb;
+}
+
+.callout-important {
+  border-left: 4px solid var(--brand-purple);
+  background-color: #faf5ff;
+}
+
+
+/* --- Tabelas --- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: var(--space-lg) 0;
+  font-size: 0.95rem;
+}
+
+thead th {
+  background-color: var(--bg-section);
+  font-weight: 600;
+  text-align: left;
+  padding: 0.75rem 1rem;
+  border-bottom: 2px solid var(--border-light);
+}
+
+tbody td {
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid var(--border-light);
+}
+
+tbody tr:hover {
+  background-color: var(--bg-section);
+}
+
+
+/* ============================================================
+   LANDING PAGE — ESTILO COVER + CARDS
+   ============================================================ */
+
+/* --- Capa (hero) --- */
+.cover {
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--space-2xl) var(--space-lg);
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  color: #ffffff;
+  position: relative;
+}
+
+.cover-content {
+  max-width: 700px;
+}
+
+.cover-visual svg {
+  width: 140px;
+  height: 140px;
+  margin-bottom: var(--space-lg);
+  opacity: 0.95;
+}
+
+.cover h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.15;
+  margin: 0 0 var(--space-md) 0;
+  border: none;
+}
+
+.cover h1 .highlight {
+  color: #60a5fa;
+}
+
+.cover-subtitle {
+  font-size: 1.15rem;
+  color: #94a3b8;
+  line-height: 1.7;
+  margin-bottom: var(--space-lg);
+}
+
+.cover-author {
+  margin-bottom: var(--space-xl);
+}
+
+.cover-author a {
+  color: #e2e8f0;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.cover-author a:hover {
+  color: #60a5fa;
+}
+
+.cover-author .affiliation {
+  color: #64748b;
+  font-size: 0.9rem;
+}
+
+.cover-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 2rem;
+  background-color: var(--brand-primary);
+  color: #ffffff !important;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  text-decoration: none !important;
+}
+
+.cover-cta:hover {
+  background-color: #1d4ed8;
+  transform: translateY(-1px);
+  text-decoration: none !important;
+}
+
+.cover-cta .arrow {
+  transition: transform 0.2s ease;
+}
+
+.cover-cta:hover .arrow {
+  transform: translateX(4px);
+}
+
+.cover-scroll-hint {
+  position: absolute;
+  bottom: 2rem;
+  color: #475569;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+
+
+/* --- Seções de conteúdo --- */
+.content-section {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: var(--space-2xl) var(--space-lg);
+}
+
+.section-header {
+  margin-bottom: var(--space-xl);
+}
+
+.section-label {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.3rem 0.8rem;
+  border-radius: 4px;
+  margin-bottom: var(--space-sm);
+}
+
+.section-label.fundamentos { background: #dbeafe; color: #1e40af; }
+.section-label.tipos       { background: #d1fae5; color: #065f46; }
+.section-label.especiais   { background: #fef3c7; color: #92400e; }
+.section-label.pratica     { background: #ede9fe; color: #5b21b6; }
+
+.section-title {
+  font-size: 1.8rem;
+  margin-top: var(--space-sm);
+  border: none;
+  padding: 0;
+}
+
+.section-divider {
+  border: none;
+  height: 1px;
+  background: var(--border-light);
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+
+/* --- Cards --- */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--space-lg);
+}
+
+.card-new {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.2s ease;
+  text-decoration: none !important;
+  color: var(--text-main) !important;
+}
+
+.card-new:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  transform: translateY(-2px);
+  text-decoration: none !important;
+}
+
+.card-new:visited {
+  color: var(--text-main) !important;
+}
+
+.card-accent {
+  height: 4px;
+}
+
+.card-accent.fundamentos { background: var(--brand-primary); }
+.card-accent.tipos       { background: var(--brand-green); }
+.card-accent.especiais   { background: var(--brand-amber); }
+.card-accent.pratica     { background: var(--brand-purple); }
+
+.card-body-new {
+  padding: 1.25rem 1.25rem 0.75rem;
+  flex: 1;
+}
+
+.card-icon-container {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-md);
+}
+
+.card-icon-container svg {
+  width: 24px;
+  height: 24px;
+}
+
+.card-icon-container.fundamentos { background: #dbeafe; }
+.card-icon-container.tipos       { background: #d1fae5; }
+.card-icon-container.especiais   { background: #fef3c7; }
+.card-icon-container.pratica     { background: #ede9fe; }
+
+.card-body-new h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0 0 var(--space-sm) 0;
+  line-height: 1.3;
+}
+
+.card-body-new p {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.card-footer-new {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1.25rem;
+  border-top: 1px solid var(--border-light);
+}
+
+.card-chapter {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.card-arrow {
+  color: var(--text-muted);
+  transition: transform 0.2s ease;
+}
+
+.card-new:hover .card-arrow {
+  transform: translateX(4px);
+  color: var(--brand-primary);
+}
+
+
+/* --- Responsividade --- */
+@media (max-width: 768px) {
+  .cover h1 {
+    font-size: 2.2rem;
+  }
+
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .content-section {
+    padding: var(--space-xl) var(--space-md);
+  }
+}

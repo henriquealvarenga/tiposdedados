@@ -1,0 +1,373 @@
+---
+title: "Visualizando por Tipo de Dado"
+subtitle: "Qual gráfico usar para cada tipo de variável — e por que o tipo de dado determina a escolha"
+---
+
+```{r}
+#| label: setup
+#| message: false
+
+library(readr)
+library(dplyr)
+library(knitr)
+library(ggplot2)
+library(tidyr)
+
+pacientes <- read_csv("data/pacientes.csv")
+```
+
+## A ponte entre classificação e visualização
+
+Os capítulos anteriores estabeleceram uma base: aprendemos a classificar variáveis em numéricas (discretas e contínuas) e categóricas (nominais e ordinais), a reconhecer casos especiais e a organizar dados em planilhas. Agora, a pergunta natural é: **como visualizar esses dados?**
+
+A resposta depende, antes de tudo, do **tipo de dado**. Uma variável numérica contínua pede um histograma ou boxplot; uma variável categórica nominal pede um gráfico de barras; o cruzamento de uma variável numérica com uma categórica pede boxplots lado a lado. Essa correspondência não é arbitrária — ela reflete a natureza das operações que fazem sentido para cada tipo de escala [@cleveland1984; @healy2018].
+
+Este capítulo não pretende ser um guia completo de visualização estatística — para isso, existe o site [Dos Dados aos Gráficos](https://www.henriquealvarenga.com/graficos/), que cobre em profundidade a gramática dos gráficos, cada tipo de gráfico, princípios de Tufte, pensamento crítico e ferramentas. O objetivo aqui é mais específico: mostrar como a **classificação do tipo de dado** — o tema central deste projeto — determina a escolha do gráfico adequado.
+
+::: {.callout-tip}
+## A regra de ouro da visualização
+
+O tipo de dado determina o tipo de gráfico. Antes de escolher *como* visualizar, pergunte: *que tipo de variável estou representando?* A resposta restringe automaticamente as opções válidas.
+:::
+
+
+## Uma variável numérica: distribuição
+
+Quando temos **uma variável numérica** e queremos entender sua distribuição — onde se concentram os valores, se há assimetria, se existem outliers — os gráficos adequados são o **histograma** e o **boxplot**. Ambos exploram a natureza contínua (ou quase contínua) dos dados: a capacidade de ordenar valores e medir distâncias entre eles.
+
+```{r}
+#| label: fig-hist-box-colesterol
+#| fig-cap: "Duas formas de ver a mesma variável numérica (colesterol): o histograma revela a forma da distribuição; o boxplot resume os cinco números de Tukey."
+#| fig-width: 9
+#| fig-height: 4
+
+p1 <- ggplot(pacientes, aes(x = colesterol)) +
+  geom_histogram(fill = "#3B82F6", color = "white", bins = 25, alpha = 0.85) +
+  labs(title = "Histograma", x = "Colesterol (mg/dL)", y = "Frequência") +
+  theme_minimal(base_size = 11) +
+  theme(panel.grid.minor = element_blank())
+
+p2 <- ggplot(pacientes, aes(y = colesterol)) +
+  geom_boxplot(fill = "#3B82F6", alpha = 0.6, width = 0.4,
+               outlier.color = "#EF4444", outlier.size = 2) +
+  coord_flip() +
+  labs(title = "Boxplot", y = "Colesterol (mg/dL)", x = NULL) +
+  theme_minimal(base_size = 11) +
+  theme(axis.text.y = element_blank(), axis.ticks.y = element_blank(),
+        panel.grid.minor = element_blank())
+
+gridExtra::grid.arrange(p1, p2, ncol = 2)
+```
+
+O histograma é mais informativo — mostra bimodalidade, lacunas e a forma detalhada da curva. O boxplot é mais conciso — resume cinco números e sinaliza outliers. Na prática, o histograma é útil para **exploração** e o boxplot para **comparação entre grupos** [@healy2018].
+
+::: {.callout-note}
+## Histograma ≠ gráfico de barras
+
+Embora visualmente parecidos, o histograma e o gráfico de barras são gráficos fundamentalmente diferentes. O histograma representa **intervalos contínuos** (as barras se tocam porque os valores são adjacentes); o gráfico de barras representa **categorias discretas** (as barras são separadas porque as categorias são distintas). Essa distinção reflete diretamente a diferença entre dados numéricos e categóricos.
+:::
+
+
+## Uma variável categórica: frequências
+
+Para variáveis categóricas — nominais ou ordinais — o gráfico adequado é o **gráfico de barras**, que mostra a frequência (ou proporção) de cada categoria. O gráfico de barras respeita a natureza do dado: as categorias são posições discretas, e a altura da barra representa a contagem ou percentual.
+
+```{r}
+#| label: fig-barras-nominal-ordinal
+#| fig-cap: "Gráficos de barras para variáveis nominais (sexo) e ordinais (biotipo) — note que a ordem das barras só importa para a ordinal."
+#| fig-width: 9
+#| fig-height: 4
+
+p1 <- pacientes |>
+  count(sexo) |>
+  mutate(proporcao = n / sum(n) * 100) |>
+  ggplot(aes(x = sexo, y = proporcao, fill = sexo)) +
+  geom_col(alpha = 0.85, show.legend = FALSE) +
+  scale_fill_manual(values = c("female" = "#EC4899", "male" = "#3B82F6")) +
+  labs(title = "Nominal: sexo", x = NULL, y = "Proporção (%)") +
+  theme_minimal(base_size = 11) +
+  theme(panel.grid.minor = element_blank())
+
+p2 <- pacientes |>
+  filter(!is.na(biotipo)) |>
+  mutate(biotipo = factor(biotipo, levels = c("small", "medium", "large"), ordered = TRUE)) |>
+  count(biotipo) |>
+  mutate(proporcao = n / sum(n) * 100) |>
+  ggplot(aes(x = biotipo, y = proporcao, fill = biotipo)) +
+  geom_col(alpha = 0.85, show.legend = FALSE) +
+  scale_fill_manual(values = c("small" = "#93C5FD", "medium" = "#3B82F6", "large" = "#1E40AF")) +
+  labs(title = "Ordinal: biotipo", x = NULL, y = "Proporção (%)") +
+  theme_minimal(base_size = 11) +
+  theme(panel.grid.minor = element_blank())
+
+gridExtra::grid.arrange(p1, p2, ncol = 2)
+```
+
+Para variáveis **nominais**, a ordem das barras é arbitrária — podemos ordenar por frequência (maior para menor) para facilitar a leitura. Para variáveis **ordinais**, a ordem das barras **deve respeitar a hierarquia** dos níveis — small < medium < large — porque a posição no eixo carrega informação.
+
+
+## Numérica × categórica: comparação entre grupos
+
+Uma das visualizações mais úteis em pesquisa em saúde é a comparação de uma variável numérica entre grupos definidos por uma variável categórica. O gráfico que faz isso de forma compacta e informativa é o **boxplot por grupo**.
+
+```{r}
+#| label: fig-boxplot-grupo
+#| fig-cap: "Comparação da glicose entre sexos — o boxplot permite comparar medianas, dispersão e outliers num único gráfico."
+#| fig-width: 7
+#| fig-height: 4
+
+ggplot(pacientes, aes(x = sexo, y = glicose, fill = sexo)) +
+  geom_boxplot(alpha = 0.7, outlier.color = "#EF4444", outlier.size = 2,
+               show.legend = FALSE) +
+  scale_fill_manual(values = c("female" = "#EC4899", "male" = "#3B82F6")) +
+  labs(x = "Sexo", y = "Glicose (mg/dL)") +
+  theme_minimal(base_size = 12) +
+  theme(panel.grid.minor = element_blank())
+```
+
+O boxplot por grupo combina informação de **duas variáveis** — uma numérica (glicose) e uma categórica (sexo) — permitindo comparar tendência central, dispersão e valores atípicos entre grupos. É o gráfico correspondente ao teste *t* ou Mann-Whitney, assim como o scatter plot é o gráfico correspondente à correlação.
+
+```{r}
+#| label: fig-boxplot-biotipo
+#| fig-cap: "Peso por biotipo — a variável ordinal mantém sua ordem no eixo x."
+#| fig-width: 7
+#| fig-height: 4
+
+pacientes |>
+  filter(!is.na(biotipo)) |>
+  mutate(biotipo = factor(biotipo, levels = c("small", "medium", "large"), ordered = TRUE)) |>
+  ggplot(aes(x = biotipo, y = peso, fill = biotipo)) +
+  geom_boxplot(alpha = 0.7, outlier.color = "#EF4444", outlier.size = 2,
+               show.legend = FALSE) +
+  scale_fill_manual(values = c("small" = "#93C5FD", "medium" = "#3B82F6", "large" = "#1E40AF")) +
+  labs(x = "Biotipo", y = "Peso (kg)") +
+  theme_minimal(base_size = 12) +
+  theme(panel.grid.minor = element_blank())
+```
+
+
+## Duas variáveis numéricas: relação
+
+Quando temos **duas variáveis numéricas** e queremos avaliar se existe relação entre elas, o gráfico adequado é o **scatter plot** (diagrama de dispersão). Cada ponto representa um sujeito, posicionado segundo os valores das duas variáveis nos eixos x e y.
+
+```{r}
+#| label: fig-scatter
+#| fig-cap: "Relação entre peso e colesterol — cada ponto é um paciente. O scatter plot é o gráfico da correlação."
+#| fig-width: 7
+#| fig-height: 5
+
+ggplot(pacientes, aes(x = peso, y = colesterol)) +
+  geom_point(alpha = 0.4, color = "#3B82F6", size = 1.5) +
+  geom_smooth(method = "lm", se = TRUE, color = "#EF4444", linewidth = 0.8) +
+  labs(x = "Peso (kg)", y = "Colesterol (mg/dL)") +
+  theme_minimal(base_size = 12) +
+  theme(panel.grid.minor = element_blank())
+```
+
+O scatter plot só faz sentido com duas variáveis numéricas — porque ambos os eixos precisam representar **magnitudes contínuas**. Para uma variável ordinal no eixo, o scatter plot perderia sua lógica visual; para uma nominal, não haveria como posicionar os pontos de forma significativa.
+
+```{r}
+#| label: fig-scatter-cor
+#| fig-cap: "Scatter plot com destaque por sexo — adicionando uma terceira variável (categórica) por cor."
+#| fig-width: 7
+#| fig-height: 5
+
+ggplot(pacientes, aes(x = peso, y = sistolica, color = sexo)) +
+  geom_point(alpha = 0.5, size = 1.5) +
+  scale_color_manual(values = c("female" = "#EC4899", "male" = "#3B82F6"),
+                      name = "Sexo") +
+  labs(x = "Peso (kg)", y = "Pressão sistólica (mmHg)") +
+  theme_minimal(base_size = 12) +
+  theme(panel.grid.minor = element_blank())
+```
+
+A cor pode codificar uma terceira variável — geralmente categórica — permitindo investigar se a relação entre as duas variáveis numéricas difere entre grupos.
+
+
+## Duas variáveis categóricas: associação
+
+Para visualizar a **associação entre duas variáveis categóricas**, o gráfico de **barras empilhadas proporcionais** ou o **mosaico** são as opções adequadas. Eles representam visualmente a tabela de contingência que vimos no Capítulo 5.
+
+```{r}
+#| label: fig-barras-empilhadas
+#| fig-cap: "Distribuição do biotipo por sexo — barras empilhadas proporcionais permitem comparar perfis entre grupos."
+#| fig-width: 7
+#| fig-height: 4
+
+pacientes |>
+  filter(!is.na(biotipo)) |>
+  mutate(biotipo = factor(biotipo, levels = c("small", "medium", "large"), ordered = TRUE)) |>
+  count(sexo, biotipo) |>
+  group_by(sexo) |>
+  mutate(proporcao = n / sum(n) * 100) |>
+  ggplot(aes(x = sexo, y = proporcao, fill = biotipo)) +
+  geom_col(alpha = 0.85, position = "fill") +
+  scale_fill_manual(values = c("small" = "#93C5FD", "medium" = "#3B82F6", "large" = "#1E40AF"),
+                     name = "Biotipo") +
+  scale_y_continuous(labels = scales::percent_format()) +
+  labs(x = "Sexo", y = "Proporção") +
+  theme_minimal(base_size = 12) +
+  theme(panel.grid.minor = element_blank())
+```
+
+
+## O erro clássico: gráfico errado para o dado
+
+Alguns erros de visualização resultam diretamente de ignorar o tipo de dado. São erros que nenhum ajuste estético resolve — porque o problema é estrutural.
+
+```{r}
+#| label: tbl-erros-comuns
+#| tbl-cap: "Erros clássicos de visualização — cada um viola a correspondência entre tipo de dado e tipo de gráfico."
+
+tibble::tibble(
+  erro = c("Histograma para dados categóricos",
+           "Pizza para variável numérica",
+           "Linha conectando categorias nominais",
+           "Média em gráfico de dados ordinais",
+           "Scatter plot com variável categórica no eixo",
+           "Barras com eixo y que não começa em zero"),
+  problema = c("Categorias não têm adjacência — as barras não devem se tocar",
+               "Proporções de faixas numéricas não somam um 'todo' natural",
+               "Linhas implicam continuidade entre pontos — categorias nominais são discretas",
+               "A linha da média pressupõe distâncias iguais entre níveis ordinais",
+               "Pontos empilhados numa mesma coordenada x não revelam distribuição",
+               "Barras representam magnitude a partir de zero — truncar distorce proporções"),
+  correto = c("Usar gráfico de barras (com espaço entre as barras)",
+              "Usar barras para distribuição por faixas ou histograma para a variável contínua",
+              "Usar barras; linhas só para dados temporais ou ordinais",
+              "Reportar mediana ou mostrar frequências por nível",
+              "Usar boxplot por grupo ou gráficos de violino",
+              "Iniciar o eixo y em zero para barras; para linhas, a regra é mais flexível")
+) |>
+  kable(
+    col.names = c("Erro", "Por que está errado", "Alternativa correta"),
+    align = "lll"
+  )
+```
+
+::: {.callout-important}
+## O teste rápido
+
+Antes de criar um gráfico, faça duas perguntas: (1) *Quantas variáveis estou representando?* e (2) *De que tipo são?* As respostas restringem automaticamente as opções válidas — e eliminam os erros mais comuns.
+:::
+
+
+## Guia rápido: tipo de dado → gráfico
+
+A tabela a seguir resume a correspondência central deste capítulo. Para cada combinação de variáveis, há gráficos **recomendados** e gráficos **inadequados**.
+
+```{r}
+#| label: tbl-guia-grafico
+#| tbl-cap: "Guia rápido — qual gráfico usar para cada tipo de variável. Para detalhes sobre cada gráfico, consulte o site Dos Dados aos Gráficos."
+
+tibble::tibble(
+  situacao = c("1 variável numérica contínua",
+               "1 variável numérica discreta",
+               "1 variável categórica nominal",
+               "1 variável categórica ordinal",
+               "2 variáveis numéricas",
+               "Numérica × categórica",
+               "2 variáveis categóricas",
+               "Variável ao longo do tempo"),
+  objetivo = c("Ver a distribuição",
+               "Ver a frequência de valores",
+               "Comparar proporções entre categorias",
+               "Comparar proporções respeitando a ordem",
+               "Avaliar relação entre elas",
+               "Comparar a numérica entre grupos",
+               "Avaliar associação",
+               "Mostrar tendência temporal"),
+  recomendado = c("Histograma, densidade, boxplot",
+                   "Gráfico de barras (contagem), dot plot",
+                   "Gráfico de barras",
+                   "Gráfico de barras (ordem fixa dos níveis)",
+                   "Scatter plot (± linha de tendência)",
+                   "Boxplot por grupo, violin plot",
+                   "Barras empilhadas, mosaico",
+                   "Gráfico de linhas"),
+  evitar = c("Barras separadas, pizza",
+             "Histograma com bins não inteiros",
+             "Histograma, linha conectando categorias",
+             "Pizza (perde a noção de ordem)",
+             "Barras agrupadas com médias",
+             "Barras de médias sem dispersão",
+             "Scatter plot, linhas",
+             "Barras (a menos que sejam intervalos discretos)")
+) |>
+  kable(
+    col.names = c("Situação", "Objetivo", "Gráfico recomendado", "Evitar"),
+    align = "llll"
+  )
+```
+
+
+## Para ir além
+
+Este capítulo cobriu a lógica central: o tipo de dado determina o tipo de gráfico. Mas há muito mais a explorar — a gramática dos gráficos, os princípios de Tufte para design limpo e honesto, a galeria de erros clássicos e as ferramentas modernas (incluindo IA) para gerar visualizações em R.
+
+Tudo isso está no site complementar **[Dos Dados aos Gráficos](https://www.henriquealvarenga.com/graficos/)**, que cobre:
+
+```{r}
+#| label: tbl-site-graficos
+#| tbl-cap: "O que você encontra no site Dos Dados aos Gráficos — o complemento natural deste capítulo."
+
+tibble::tibble(
+  parte = c("I. Fundamentos",
+            "II. Tipos de gráficos",
+            "III. Pensamento crítico",
+            "IV. Ferramentas"),
+  conteudo = c("Quando usar um gráfico (vs. tabela), gramática dos gráficos (Wilkinson/Wickham), elementos de um gráfico, princípios de Tufte (data-ink ratio, chartjunk, lie factor)",
+               "Pizza, barras, histograma, densidade, boxplot, scatter plot, linhas e curvas de Kaplan-Meier — cada um com anatomia, quando usar, erros comuns e código R",
+               "Gráficos que mudaram a história (Nightingale, Snow, Challenger), mesmos dados com histórias diferentes, galeria de horrores com makeover",
+               "IA para gráficos (ChatGPT, Claude, Copilot), fluxograma interativo 'Qual gráfico devo usar?'")
+) |>
+  kable(
+    col.names = c("Parte", "Conteúdo"),
+    align = "ll"
+  )
+```
+
+
+## Resumo do capítulo
+
+```{r}
+#| label: tbl-resumo-cap8
+#| tbl-cap: "Resumo — a correspondência entre tipo de dado e tipo de gráfico."
+
+tibble::tibble(
+  conceito = c("Tipo de dado → tipo de gráfico",
+               "Numérica contínua → histograma/boxplot",
+               "Categórica → barras",
+               "Numérica × categórica → boxplot por grupo",
+               "Duas numéricas → scatter plot",
+               "Duas categóricas → barras empilhadas",
+               "Temporal → linhas",
+               "Erro estrutural"),
+  definicao = c("A natureza da variável restringe automaticamente os gráficos válidos",
+                "Distribuição, forma, outliers — exploração de dados contínuos",
+                "Frequências e proporções — respeite a ordem se for ordinal",
+                "Comparação de distribuições entre grupos definidos por categorias",
+                "Relação entre magnitudes — cada ponto é uma observação",
+                "Associação entre categorias — versão visual da tabela de contingência",
+                "Tendência ao longo do tempo — linhas implicam continuidade temporal",
+                "Usar o gráfico errado para o tipo de dado — nenhum ajuste estético resolve"),
+  exemplo = c("Antes de escolher o gráfico, classifique a variável",
+              "Colesterol: histograma mostra assimetria; boxplot mostra outliers",
+              "Sexo: barras (ordem livre); biotipo: barras (small < medium < large)",
+              "Glicose por sexo: boxplots lado a lado com outliers sinalizados",
+              "Peso × colesterol: scatter plot com linha de tendência",
+              "Sexo × biotipo: barras empilhadas proporcionais",
+              "Incidência de doença por mês/ano: gráfico de linhas",
+              "Histograma para categorias, pizza para variável contínua, linha para nominal")
+) |>
+  kable(
+    col.names = c("Conceito", "Definição", "Exemplo do estudo"),
+    align = "lll"
+  )
+```
+
+::: {.callout-note}
+## Próximos passos
+
+Este capítulo mostrou que o tipo de dado determina o gráfico. No próximo e último capítulo, reuniremos tudo: como **reportar** dados corretamente em tabelas e texto de artigos científicos — integrando classificação, descrição e apresentação.
+:::

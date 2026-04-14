@@ -1,0 +1,38 @@
+# Quarto
+/.quarto/
+/_freeze/
+
+# Rendered site (output-dir: docs)
+# Descomente a linha abaixo se NÃO quiser versionar o site renderizado.
+# Se usa GitHub Pages a partir da pasta /docs, mantenha comentada.
+# /docs/
+
+# Arquivos intermediários de renderização
+*_files/
+*_cache/
+*.self_contained.*
+
+# R
+.Rproj.user/
+.Rhistory
+.Rdata
+.RData
+.httr-oauth
+
+# Python
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+venv/
+
+# macOS
+.DS_Store
+
+# IDEs
+.vscode/
+.idea/
+*.Rproj
+
+**/*.quarto_ipynb
+references/PDF/

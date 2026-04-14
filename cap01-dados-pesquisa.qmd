@@ -1,0 +1,52 @@
+---
+title: "Os Dados da Pesquisa"
+subtitle: "O que são dados, quem os define, e por que classificá-los é o primeiro passo"
+---
+
+## Introdução
+
+Hoje a classificação dos dados em pesquisa segue uma estrutura simples:  **numéricos** ou **categóricos**.  
+
+Dados numéricos (ou quantitativos) podem ser discretos ou contínuos. Discretos quando assumem valores inteiros, como número de internações. Contínuos quando admitem qualquer valor num intervalo, como peso ou pressão arterial.   
+
+Dados categóricos (ou qualitativos) podem ser nominais ou Ordinais. Nominais quando as categorias não têm ordem, como tipo sanguíneo ou cidade.  Ordinais quando existe uma hierarquia entre os níveis, como estadiamento de câncer ou escala de dor. Um caso especial são as variáveis binárias, que têm exatamente dois níveis (sim/não, presente/ausente) e aparecem com enorme frequência em estudos de saúde.
+
+Essa estrutura que hoje parece quase óbvia, um dia precisou ser inventada. E a razão pela qual foi inventada é que, sem ela, os dados viravam uma bagunça — as mesmas informações recebiam nomes diferentes, registros de fontes distintas não podiam ser comparados, e conclusões contraditórias surgiam dos mesmos fenômenos.
+
+
+## A história
+
+Na Inglaterra da primeira metade do século XIX, as estatísticas de mortalidade eram uma bagunça. Cada doença podia ter três ou quatro nomes diferentes, e cada nome podia se referir a doenças diferentes. As complicações eram registradas no lugar das doenças primárias. Não havia padrão.
+
+William Farr sabia disso melhor do que ninguém. Nomeado em 1839 como o primeiro estatístico do General Register Office da Inglaterra — o órgão responsável pelos registros de nascimentos, casamentos e óbitos — Farr passou a receber, organizar e analisar os dados de mortalidade de todo o país. O problema ficou evidente já no primeiro relatório anual, onde ele escreveu:
+
+> *"The advantages of a uniform nomenclature, however imperfect, are so obvious, that it is surprising no attention has been paid to its enforcement in Bills of Mortality. Each disease has, in many instances, been denoted by three or four terms, and each term has been applied to as many different diseases."*
+
+E completou: a nomenclatura de doenças é tão importante para a estatística *"as weights and measures in the physical sciences, and should be settled without delay"* [@moriyama2011].
+
+Farr não ficou na reclamação. Ao longo das quatro décadas seguintes, ele construiu uma classificação sistemática de doenças — dividida em epidêmicas, constitucionais, locais (organizadas por sítio anatômico), do desenvolvimento e por causas externas — que se tornaria a base da futura Classificação Internacional de Doenças, o CID [@moriyama2011; @halliday2000].
+
+Quinze anos depois, o mesmo problema apareceu de outra forma. Florence Nightingale voltou da Guerra da Crimeia em 1856 convencida de que os soldados britânicos estavam morrendo mais de doenças infecciosas do que de ferimentos de batalha — mas provar isso com os dados disponíveis era quase impossível. Ela comparou seis fontes oficiais diferentes de registros de mortalidade e nenhuma concordava com as outras. Os registros hospitalares capturavam apenas um sétimo das mortes reais. Soldados que eram admitidos e morriam entre as contagens semanais simplesmente não apareciam nos números [@bradshaw2020].
+
+Numa carta ao cientista militar John Henry Lefroy, Nightingale descreveu os dados do Land Transport Corps como estando em *"a state of great confusion"*, com *"an extraordinary method (or no method) of keeping statistics"*. Sobre a Índia, onde certas causas de morte eram convenientemente excluídas dos relatórios oficiais, ela foi mais ácida: *"I could not help laughing at your critics who 'exclude' specific diseases such as 'cholera,' accidents 'proving fatal,' etc. It is very convenient indeed to leave out all deaths that ought not to have happened"* [@bradshaw2020].
+
+Nightingale não era estatística de formação, mas entendia que o problema era anterior à análise: antes de calcular qualquer proporção, era preciso decidir **o que** registrar e **como** registrar. Ao voltar para a Inglaterra, ela fez pressão política pela padronização dos dados hospitalares nas forças armadas — e recrutou Farr para resolver o lado técnico [@moriyama2011].
+
+Foi essa padronização que tornou possíveis os seus célebres diagramas de área polar — os *coxcombs* — que mostraram ao Parlamento britânico, de forma visual e imediata, que a maioria dos soldados morria por condições sanitárias, não por combate. O gráfico era poderoso, mas só existiu porque os dados por trás dele haviam sido padronizados antes. Em 1858, Nightingale se tornou a primeira mulher eleita fellow da Royal Statistical Society [@bradshaw2020].
+
+::: {.callout-tip}
+## A lição de Farr e Nightingale
+
+Dados não existem prontos na natureza. Alguém precisa decidir **o que** observar, **como** medir e **de que forma** registrar. 
+:::
+
+
+## Estrutura do Livro
+
+Este livro está organizado em três blocos.
+
+O primeiro — **Fundamentos**. Neste capítulo vimos que dados não existem prontos: alguém precisa decidir o que medir e como registrar, e que essa decisão determina as análises possíveis. No capítulo seguinte, vamos conhecer a classificação formal dos tipos de dados — de onde veio, quem a inventou, que debates gerou — e chegar ao mapa que usaremos no restante do livro: numéricos (discretos e contínuos) e categóricos (nominais e ordinais). No terceiro capítulo, veremos como documentar essas decisões num dicionário de variáveis — o documento que garante que todos os envolvidos num estudo entendam cada coluna do banco de dados da mesma forma. A história do Mars Climate Orbiter, que perdeu uma sonda de 125 milhões de dólares por falta de documentação sobre unidades de medida, mostra que isso não é formalismo.
+
+O segundo bloco — **Tipos de Dados** — entra no detalhe de cada tipo. Um capítulo inteiro dedicado aos dados numéricos: o que muda entre discretos e contínuos, quais descritivas usar, o debate sobre escalas intervalar e de razão e por que ele ficou na teoria. Outro capítulo dedicado aos categóricos: nominais, ordinais, binários, tabelas de frequência, tabelas de contingência e o papel do pesquisador na definição dos níveis. E um terceiro capítulo sobre os casos que não se encaixam facilmente em nenhuma gaveta — a escala de Likert (ordinal ou numérica?), o IMC (contínuo que vira categórico) e outras variáveis que mudam de identidade dependendo do contexto.
+
+O terceiro bloco — **Na Prática** — é onde a classificação encontra o mundo real. Como organizar dados em planilhas sem criar armadilhas para si mesmo. Qual gráfico usar para cada tipo de variável. Como publicar dados seguindo os princípios FAIR de ciência aberta. E, finalmente, como o R e o Python enxergam os tipos de dados — porque o software não lê a sua mente, e a forma como ele armazena uma variável nem sempre corresponde ao que você pretendia.

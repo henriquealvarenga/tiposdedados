@@ -1,0 +1,14 @@
+---
+title: "Referências"
+bibliography: references/references.bib
+nocite: |
+  @*
+---
+
+::: {#refs}
+:::
+
+<!-- Esta página lista todas as referências automaticamente.
+     Não digite referências manualmente aqui.
+     Para adicionar novas referências, edite o arquivo
+     references/references.bib -->
