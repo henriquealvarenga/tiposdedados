@@ -161,11 +161,7 @@ function copyCitation() {
 ## Ficha catalográfica
 
 ::: {.callout-note title="Ficha Catalográfica" icon=false}
-*Ficha catalográfica será incluída após elaboração.*
-
-<!-- Substituir pela imagem da ficha quando disponível:
 ![](images/ficha-catalografica.png)
--->
 :::
 
 ## Agradecimentos
