@@ -1,35 +1,50 @@
-# Quarto
-/.quarto/
-/_freeze/
+# ==============================================================
+# .gitignore — Tipos de Dados em Saúde
+# Quarto + GitHub Pages (publicado via GitHub Actions)
+# ==============================================================
 
-# Rendered site (output-dir: docs)
+# --- Saída do Quarto (gerada pelo GitHub Actions, não versionar) ---
+docs/
 
-# Arquivos intermediários de renderização
-*_files/
-*_cache/
+# --- Caches regenerados localmente ---
+.quarto/
+**/*_cache/
+**/*_files/
+**/*.quarto_ipynb
 *.self_contained.*
 
-# R
+# Nota: _freeze/ É versionado neste projeto.
+# Contém os resultados das chunks R/Python executadas localmente,
+# para que o GitHub Actions não precise instalar R nem Python.
+
+# --- R ---
 .Rproj.user/
 .Rhistory
 .Rdata
 .RData
+.Ruserdata
 .httr-oauth
+*.Rproj
 
-# Python
+# --- Python ---
 __pycache__/
 *.py[cod]
 .ipynb_checkpoints/
 .venv/
 venv/
 
-# macOS
-.DS_Store
+# --- Configurações locais do Claude Code (não versionar) ---
+.claude/
 
-# IDEs
+# --- OS ---
+.DS_Store
+Thumbs.db
+
+# --- IDEs ---
 .vscode/
 .idea/
-*.Rproj
 
-**/*.quarto_ipynb
+# --- Conteúdo não distribuível ---
 references/PDF/
+
+/.quarto/
