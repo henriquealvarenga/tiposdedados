@@ -45,7 +45,7 @@ Hoje, a questão está resolvida na prática. O consenso se apoia em dois pontos
 
 1. Um **item** Likert individual é ordinal. A mediana e as frequências são a forma mais honesta de descrevê-lo.
 
-2. O **score tota da escala** Likert composta (soma de múltiplos itens) se comporta de forma aproximadamente contínua — e o uso de média, desvio-padrão e testes paramétricos é adequado. Isso é especialmente claro quando a escala tem oito ou mais itens [@carifio2008].
+2. O **escore total da escala** Likert composta (soma de múltiplos itens) se comporta de forma aproximadamente contínua — e o uso de média, desvio-padrão e testes paramétricos é adequado. Isso é especialmente claro quando a escala tem oito ou mais itens [@carifio2008].
 
 ::: {.callout-tip}
 ## Item vs. escala

@@ -195,7 +195,7 @@ Dados categóricos representam **categorias** ou **rótulos**. Os valores indica
 No R, variáveis categóricas são armazenadas como `factor` — um tipo que permite definir quais são os níveis válidos e se existe uma ordem entre eles (nominal ou ordinal). No Python (pandas), o equivalente é o tipo `category`. Veremos como usar ambos no **Capítulo 10**.
 :::
 
-### categóricos Nominais
+### Categóricos Nominais
 
 Dados nominais classificam sujeitos em categorias **sem qualquer relação de ordem**. Não existe hierarquia entre os níveis — reorganizá-los em qualquer sequência não altera o significado.
 

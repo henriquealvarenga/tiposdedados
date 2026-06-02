@@ -59,10 +59,10 @@ Contribuições, sugestões e correções são bem-vindas por meio de *issues* o
 
 ## Outros projetos do autor
 
--   [Dos Dados aos Gráficos](www.henriquealvarenga.com/graficos) — Visualização Estatística para Profissionais de Saúde    
--   [Revisões de Literatura em Saúde](www.henriquealvarenga/Literature_Review)   
--   [GitHub Manual](www.henriquealvarenga.com/github_manual)   
--   [Manual Basico da Linguagem R](www.henriquealvarenga.com/manual_r)   
+-   [Dos Dados aos Gráficos](https://www.henriquealvarenga.com/graficos) — Visualização Estatística para Profissionais de Saúde
+-   [Revisões de Literatura em Saúde](https://www.henriquealvarenga.com/Literature_Review)
+-   [GitHub Manual](https://www.henriquealvarenga.com/github_manual)
+-   [Manual Básico da Linguagem R](https://www.henriquealvarenga.com/manual_r)
 
 ## Licença
 

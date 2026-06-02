@@ -417,7 +417,7 @@ Se a variável é reportada como mediana (IIQ), o teste de comparação deve ser
 
 Variáveis com distribuição muito assimétrica — como a glicose no nosso estudo — podem dificultar a aplicação de métodos que pressupõem normalidade. Uma estratégia comum é aplicar uma **transformação matemática** que aproxime a distribuição de uma forma mais simétrica.
 
-A transformação mais usada é o **logaritmo natural** (ln).  Ela comprime os valores mais altos mais intensamente do que os mais baixos, o que frequentemente reduz a assimetria à direita.”
+A transformação mais usada é o **logaritmo natural** (ln). Ela comprime os valores mais altos mais intensamente do que os mais baixos, o que frequentemente reduz a assimetria à direita.
 
 
 ```{r}
@@ -441,8 +441,7 @@ p2 <- ggplot(pacientes, aes(x = log(glicose))) +
 gridExtra::grid.arrange(p1, p2, ncol = 2)
 ```
 
-A transformação logarítmica é especialmente útil para variáveis biológicas estritamente positivas e com assimetria à direita, como concentrações sanguíneas, tempos de reação e algumas medidas laboratoriais. Em muitos casos, ela reduz a assimetria e estabiliza a variabilidade, o que pode tornar mais apropriado o uso de métodos paramétricos. Após a análise, os resultados podem ser reexpressos na escala original; por exemplo, a média dos valores transformados em log, quando retransformada, corresponde à média geométrica.
-[@freedman2007].
+A transformação logarítmica é especialmente útil para variáveis biológicas estritamente positivas e com assimetria à direita, como concentrações sanguíneas, tempos de reação e algumas medidas laboratoriais. Em muitos casos, ela reduz a assimetria e estabiliza a variabilidade, o que pode tornar mais apropriado o uso de métodos paramétricos. Após a análise, os resultados podem ser reexpressos na escala original; por exemplo, a média dos valores transformados em log, quando retransformada, corresponde à média geométrica [@freedman2007].
 
 ::: {.callout-note}
 ## Cuidado com a interpretação

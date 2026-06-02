@@ -59,7 +59,7 @@ website:
         text: Sobre
         icon: person-circle
       - icon: github
-        href: https://github.com/halvarengda
+        href: https://github.com/henriquealvarenga/tiposdedados
   sidebar: false
 
 format:

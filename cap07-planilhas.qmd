@@ -16,7 +16,7 @@ library(tidyr)
 pacientes <- read_csv("data/pacientes.csv")
 ```
 
-## O arquivos de dados de uma pesquisa
+## Os arquivos de dados de uma pesquisa
 
 Toda pesquisa gera um conjunto de dados que precisam ser armazenados de alguma forma. Via de regra, são armazenados em formato de tabelas, nas quais cada variável é representada por uma coluna e cada participante da pesquisa por uma linha. A primeira linha contém os nomes das variáveis; as linhas seguintes são os dados de cada participante. O banco de dados que usamos neste livro — `pacientes.csv` — segue exatamente esse formato:
 
@@ -317,12 +317,12 @@ tibble::tibble(
                "Formato CSV?"),
   resultado = c(paste0("Sim — ", n_total, " linhas × ", n_vars, " colunas"),
                 paste0("Sim — cada linha é um paciente (n = ", n_total, ")"),
-                "Sim — todos em snake_case (ex: glicohemoglobina, time.ppn)",
+                "Quase — a maioria em snake_case (ex: glicohemoglobina, sistolica); ver ressalva abaixo",
                 paste0("Sim — NA usado para ausência (", n_na_total, " valores ausentes em ", vars_com_na, " variáveis)"),
                 "Sim — cada célula contém um único valor",
                 "Sim — apenas dados brutos, sem fórmulas",
                 "Sim — arquivo .csv com separador vírgula"),
-  status = c("OK", "OK", "OK", "OK", "OK", "OK", "OK")
+  status = c("OK", "OK", "Atenção", "OK", "OK", "OK", "OK")
 ) |>
   kable(
     col.names = c("Critério", "Resultado", "Status"),
