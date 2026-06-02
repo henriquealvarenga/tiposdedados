@@ -1,6 +1,6 @@
 ---
 title: "Referências"
-bibliography: references/references.bib
+bibliography: references/references_zotero.bib
 nocite: |
   @*
 ---

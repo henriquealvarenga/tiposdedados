@@ -50,7 +50,7 @@ tibble::tibble(
                "glicohemoglobina", "peso", "altura",
                "sistolica", "diastolica", "cintura", "quadril"),
   unidade = c("anos", "mg/dL", "mg/dL", "mg/dL", "adimensional",
-              "% (HbA1c)", "kg", "cm", "mmHg", "mmHg", "cm", "cm"),
+              "% (HbA1c)", "kg", "cm", "mmHg", "mmHg", "polegadas", "polegadas"),
   tipo = c("Contínua*", "Contínua", "Contínua", "Contínua", "Contínua",
            "Contínua", "Contínua", "Contínua", "Contínua", "Contínua",
            "Contínua", "Contínua"),
