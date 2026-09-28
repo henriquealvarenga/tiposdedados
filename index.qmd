@@ -38,8 +38,11 @@ page-layout: full
 
     <h1>Tipos de<br>Dados em <span class="highlight">Saúde</span></h1>
 
+    <!-- Título e subtítulo exatamente como no registro do ISBN. -->
+    <p class="cover-book-subtitle">Da Coleta à Análise</p>
+
     <p class="cover-subtitle">
-      Da coleta à análise — entendendo variáveis para pesquisa em saúde.<br>
+      Entendendo variáveis para pesquisa em saúde.<br>
       De Stevens a Likert, do dicionário de variáveis à publicação dos dados.
     </p>
 

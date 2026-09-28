@@ -93,21 +93,23 @@ Selecione o formato desejado e clique em **Copiar** para copiar a citação:
     <button onclick="showCitation('apa')" id="btn-apa" style="padding: 8px 18px; border: 2px solid #3B82F6; background: white; color: #3B82F6; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.9em;">APA 7ª ed.</button>
     <button onclick="showCitation('bibtex')" id="btn-bibtex" style="padding: 8px 18px; border: 2px solid #3B82F6; background: white; color: #3B82F6; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.9em;">BibTeX</button>
   </div>
-  <div id="citation-box" style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 16px; font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size: 0.85em; line-height: 1.6; white-space: pre-wrap; min-height: 60px;">SILVA, Henrique Alvarenga da. <b>Tipos de Dados em Saúde</b>: Da Coleta à Análise. Publicação independente, 2026. ISBN 978-65-02-05110-8. Disponível em: https://henriquealvarenga.com/tiposdedados/</div>
+  <div id="citation-box" style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 16px; font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size: 0.85em; line-height: 1.6; white-space: pre-wrap; min-height: 60px;">SILVA, Henrique Alvarenga da. <b>Tipos de Dados em Saúde</b>: Da Coleta à Análise. São João del-Rei: Edição do Autor, 2026. ISBN 978-65-02-05110-8. Disponível em: https://henriquealvarenga.com/tiposdedados/</div>
   <button onclick="copyCitation()" id="btn-copy" style="margin-top: 10px; padding: 8px 20px; background: #10B981; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.9em;">📋 Copiar</button>
   <span id="copy-msg" style="margin-left: 10px; color: #10B981; font-weight: 600; display: none;">Copiado!</span>
 </div>
 
 <script>
 const citations = {
-  abnt: 'SILVA, Henrique Alvarenga da. <b>Tipos de Dados em Saúde</b>: Da Coleta à Análise. Publicação independente, 2026. ISBN 978-65-02-05110-8. Disponível em: https://henriquealvarenga.com/tiposdedados/',
-  vancouver: 'Silva HA. Tipos de dados em saúde: da coleta à análise [Internet]. Publicação independente; 2026 [cited ' + new Date().getFullYear() + ']. ISBN 978-65-02-05110-8. Available from: https://henriquealvarenga.com/tiposdedados/',
-  apa: 'Silva, H. A. (2026). <i>Tipos de dados em saúde: Da coleta à análise</i>. Publicação independente. ISBN 978-65-02-05110-8. https://henriquealvarenga.com/tiposdedados/',
+  abnt: 'SILVA, Henrique Alvarenga da. <b>Tipos de Dados em Saúde</b>: Da Coleta à Análise. São João del-Rei: Edição do Autor, 2026. ISBN 978-65-02-05110-8. Disponível em: https://henriquealvarenga.com/tiposdedados/',
+  vancouver: 'Silva HA. Tipos de dados em saúde: da coleta à análise [Internet]. São João del-Rei (MG): Edição do Autor; 2026 [cited ' + new Date().getFullYear() + ']. ISBN 978-65-02-05110-8. Available from: https://henriquealvarenga.com/tiposdedados/',
+  // APA 7: quando autor e editora são a mesma pessoa, a editora é omitida.
+  apa: 'Silva, H. A. (2026). <i>Tipos de dados em saúde: Da coleta à análise</i>. ISBN 978-65-02-05110-8. https://henriquealvarenga.com/tiposdedados/',
   bibtex: `@book{silva2026tiposdedados,
   author    = {Silva, Henrique Alvarenga da},
   title     = {Tipos de Dados em Saúde: Da Coleta à Análise},
   year      = {2026},
-  publisher = {Publicação independente},
+  publisher = {Edição do Autor},
+  address   = {São João del-Rei, MG},
   isbn      = {978-65-02-05110-8},
   url       = {https://henriquealvarenga.com/tiposdedados/},
   note      = {Recurso educacional aberto}
@@ -115,9 +117,9 @@ const citations = {
 };
 
 const citationsPlain = {
-  abnt: 'SILVA, Henrique Alvarenga da. Tipos de Dados em Saúde: Da Coleta à Análise. Publicação independente, 2026. ISBN 978-65-02-05110-8. Disponível em: https://henriquealvarenga.com/tiposdedados/',
-  vancouver: 'Silva HA. Tipos de dados em saúde: da coleta à análise [Internet]. Publicação independente; 2026 [cited ' + new Date().getFullYear() + ']. ISBN 978-65-02-05110-8. Available from: https://henriquealvarenga.com/tiposdedados/',
-  apa: 'Silva, H. A. (2026). Tipos de dados em saúde: Da coleta à análise. Publicação independente. ISBN 978-65-02-05110-8. https://henriquealvarenga.com/tiposdedados/',
+  abnt: 'SILVA, Henrique Alvarenga da. Tipos de Dados em Saúde: Da Coleta à Análise. São João del-Rei: Edição do Autor, 2026. ISBN 978-65-02-05110-8. Disponível em: https://henriquealvarenga.com/tiposdedados/',
+  vancouver: 'Silva HA. Tipos de dados em saúde: da coleta à análise [Internet]. São João del-Rei (MG): Edição do Autor; 2026 [cited ' + new Date().getFullYear() + ']. ISBN 978-65-02-05110-8. Available from: https://henriquealvarenga.com/tiposdedados/',
+  apa: 'Silva, H. A. (2026). Tipos de dados em saúde: Da coleta à análise. ISBN 978-65-02-05110-8. https://henriquealvarenga.com/tiposdedados/',
   bibtex: citations.bibtex
 };
 
@@ -172,7 +174,7 @@ Agradeço aos estudantes e colegas que, ao longo dos anos, motivaram a criação
 
 | Versão | Data        | Descrição      |
 |--------|-------------|----------------|
-| 1.0.0  | Março/2026  | Versão inicial |
+| 1.0.0  | Abril/2026  | Versão inicial |
 
 ## Contato
 
@@ -184,4 +186,4 @@ Ou por meio de *issues* no repositório do projeto no GitHub.
 
 ------------------------------------------------------------------------
 
-*Última atualização: Março de 2026*
+*Última atualização: Setembro de 2026*

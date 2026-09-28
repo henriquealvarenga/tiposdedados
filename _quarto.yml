@@ -4,7 +4,7 @@ project:
 
 website:
   title: "Tipos de Dados em Saúde"
-  description: "Da coleta à análise — entendendo variáveis para pesquisa em saúde."
+  description: "Da Coleta à Análise — entendendo variáveis para pesquisa em saúde."
   # Sem site-url o Quarto não gera sitemap nem robots.txt, e o canonical não
   # tem como ser montado. Sem barra final: a barra dispara um defeito conhecido
   # do Quarto que produz barra dupla no canonical.
