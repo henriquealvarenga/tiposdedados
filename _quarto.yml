@@ -63,6 +63,9 @@ website:
         text: Referências
         icon: bookmark
     right:
+      - href: creditos.qmd
+        text: Créditos
+        icon: c-circle
       - href: about.qmd
         text: Sobre
         icon: person-circle

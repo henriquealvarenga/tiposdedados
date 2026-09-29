@@ -38,18 +38,18 @@ page-layout: full
 
     <h1>Tipos de<br>Dados em <span class="highlight">Saúde</span></h1>
 
-    <!-- Título e subtítulo exatamente como no registro do ISBN. -->
+    <!-- Esta capa é a página de rosto do livro: a CBL monta a ficha
+         catalográfica a partir dela. Título e subtítulo exatamente como no
+         registro do ISBN, e nenhum outro texto junto deles — uma frase de
+         apresentação que ficava aqui acabou catalogada como subtítulo. -->
     <p class="cover-book-subtitle">Da Coleta à Análise</p>
-
-    <p class="cover-subtitle">
-      Entendendo variáveis para pesquisa em saúde.<br>
-      De Stevens a Likert, do dicionário de variáveis à publicação dos dados.
-    </p>
 
     <div class="cover-author">
       <a href="https://www.henriquealvarenga.com" target="_blank">Prof. Henrique Alvarenga da Silva</a><br>
       <span class="affiliation">UFSJ · UNIPTAN/AFYA</span>
     </div>
+
+    <p class="cover-imprint">São João del-Rei, MG · Edição do Autor · 2026</p>
 
     <a href="#conteudo" class="cover-cta">
       Começar a explorar
