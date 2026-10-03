@@ -27,8 +27,7 @@ ISBN 978-65-02-05110-8
 
 ![](images/barcode.jpeg){width=220px fig-align="center" fig-alt="Código de barras do ISBN 978-65-02-05110-8"}
 
-<!-- A ficha catalográfica (CIP) entra aqui quando a CBL enviar a versão
-     corrigida. -->
+![](images/ficha-catalografica.png){fig-alt="Ficha catalográfica (CIP) emitida pela Câmara Brasileira do Livro: Silva, Henrique Alvarenga da. Tipos de dados em saúde [livro eletrônico] : da coleta à análise. São João del Rei, MG : Ed. do Autor, 2026. ISBN 978-65-02-05110-8. CDD-610.72."}
 
 [Esta obra está licenciada sob a Licença Creative Commons Atribuição-NãoComercial-CompartilhaIgual 4.0 Internacional ([CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.pt_BR)).]{.creditos-licenca}
 
